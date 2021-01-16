@@ -1,0 +1,144 @@
+VOICE_GROUP;VOICE;PROGRAM;BANK_MSB;BANK_LSB
+Accordion;Bandoneon;23;0;113
+Accordion;Harmonica;22;0;112
+Accordion;Musette Accordion;21;0;112
+Accordion;Traditional Accordion;21;0;113
+Bass;Acoustic Bass;32;0;112
+Bass;Dance Bass;39;0;113
+Bass;Finger Bass;33;0;112
+Bass;Fretless Bass;35;0;112
+Bass;Hi-Q Bass;38;0;113
+Bass;Pick Bass;34;0;112
+Bass;Slap Bass;36;0;112
+Bass;Synth Bass;38;0;112
+Brass;Big Band Brass;61;0;113
+Brass;Brass Section;61;0;112
+Brass;Jump Brass;62;0;113
+Brass;Mellow Horns;61;0;119
+Brass;Synth Brass;62;0;112
+Brass;Techno Brass;62;0;114
+Choir;Air Choir;54;0;112
+Choir;Choir;52;0;112
+Choir;Vocal Ensemble;52;0;113
+Choir;Vox Humana;53;0;112
+Drum Kits;Analog Kit;25;127;0
+Drum Kits;Brush Kit;40;127;0
+Drum Kits;Dance Kit;27;127;0
+Drum Kits;Electronic Kit;24;127;0
+Drum Kits;Jazz Kit;32;127;0
+Drum Kits;Rock Kit;16;127;0
+Drum Kits;Room Kit;8;127;0
+Drum Kits;SFX Kit 1;0;126;0
+Drum Kits;SFX Kit 2;1;126;0
+Drum Kits;Standard Kit 1;0;127;0
+Drum Kits;Standard Kit 2;1;127;0
+Drum Kits;Symphony Kit;48;127;0
+E-Piano;Clavi;7;0;112
+E-Piano;DX Modern Electrc Piano;5;0;112
+E-Piano;Funky Electric Piano;4;0;112
+E-Piano;Galaxy EP;4;0;114
+E-Piano;Hyper Tines;5;0;113
+E-Piano;Venus Electric Piano;5;0;114
+Flute;Flute;73;0;112
+Flute;Ocarina;79;0;112
+Flute;Pan Flute;75;0;112
+Flute;Piccolo;72;0;112
+Flute;Recorder;74;0;112
+Guitar;12 Strings Guitar;25;0;113
+Guitar;60's Clean Guitar;27;0;117
+Guitar;Classical Guitar;24;0;112
+Guitar;Clean Guitar;27;0;112
+Guitar;Distortion Guitar;30;0;112
+Guitar;Folk Guitar;25;0;112
+Guitar;Jazz Guitar;26;0;112
+Guitar;Muted Guitar;28;0;112
+Guitar;Octave Guitar;26;0;113
+Guitar;Overdriven Guitar;29;0;112
+Organ;16'+2' Organ;16;0;118
+Organ;16'+4' Organ;16;0;119
+Organ;Bright Organ;16;0;116
+Organ;Chapel Organ;19;0;113
+Organ;Church Organ;19;0;112
+Organ;Click Organ;17;0;112
+Organ;Jazz Organ 1;16;0;112
+Organ;Jazz Organ 2;16;0;113
+Organ;Purple Organ;18;0;114
+Organ;Reed Organ;20;0;112
+Organ;Rock Organ;18;0;112
+Organ;Theater Organ;16;0;114
+Percussion;Celesta;8;0;112
+Percussion;Marimba;12;0;112
+Percussion;Music Box;10;0;112
+Percussion;Steel Drums;114;0;112
+Percussion;Timpani;47;0;112
+Percussion;Tubular Bells;14;0;112
+Percussion;Vibraphone;11;0;112
+Percussion;Xylophone;13;0;112
+Piano;Bright Piano;1;0;112
+Piano;CP 80;2;0;113
+Piano;Grand Piano;0;0;112
+Piano;Harpischord;6;0;112
+Piano;Honky-tonk Piano;3;0;112
+Piano;MIDI Grand Piano;2;0;112
+Piano XG;Bright Piano;1;0;0
+Piano XG;Bright Piano KSP;1;0;1
+Piano XG;Chorus Electric Piano 1;4;0;32
+Piano XG;Chorus Electric Piano 2;5;0;32
+Piano XG;Clavi;7;0;0
+Piano XG;Clavi KSP;7;0;1
+Piano XG;Detuned CP80;2;0;32
+Piano XG;Dream;0;0;41
+Piano XG;DX + Analog Electric Piano;5;0;41
+Piano XG;Electric Grand Piano;2;0;0
+Piano XG;Electric Grand Piano KSP;2;0;1
+Piano XG;Electric Piano 1;4;0;0
+Piano XG;Electric Piano 1 KSP;4;0;1
+Piano XG;Electric Piano 2;5;0;0
+Piano XG;Electric Piano 2 KSP;5;0;1
+Piano XG;Grand Piano;0;0;0
+Piano XG;Grand Piano KSP;0;0;1
+Piano XG;Harpischord;6;0;0
+Piano XG;Harpischord 3;6;0;35
+Piano XG;Harpischord KSP;6;0;1
+Piano XG;Honky-tonk Piano;3;0;0
+Piano XG;Honky-tonk Piano KSP;3;0;1
+Piano XG;Piano Strings;0;0;40
+Saxophone;Alto Saxophone;65;0;112
+Saxophone;Baritone Saxophone;67;0;112
+Saxophone;Bassoon;70;0;112
+Saxophone;Breathy Tenor;66;0;114
+Saxophone;Clarinet;71;0;112
+Saxophone;English Horn;69;0;112
+Saxophone;Oboe;68;0;112
+Saxophone;Soprano Saxophone;64;0;112
+Saxophone;Tenor Saxophone;66;0;112
+Strings;Banjo;105;0;112
+Strings;Cello;42;0;112
+Strings;Chamber Strings;49;0;112
+Strings;Contrabass;43;0;112
+Strings;Harp;46;0;112
+Strings;Orchestra Hit;55;0;112
+Strings;Pizzicato Strings;45;0;112
+Strings;Slow Strings;49;0;113
+Strings;String Ensemble;48;0;112
+Strings;Synth Strings;50;0;112
+Strings;Tremolo Strings;44;0;112
+Strings;Violin;40;0;112
+Synth Lead;Analogon;81;0;115
+Synth Lead;Brightness;100;0;112
+Synth Lead;Fargo;81;0;119
+Synth Lead;Sawtooth Lead;81;0;112
+Synth Lead;Square Lead;80;0;112
+Synth Lead;Star Dust;98;0;112
+Synth Lead;Voice Lead;85;0;112
+Synth Pad;Bell Pad;100;0;113
+Synth Pad;Dark Moon;89;0;113
+Synth Pad;Equinox;94;0;112
+Synth Pad;Fantasia;88;0;112
+Synth Pad;Xenon Pad;91;0;112
+Trumpet;French Horn;60;0;112
+Trumpet;Muted Trumpet;59;0;112
+Trumpet;Tromboe;57;0;112
+Trumpet;Tromboe Section;57;0;113
+Trumpet;Trumpet;56;0;112
+Trumpet;Tuba;58;0;112

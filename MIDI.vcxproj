@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="..\DebugSettings.props" />
+    <Import Project="..\CommonSettings.props" />
+    <Import Project="..\Common32Settings.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="..\ReleaseSettings.props" />
+    <Import Project="..\CommonSettings.props" />
+    <Import Project="..\Common32Settings.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="..\ReleaseSettings.props" />
+    <Import Project="..\CommonSettings.props" />
+    <Import Project="..\Common64Settings.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="..\DebugSettings.props" />
+    <Import Project="..\CommonSettings.props" />
+    <Import Project="..\Common64Settings.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>
+    </LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile />
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Link>
+      <AdditionalDependencies>Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+    <ClCompile />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Tools\audio.cpp" />
+    <ClCompile Include="Tools\DrumVoices.cpp" />
+    <ClCompile Include="Tools\InstrumentWindow.cpp" />
+    <ClCompile Include="Tools\MetronomWindow.cpp" />
+    <ClCompile Include="Tools\midi.gui.cpp" />
+    <ClCompile Include="Tools\midiApplication.cpp" />
+    <ClCompile Include="Tools\MidiChannelsWindow.cpp" />
+    <ClCompile Include="Tools\MidiChannelVolume.cpp" />
+    <ClCompile Include="Tools\MIDIdevices.cpp" />
+    <ClCompile Include="Tools\MIDIdrumWindow.cpp" />
+    <ClCompile Include="Tools\MIDIEditorWindow.cpp" />
+    <ClCompile Include="Tools\midifile.cpp" />
+    <ClCompile Include="Tools\MidiFilterWindow.cpp" />
+    <ClCompile Include="Tools\MIDIloopEditor.cpp" />
+    <ClCompile Include="Tools\MidiPatternStereo.cpp" />
+    <ClCompile Include="Tools\MidiPatternVolume.cpp" />
+    <ClCompile Include="Tools\MIDIrecorderWindow.cpp" />
+    <ClCompile Include="Tools\MidiSwapChannels.cpp" />
+    <ClCompile Include="Tools\MIDIsynthesizerWindow.cpp" />
+    <ClCompile Include="Tools\PianoPainter.cpp" />
+    <ClCompile Include="Tools\PlayerWindow.cpp" />
+    <ClCompile Include="Tools\ToolBarWindow.cpp" />
+    <ClCompile Include="Tools\Voices.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Synth\manipulator.h" />
+    <ClInclude Include="Synth\midi.h" />
+    <ClInclude Include="Synth\oscilator.h" />
+    <ClInclude Include="Synth\synthesizer.h" />
+    <ClInclude Include="Tools\audio.h" />
+    <ClInclude Include="Tools\controls.h" />
+    <ClInclude Include="Tools\DrumVoices.h" />
+    <ClInclude Include="Tools\InstrumentWindow.h" />
+    <ClInclude Include="Tools\MetronomWindow.h" />
+    <ClInclude Include="Tools\midi.gui.h" />
+    <ClInclude Include="Tools\midiApplication.h" />
+    <ClInclude Include="Tools\MidiChannelsWindow.h" />
+    <ClInclude Include="Tools\MidiChannelVolume.h" />
+    <ClInclude Include="Tools\MIDIdevices.h" />
+    <ClInclude Include="Tools\MIDIdrumWindow.h" />
+    <ClInclude Include="Tools\MIDIEditorWindow.h" />
+    <ClInclude Include="Tools\midifile.h" />
+    <ClInclude Include="Tools\MidiFilterWindow.h" />
+    <ClInclude Include="Tools\MIDIloopEditor.h" />
+    <ClInclude Include="Tools\MidiPatternStereo.h" />
+    <ClInclude Include="Tools\MidiPatternVolume.h" />
+    <ClInclude Include="Tools\MIDIrecorderWindow.h" />
+    <ClInclude Include="Tools\MidiSwapChannels.h" />
+    <ClInclude Include="Tools\MIDIsynthesizerWindow.h" />
+    <ClInclude Include="Tools\midi_rc.h" />
+    <ClInclude Include="Tools\PianoPainter.h" />
+    <ClInclude Include="Tools\PlayerWindow.h" />
+    <ClInclude Include="Tools\statusWindow.h" />
+    <ClInclude Include="Tools\ToolBarWindow.h" />
+    <ClInclude Include="Tools\Voices.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Tools\drums.ico" />
+    <None Include="Tools\eighth.bmp" />
+    <None Include="Tools\full.bmp" />
+    <None Include="Tools\half.bmp" />
+    <None Include="Tools\loop.ico" />
+    <None Include="Tools\midi.ico" />
+    <None Include="Tools\quarter.bmp" />
+    <None Include="Tools\settings.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Tools\midi.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

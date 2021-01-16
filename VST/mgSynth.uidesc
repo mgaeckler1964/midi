@@ -1,0 +1,1329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vstgui-ui-description version="1">
+	<fonts>
+	</fonts>
+	<colors>
+		<color name="Background" rgba="#a5a5a5ff"/>
+		<color name="Focus" rgba="#ffffff59"/>
+
+		<color name="TitleColor" rgba="#000000ff"/>
+		<color name="TitleShadow" rgba="#111111ff"/>
+		<color name="SectionColor" rgba="#ffffffff"/>
+		<color name="SectionBackgound" rgba="#000000ff"/>
+		<color name="ValueColor" rgba="#000000ff"/>
+		<color name="ValueBackgound" rgba="#aaaaaaff"/>
+		<color name="LabelColor" rgba="#222222ff"/>
+	</colors>
+	<template 
+		background-color="Background" background-color-draw-style="filled and stroked" 
+		bitmap="background" class="CViewContainer" maxSize="560, 580" minSize="560, 580" 
+		mouse-enabled="true" name="Editor" origin="0, 0" size="560, 580" transparent="false"
+	>
+		<view 
+			back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel" 
+			default-value="0.5" font="~ NormalFontVeryBig" font-antialias="true" 
+			font-color="TitleColor" frame-color="~ BlackCColor" frame-width="1" max-value="1" 
+			min-value="0" mouse-enabled="true" origin="72, 0" round-rect-radius="6" 
+			shadow-color="TitleShadow" size="386, 45" style-3D-in="false" 
+			style-3D-out="false" style-no-draw="false" style-no-frame="false" 
+			style-no-text="false" style-round-rect="false" style-shadow-text="true" 
+			text-alignment="center" text-inset="0, 0" title="MG Analog Synthesizer V1 - ß1" 
+			transparent="true" value-precision="2" wheel-inc-value="0.1"
+		/>
+		<!--
+			Global
+		-->
+		<view
+			background-color="~ BlackCColor" background-color-draw-style="filled and stroked"
+			bitmap="groupframe" class="CViewContainer" mouse-enabled="true"
+			origin="5, 40" size="520, 125" transparent="true"
+		>
+			<view
+				autosize="left right top " back-color="SectionBackgound" background-offset="0, 0"
+				class="CTextLabel" default-value="0.5" font="~ NormalFont"
+				font-antialias="true" font-color="SectionColor" frame-color="~ BlackCColor"
+				frame-width="1" max-value="1" min-value="0" mouse-enabled="true"
+				origin="0, 0" round-rect-radius="6" shadow-color="~ BlackCColor"
+				size="520, 25" style-3D-in="false" style-3D-out="false" style-no-draw="false"
+				style-no-frame="false" style-no-text="false" style-round-rect="false"
+				style-shadow-text="true" text-alignment="center" text-inset="0, 0"
+				title="Global" transparent="false" value-precision="2"
+				wheel-inc-value="0.1"
+			/>
+			<!-- Synth Selector -->
+			<view
+				background-color="~ TransparentCColor"
+				background-color-draw-style="filled and stroked"
+				class="CViewContainer" mouse-enabled="true" origin="5, 30" size="250, 90"
+				transparent="true"
+			>
+				<!-- Synth A -->
+				<view
+					back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel"
+					default-value="0.5" font="~ NormalFontSmaller" font-antialias="true"
+					font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1"
+					max-value="1" min-value="0" mouse-enabled="true" origin="5, 5"
+					round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+					style-3D-in="false" style-3D-out="false" style-no-draw="false"
+					style-no-frame="false" style-no-text="false" style-round-rect="false"
+					style-shadow-text="false" text-alignment="center" text-inset="0, 0"
+					title="Synth A" transparent="true" value-precision="2"
+					wheel-inc-value="0.1"
+				/>
+				<view
+					background-offset="0, 0"  bitmap="onoff" control-tag="spiSynthEnabled1"
+					class="COnOffButton" default-value="0" origin="20, 25" max-value="1"
+					min-value="0" size="15, 15" tooltip="Enable Synth A"
+					wheel-inc-value="0.1"
+				/>
+				<view
+					background-offset="0, 0"  bitmap="radio" control-tag="esSynthA"
+					class="COnOffButton" default-value="0" origin="20, 50" max-value="1"
+					min-value="0" size="15, 15" tooltip="Edit Synth A"
+					wheel-inc-value="0.1"
+				/>
+				<!-- Synth B -->
+				<view
+					back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel"
+					default-value="0.5" font="~ NormalFontSmaller" font-antialias="true"
+					font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1"
+					max-value="1" min-value="0" mouse-enabled="true" origin="55, 5"
+					round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+					style-3D-in="false" style-3D-out="false" style-no-draw="false"
+					style-no-frame="false" style-no-text="false" style-round-rect="false"
+					style-shadow-text="false" text-alignment="center" text-inset="0, 0"
+					title="Synth B" transparent="true" value-precision="2"
+					wheel-inc-value="0.1"
+				/>
+				<view
+					background-offset="0, 0"  bitmap="onoff" control-tag="spiSynthEnabled2"
+					class="COnOffButton" default-value="0" origin="70, 25" max-value="1"
+					min-value="0" size="15, 15" tooltip="Enable Synth B"
+					wheel-inc-value="0.1"
+				/>
+				<view
+					background-offset="0, 0"  bitmap="radio" control-tag="esSynthB"
+					class="COnOffButton" default-value="0" origin="70, 50" max-value="1"
+					min-value="0" size="15, 15" tooltip="Edit Synth B"
+					wheel-inc-value="0.1"
+				/>
+				<!-- Synth C -->
+				<view
+					back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel"
+					default-value="0.5" font="~ NormalFontSmaller" font-antialias="true"
+					font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1"
+					max-value="1" min-value="0" mouse-enabled="true" origin="105, 5"
+					round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+					style-3D-in="false" style-3D-out="false" style-no-draw="false"
+					style-no-frame="false" style-no-text="false" style-round-rect="false"
+					style-shadow-text="false" text-alignment="center" text-inset="0, 0"
+					title="Synth C" transparent="true" value-precision="2"
+					wheel-inc-value="0.1"
+				/>
+				<view
+					background-offset="0, 0"  bitmap="onoff" control-tag="spiSynthEnabled3"
+					class="COnOffButton" default-value="0" origin="120, 25" max-value="1"
+					min-value="0" size="15, 15" tooltip="Enable Synth C"
+					wheel-inc-value="0.1"
+				/>
+				<view
+					background-offset="0, 0"  bitmap="radio" control-tag="esSynthC"
+					class="COnOffButton" default-value="0" origin="120, 50" max-value="1"
+					min-value="0" size="15, 15" tooltip="Edit Synth C"
+					wheel-inc-value="0.1"
+				/>
+				<!-- Synth D -->
+				<view
+					back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel"
+					default-value="0.5" font="~ NormalFontSmaller" font-antialias="true"
+					font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1"
+					max-value="1" min-value="0" mouse-enabled="true" origin="155, 5"
+					round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+					style-3D-in="false" style-3D-out="false" style-no-draw="false"
+					style-no-frame="false" style-no-text="false" style-round-rect="false"
+					style-shadow-text="false" text-alignment="center" text-inset="0, 0"
+					title="Synth D" transparent="true" value-precision="2"
+					wheel-inc-value="0.1"
+				/>
+				<view
+					background-offset="0, 0"  bitmap="onoff" control-tag="spiSynthEnabled4"
+					class="COnOffButton" default-value="0" origin="170, 25" max-value="1"
+					min-value="0" size="15, 15" tooltip="Enable Synth D"
+					wheel-inc-value="0.1"
+				/>
+				<view
+					background-offset="0, 0"  bitmap="radio" control-tag="esSynthD"
+					class="COnOffButton" default-value="0" origin="170, 50" max-value="1"
+					min-value="0" size="15, 15" tooltip="Edit Synth D"
+					wheel-inc-value="0.1"
+				/>
+			</view>
+			<!-- Volume / Presence -->
+			<view
+				background-color="~ TransparentCColor"
+				background-color-draw-style="filled and stroked"
+				class="CViewContainer" mouse-enabled="true" origin="260, 30" size="250, 90"
+				transparent="true"
+			>
+				<!-- spiMasterVolume -->
+				<view
+					back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel"
+					default-value="0.5" font="~ NormalFontSmaller" font-antialias="true"
+					font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1"
+					max-value="1" min-value="0" mouse-enabled="true" origin="5, 5"
+					round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+					style-3D-in="false" style-3D-out="false" style-no-draw="false"
+					style-no-frame="false" style-no-text="false" style-round-rect="false"
+					style-shadow-text="false" text-alignment="center" text-inset="0, 0"
+					title="Master" transparent="true" value-precision="2"
+					wheel-inc-value="0.1"
+				/>
+				<view
+					angle-range="270" angle-start="135" background-offset="0, 0"
+					bitmap="yellowKnob" circle-drawing="false" class="CAnimKnob"
+					control-tag="spiMasterVolume" corona-color="~ WhiteCColor"
+					corona-dash-dot="false" corona-drawing="false" corona-from-center="false"
+					corona-inset="0" corona-inverted="false" corona-outline="false"
+					default-value="0.8" handle-color="~ WhiteCColor" handle-line-width="1"
+					handle-shadow-color="~ GreyCColor" height-of-one-image="42" max-value="1"
+					min-value="0" mouse-enabled="true" origin="5, 20" size="42, 42"
+					sub-pixmaps="91" tooltip="Master Volume (%)" transparent="false" value-inset="0"
+					wheel-inc-value="0.1" zoom-factor="1.5"
+				/>
+				<view
+					back-color="ValueBackgound" background-offset="0, 0" class="CTextEdit"
+					control-tag="spiMasterVolume" default-value="0.8"
+					font="~ NormalFontSmaller" font-antialias="true" font-color="ValueColor"
+					frame-color="~ BlackCColor" frame-width="1" immediate-text-change="false"
+					max-value="1" min-value="0" mouse-enabled="true" origin="5, 60"
+					round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+					style-3D-in="false" style-3D-out="false" style-no-draw="false"
+					style-no-frame="false" style-no-text="false" style-round-rect="false"
+					style-shadow-text="false" text-alignment="center" text-inset="0, 0"
+					title="100.0" tooltip="Master Volume (%)" transparent="true"
+					value-precision="2" wheel-inc-value="0.1"
+				/>
+				<!-- spiMasterPresence -->
+				<view
+					back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel"
+					default-value="0.5" font="~ NormalFontVerySmall" font-antialias="true"
+					font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1"
+					max-value="1" min-value="0" mouse-enabled="true" origin="55, 5"
+					round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+					style-3D-in="false" style-3D-out="false" style-no-draw="false"
+					style-no-frame="false" style-no-text="false" style-round-rect="false"
+					style-shadow-text="false" text-alignment="center" text-inset="0, 0"
+					title="Presence" transparent="true" value-precision="2"
+					wheel-inc-value="0.1"
+				/>
+				<view
+					angle-range="270" angle-start="135" background-offset="0, 0"
+					bitmap="yellowKnob" circle-drawing="false" class="CAnimKnob"
+					control-tag="spiMasterPresence" corona-color="~ WhiteCColor"
+					corona-dash-dot="false" corona-drawing="false" corona-from-center="false"
+					corona-inset="0" corona-inverted="false" corona-outline="false"
+					default-value="0.5" handle-color="~ WhiteCColor" handle-line-width="1"
+					handle-shadow-color="~ GreyCColor" height-of-one-image="42" max-value="1"
+					min-value="0" mouse-enabled="true" origin="55, 20" size="42, 42"
+					sub-pixmaps="91" tooltip="Presence" transparent="false"
+					value-inset="0" wheel-inc-value="0.1" zoom-factor="1.5"
+				/>
+				<view
+					back-color="ValueBackgound" background-offset="0, 0" class="CTextEdit"
+					control-tag="spiMasterPresence" default-value="0.5" 
+					font="~ NormalFontVerySmall" font-antialias="true" 
+					font-color="ValueColor" frame-color="~ BlackCColor" frame-width="1" 
+					immediate-text-change="false" max-value="1" min-value="0"
+					mouse-enabled="true" origin="55, 60" round-rect-radius="6"
+					shadow-color="~ RedCColor" size="42, 15" style-3D-in="false"
+					style-3D-out="false" style-no-draw="false" style-no-frame="false"
+					style-no-text="false" style-round-rect="false" style-shadow-text="false"
+					text-alignment="center" text-inset="0, 0" title="0"
+					tooltip="Presence" transparent="true" value-precision="2"
+					wheel-inc-value="0.1"
+				/>
+				<!-- spiActiveVoices -->
+				<view
+					back-color="ValueBackgound" background-offset="0, 0"	class="CTextEdit" 
+					control-tag="spiActiveVoices" default-value="0.5"
+					font="~ NormalFontSmaller" font-antialias="true"
+					font-color="ValueColor" frame-color="~ BlackCColor" frame-width="1" 
+					immediate-text-change="false" max-value="1" min-value="0" 
+					mouse-enabled="false" origin="230, 5" round-rect-radius="6" 
+					shadow-color="~ RedCColor" size="30, 15" style-3D-in="false" 
+					style-3D-out="false" style-no-draw="false" style-no-frame="false" 
+					style-no-text="false" style-round-rect="false" style-shadow-text="false" 
+					text-alignment="left" text-inset="0, 0" title="0" 
+					tooltip="Active Voices" transparent="true" value-precision="2" 
+					wheel-inc-value="0.1"
+				/>
+				<!-- spiMaxVoices -->
+				<view
+					back-color="ValueBackgound" background-offset="0, 0"
+					class="CTextEdit" control-tag="spiMaxVoices" default-value="0"
+					font="~ NormalFontSmaller" font-antialias="true"
+					font-color="ValueColor" frame-color="~ BlackCColor"
+					frame-width="1" immediate-text-change="false" max-value="64"
+					min-value="0" mouse-enabled="false" origin="230, 60"
+					round-rect-radius="6" shadow-color="~ RedCColor" size="30, 15"
+					style-3D-in="false" style-3D-out="false" style-no-draw="false"
+					style-no-frame="false" style-no-text="false" style-round-rect="false"
+					style-shadow-text="false" text-alignment="left" text-inset="0, 0"
+					title="0" tooltip="Max Voices" transparent="true"
+					value-precision="2" wheel-inc-value="0.1"
+				/>
+			</view>
+		</view>
+		<!--
+			GENERATORS
+		-->
+		<view 
+			background-color="~ BlackCColor" background-color-draw-style="filled and stroked" 
+			bitmap="groupframe" class="CViewContainer" mouse-enabled="true" 
+			origin="5, 175" size="520, 125" transparent="true"
+		>
+			<view 
+				autosize="left right top " back-color="SectionBackgound" background-offset="0, 0" 
+				class="CTextLabel" default-value="0.5" font="~ NormalFont" 
+				font-antialias="true" font-color="SectionColor" frame-color="~ BlackCColor" 
+				frame-width="1" max-value="1" min-value="0" mouse-enabled="true" 
+				origin="0, 0" round-rect-radius="6" shadow-color="~ BlackCColor" 
+				size="520, 25" style-3D-in="false" style-3D-out="false" style-no-draw="false" 
+				style-no-frame="false" style-no-text="false" style-round-rect="false" 
+				style-shadow-text="true" text-alignment="center" text-inset="0, 0" 
+				title="Generators" transparent="false" value-precision="2" 
+				wheel-inc-value="0.1"
+			/>
+			<view 
+				background-color="~ TransparentCColor" 
+				background-color-draw-style="filled and stroked" 
+				class="CViewContainer" mouse-enabled="true" origin="5, 30" size="510, 90" 
+				transparent="true"
+			>
+				<!-- spiSynthVolume -->
+				<view 
+					back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel" 
+					default-value="0.5" font="~ NormalFontSmaller" font-antialias="true" 
+					font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1" 
+					max-value="1" min-value="0" mouse-enabled="true" origin="5, 5" 
+					round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15" 
+					style-3D-in="false" style-3D-out="false" style-no-draw="false" 
+					style-no-frame="false" style-no-text="false" style-round-rect="false" 
+					style-shadow-text="false" text-alignment="center" text-inset="0, 0" 
+					title="Volume" transparent="true" value-precision="2" 
+					wheel-inc-value="0.1"
+				/>
+				<view 
+					angle-range="270" angle-start="135" background-offset="0, 0" 
+					bitmap="orangeKnob" circle-drawing="false" class="CAnimKnob" 
+					control-tag="spiSynthVolume" corona-color="~ WhiteCColor" 
+					corona-dash-dot="false" corona-drawing="false" corona-from-center="false" 
+					corona-inset="0" corona-inverted="false" corona-outline="false" 
+					default-value="0.8" handle-color="~ WhiteCColor" handle-line-width="1" 
+					handle-shadow-color="~ GreyCColor" height-of-one-image="42" max-value="1" 
+					min-value="0" mouse-enabled="true" origin="5, 20" size="42, 42" 
+					sub-pixmaps="91" tooltip="Volume (%)" transparent="false" value-inset="0" 
+					wheel-inc-value="0.1" zoom-factor="1.5"
+				/>
+				<view 
+					back-color="ValueBackgound" background-offset="0, 0" class="CTextEdit" 
+					control-tag="spiSynthVolume" default-value="0.8" 
+					font="~ NormalFontSmaller" font-antialias="true" font-color="ValueColor" 
+					frame-color="~ BlackCColor" frame-width="1" immediate-text-change="false" 
+					max-value="1" min-value="0" mouse-enabled="true" origin="5, 60" 
+					round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15" 
+					style-3D-in="false" style-3D-out="false" style-no-draw="false" 
+					style-no-frame="false" style-no-text="false" style-round-rect="false" 
+					style-shadow-text="false" text-alignment="center" text-inset="0, 0" 
+					title="100.0" tooltip="Volume (%)" transparent="true" 
+					value-precision="2" wheel-inc-value="0.1"
+				/>
+				<!-- spiSynthPan -->
+				<view 
+					back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel" 
+					default-value="0.5" font="~ NormalFontVerySmall" font-antialias="true" 
+					font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1" 
+					max-value="1" min-value="0" mouse-enabled="true" origin="55, 5" 
+					round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15" 
+					style-3D-in="false" style-3D-out="false" style-no-draw="false" 
+					style-no-frame="false" style-no-text="false" style-round-rect="false" 
+					style-shadow-text="false" text-alignment="center" text-inset="0, 0" 
+					title="Paning" transparent="true" value-precision="2" 
+					wheel-inc-value="0.1"
+				/>
+				<view 
+					angle-range="270" angle-start="135" background-offset="0, 0" 
+					bitmap="silverKnob" circle-drawing="false" class="CAnimKnob" 
+					control-tag="spiSynthPan" corona-color="~ WhiteCColor" 
+					corona-dash-dot="false" corona-drawing="false" corona-from-center="false" 
+					corona-inset="0" corona-inverted="false" corona-outline="false" 
+					default-value="0.5" handle-color="~ WhiteCColor" handle-line-width="1" 
+					handle-shadow-color="~ GreyCColor" height-of-one-image="42" max-value="1" 
+					min-value="0" mouse-enabled="true" origin="55, 20" size="42, 42" 
+					sub-pixmaps="91" tooltip="Paning" transparent="false" 
+					value-inset="0" wheel-inc-value="0.1" zoom-factor="1.5"
+				/>
+				<view 
+					back-color="ValueBackgound" background-offset="0, 0" class="CTextEdit" 
+					control-tag="spiSynthPan" default-value="0.5" font="~ NormalFontVerySmall" 
+					font-antialias="true" font-color="ValueColor" frame-color="~ BlackCColor" 
+					frame-width="1" immediate-text-change="false" max-value="1" min-value="0" 
+					mouse-enabled="true" origin="55, 60" round-rect-radius="6" 
+					shadow-color="~ RedCColor" size="42, 15" style-3D-in="false" 
+					style-3D-out="false" style-no-draw="false" style-no-frame="false" 
+					style-no-text="false" style-round-rect="false" style-shadow-text="false" 
+					text-alignment="center" text-inset="0, 0" title="0" 
+					tooltip="Paning" transparent="true" value-precision="2" 
+					wheel-inc-value="0.1"
+				/>
+				<!-- spiSynthPitch -->
+				<view
+					back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel"
+					default-value="0.5" font="~ NormalFontVerySmall" font-antialias="true"
+					font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1"
+					max-value="1" min-value="0" mouse-enabled="true" origin="105, 5"
+					round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+					style-3D-in="false" style-3D-out="false" style-no-draw="false"
+					style-no-frame="false" style-no-text="false" style-round-rect="false"
+					style-shadow-text="false" text-alignment="center" text-inset="0, 0"
+					title="Pitch" transparent="true" value-precision="2"
+					wheel-inc-value="0.1"
+				/>
+				<view
+					angle-range="270" angle-start="135" background-offset="0, 0"
+					bitmap="silverKnob" circle-drawing="false" class="CAnimKnob"
+					control-tag="spiSynthPitch" corona-color="~ WhiteCColor"
+					corona-dash-dot="false" corona-drawing="false" corona-from-center="false"
+					corona-inset="0" corona-inverted="false" corona-outline="false"
+					default-value="0.5" handle-color="~ WhiteCColor" handle-line-width="1"
+					handle-shadow-color="~ GreyCColor" height-of-one-image="42" max-value="1"
+					min-value="0" mouse-enabled="true" origin="105, 20" size="42, 42"
+					sub-pixmaps="91" tooltip="Pitch" transparent="false"
+					value-inset="0" wheel-inc-value="0.1" zoom-factor="1.5"
+				/>
+				<view
+					back-color="ValueBackgound" background-offset="0, 0" class="CTextEdit"
+					control-tag="spiSynthPitch" default-value="0.5" font="~ NormalFontVerySmall"
+					font-antialias="true" font-color="ValueColor" frame-color="~ BlackCColor"
+					frame-width="1" immediate-text-change="false" max-value="1" min-value="0"
+					mouse-enabled="true" origin="105, 60" round-rect-radius="6"
+					shadow-color="~ RedCColor" size="42, 15" style-3D-in="false"
+					style-3D-out="false" style-no-draw="false" style-no-frame="false"
+					style-no-text="false" style-round-rect="false" style-shadow-text="false"
+					text-alignment="center" text-inset="0, 0" title="0"
+					tooltip="Pitch" transparent="true" value-precision="2"
+					wheel-inc-value="0.1"
+				/>
+				<!-- spiSynthPhase -->
+				<view
+					back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel"
+					default-value="0.5" font="~ NormalFontVerySmall" font-antialias="true"
+					font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1"
+					max-value="1" min-value="0" mouse-enabled="true" origin="155, 5"
+					round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+					style-3D-in="false" style-3D-out="false" style-no-draw="false"
+					style-no-frame="false" style-no-text="false" style-round-rect="false"
+					style-shadow-text="false" text-alignment="center" text-inset="0, 0"
+					title="Phase" transparent="true" value-precision="2"
+					wheel-inc-value="0.1"
+				/>
+				<view
+					angle-range="270" angle-start="135" background-offset="0, 0"
+					bitmap="silverKnob" circle-drawing="false" class="CAnimKnob"
+					control-tag="spiSynthPhase" corona-color="~ WhiteCColor"
+					corona-dash-dot="false" corona-drawing="false" corona-from-center="false"
+					corona-inset="0" corona-inverted="false" corona-outline="false"
+					default-value="0.5" handle-color="~ WhiteCColor" handle-line-width="1"
+					handle-shadow-color="~ GreyCColor" height-of-one-image="42" max-value="1"
+					min-value="0" mouse-enabled="true" origin="155, 20" size="42, 42"
+					sub-pixmaps="91" tooltip="Phase (°)" transparent="false"
+					value-inset="0" wheel-inc-value="0.1" zoom-factor="1.5"
+				/>
+				<view
+					back-color="ValueBackgound" background-offset="0, 0" class="CTextEdit"
+					control-tag="spiSynthPhase" default-value="0.5" font="~ NormalFontVerySmall"
+					font-antialias="true" font-color="ValueColor" frame-color="~ BlackCColor"
+					frame-width="1" immediate-text-change="false" max-value="1" min-value="0"
+					mouse-enabled="true" origin="155, 60" round-rect-radius="6"
+					shadow-color="~ RedCColor" size="42, 15" style-3D-in="false"
+					style-3D-out="false" style-no-draw="false" style-no-frame="false"
+					style-no-text="false" style-round-rect="false" style-shadow-text="false"
+					text-alignment="center" text-inset="0, 0" title="0"
+					tooltip="Phase (°)" transparent="true" value-precision="2"
+					wheel-inc-value="0.1"
+				/>
+
+				<!-- spiSub1Volume -->
+				<view
+					back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel"
+					default-value="0.5" font="~ NormalFontVerySmall" font-antialias="true"
+					font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1"
+					max-value="1" min-value="0" mouse-enabled="true" origin="205, 5"
+					round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+					style-3D-in="false" style-3D-out="false" style-no-draw="false"
+					style-no-frame="false" style-no-text="false" style-round-rect="false"
+					style-shadow-text="false" text-alignment="center" text-inset="0, 0"
+					title="S1 Vol." transparent="true" value-precision="2"
+					wheel-inc-value="0.1"
+				/>
+				<view
+					angle-range="270" angle-start="135" background-offset="0, 0"
+					bitmap="silverKnob" circle-drawing="false" class="CAnimKnob"
+					control-tag="spiSub1Volume" corona-color="~ WhiteCColor"
+					corona-dash-dot="false" corona-drawing="false" corona-from-center="false"
+					corona-inset="0" corona-inverted="false" corona-outline="false"
+					default-value="0.5" handle-color="~ WhiteCColor" handle-line-width="1"
+					handle-shadow-color="~ GreyCColor" height-of-one-image="42" max-value="1"
+					min-value="0" mouse-enabled="true" origin="205, 20" size="42, 42"
+					sub-pixmaps="silverKnob" tooltip="Subosc 1 Volume (%)" transparent="false"
+					value-inset="0" wheel-inc-value="0.1" zoom-factor="1.5"
+				/>
+				<view
+					back-color="ValueBackgound" background-offset="0, 0" class="CTextEdit"
+					control-tag="spiSub1Volume" default-value="0.5" font="~ NormalFontVerySmall"
+					font-antialias="true" font-color="ValueColor" frame-color="~ BlackCColor"
+					frame-width="1" immediate-text-change="false" max-value="1" min-value="0"
+					mouse-enabled="true" origin="205, 60" round-rect-radius="6"
+					shadow-color="~ RedCColor" size="42, 15" style-3D-in="false"
+					style-3D-out="false" style-no-draw="false" style-no-frame="false"
+					style-no-text="false" style-round-rect="false" style-shadow-text="false"
+					text-alignment="center" text-inset="0, 0" title="0"
+					tooltip="Subosc 1 Volume (%)" transparent="true" value-precision="2"
+					wheel-inc-value="0.1"
+				/>
+				<!-- spiSub1Phase -->
+				<view
+					back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel"
+					default-value="0.5" font="~ NormalFontVerySmall" font-antialias="true"
+					font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1"
+					max-value="1" min-value="0" mouse-enabled="true" origin="255, 5"
+					round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+					style-3D-in="false" style-3D-out="false" style-no-draw="false"
+					style-no-frame="false" style-no-text="false" style-round-rect="false"
+					style-shadow-text="false" text-alignment="center" text-inset="0, 0"
+					title="S1 Phase" transparent="true" value-precision="2"
+					wheel-inc-value="0.1"
+				/>
+				<view
+					angle-range="270" angle-start="135" background-offset="0, 0"
+					bitmap="silverKnob" circle-drawing="false" class="CAnimKnob"
+					control-tag="spiSub1Phase" corona-color="~ WhiteCColor"
+					corona-dash-dot="false" corona-drawing="false" corona-from-center="false"
+					corona-inset="0" corona-inverted="false" corona-outline="false"
+					default-value="0.5" handle-color="~ WhiteCColor" handle-line-width="1"
+					handle-shadow-color="~ GreyCColor" height-of-one-image="42" max-value="1"
+					min-value="0" mouse-enabled="true" origin="255, 20" size="42, 42"
+					sub-pixmaps="91" tooltip="Subosc 1 Phase (°)" transparent="false"
+					value-inset="0" wheel-inc-value="0.1" zoom-factor="1.5"
+				/>
+				<view
+					back-color="ValueBackgound" background-offset="0, 0" class="CTextEdit"
+					control-tag="spiSub1Phase" default-value="0.5" font="~ NormalFontVerySmall"
+					font-antialias="true" font-color="ValueColor" frame-color="~ BlackCColor"
+					frame-width="1" immediate-text-change="false" max-value="1" min-value="0"
+					mouse-enabled="true" origin="255, 60" round-rect-radius="6"
+					shadow-color="~ RedCColor" size="42, 15" style-3D-in="false"
+					style-3D-out="false" style-no-draw="false" style-no-frame="false"
+					style-no-text="false" style-round-rect="false" style-shadow-text="false"
+					text-alignment="center" text-inset="0, 0" title="0"
+					tooltip="Subosc 1 Phase (°)" transparent="true" value-precision="2"
+					wheel-inc-value="0.1"
+				/>
+				<!-- spiSub1Pitch -->
+				<view
+					back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel"
+					default-value="0.5" font="~ NormalFontVerySmall" font-antialias="true"
+					font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1"
+					max-value="1" min-value="0" mouse-enabled="true" origin="305, 5"
+					round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+					style-3D-in="false" style-3D-out="false" style-no-draw="false"
+					style-no-frame="false" style-no-text="false" style-round-rect="false"
+					style-shadow-text="false" text-alignment="center" text-inset="0, 0"
+					title="S1 Pitch" transparent="true" value-precision="2"
+					wheel-inc-value="0.1"
+				/>
+				<view
+					angle-range="270" angle-start="135" background-offset="0, 0"
+					bitmap="silverKnob" circle-drawing="false" class="CAnimKnob"
+					control-tag="spiSub1Pitch" corona-color="~ WhiteCColor"
+					corona-dash-dot="false" corona-drawing="false" corona-from-center="false"
+					corona-inset="0" corona-inverted="false" corona-outline="false"
+					default-value="0.5" handle-color="~ WhiteCColor" handle-line-width="1"
+					handle-shadow-color="~ GreyCColor" height-of-one-image="42" max-value="1"
+					min-value="0" mouse-enabled="true" origin="305, 20" size="42, 42"
+					sub-pixmaps="91" tooltip="Subosc 1 Pitch" transparent="false"
+					value-inset="0" wheel-inc-value="0.1" zoom-factor="1.5"
+				/>
+				<view
+					back-color="ValueBackgound" background-offset="0, 0" class="CTextEdit"
+					control-tag="spiSub1Pitch" default-value="0.5" font="~ NormalFontVerySmall"
+					font-antialias="true" font-color="ValueColor" frame-color="~ BlackCColor"
+					frame-width="1" immediate-text-change="false" max-value="1" min-value="0"
+					mouse-enabled="true" origin="305, 60" round-rect-radius="6"
+					shadow-color="~ RedCColor" size="42, 15" style-3D-in="false"
+					style-3D-out="false" style-no-draw="false" style-no-frame="false"
+					style-no-text="false" style-round-rect="false" style-shadow-text="false"
+					text-alignment="center" text-inset="0, 0" title="0"
+					tooltip="Subosc 1 Pitch" transparent="true" value-precision="2"
+					wheel-inc-value="0.1"
+				/>
+
+				<!-- spiSub2Volume -->
+				<view
+					back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel"
+					default-value="0.5" font="~ NormalFontVerySmall" font-antialias="true"
+					font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1"
+					max-value="1" min-value="0" mouse-enabled="true" origin="355, 5"
+					round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+					style-3D-in="false" style-3D-out="false" style-no-draw="false"
+					style-no-frame="false" style-no-text="false" style-round-rect="false"
+					style-shadow-text="false" text-alignment="center" text-inset="0, 0"
+					title="S2 Vol." transparent="true" value-precision="2"
+					wheel-inc-value="0.1"
+				/>
+				<view
+					angle-range="270" angle-start="135" background-offset="0, 0"
+					bitmap="silverKnob" circle-drawing="false" class="CAnimKnob"
+					control-tag="spiSub2Volume" corona-color="~ WhiteCColor"
+					corona-dash-dot="false" corona-drawing="false" corona-from-center="false"
+					corona-inset="0" corona-inverted="false" corona-outline="false"
+					default-value="0.5" handle-color="~ WhiteCColor" handle-line-width="1"
+					handle-shadow-color="~ GreyCColor" height-of-one-image="42" max-value="1"
+					min-value="0" mouse-enabled="true" origin="355, 20" size="42, 42"
+					sub-pixmaps="91" tooltip="Subosc 2 Volume (%)" transparent="false"
+					value-inset="0" wheel-inc-value="0.1" zoom-factor="1.5"
+				/>
+				<view
+					back-color="ValueBackgound" background-offset="0, 0" class="CTextEdit"
+					control-tag="spiSub2Volume" default-value="0.5" font="~ NormalFontVerySmall"
+					font-antialias="true" font-color="ValueColor" frame-color="~ BlackCColor"
+					frame-width="1" immediate-text-change="false" max-value="1" min-value="0"
+					mouse-enabled="true" origin="355, 60" round-rect-radius="6"
+					shadow-color="~ RedCColor" size="42, 15" style-3D-in="false"
+					style-3D-out="false" style-no-draw="false" style-no-frame="false"
+					style-no-text="false" style-round-rect="false" style-shadow-text="false"
+					text-alignment="center" text-inset="0, 0" title="0"
+					tooltip="Subosc 2 Volume (%)" transparent="true" value-precision="2"
+					wheel-inc-value="0.1"
+				/>
+				<!-- spiSub2Phase -->
+				<view
+					back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel"
+					default-value="0.5" font="~ NormalFontVerySmall" font-antialias="true"
+					font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1"
+					max-value="1" min-value="0" mouse-enabled="true" origin="405, 5"
+					round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+					style-3D-in="false" style-3D-out="false" style-no-draw="false"
+					style-no-frame="false" style-no-text="false" style-round-rect="false"
+					style-shadow-text="false" text-alignment="center" text-inset="0, 0"
+					title="S2 Phase" transparent="true" value-precision="2"
+					wheel-inc-value="0.1"
+				/>
+				<view
+					angle-range="270" angle-start="135" background-offset="0, 0"
+					bitmap="silverKnob" circle-drawing="false" class="CAnimKnob"
+					control-tag="spiSub2Phase" corona-color="~ WhiteCColor"
+					corona-dash-dot="false" corona-drawing="false" corona-from-center="false"
+					corona-inset="0" corona-inverted="false" corona-outline="false"
+					default-value="0.5" handle-color="~ WhiteCColor" handle-line-width="1"
+					handle-shadow-color="~ GreyCColor" height-of-one-image="42" max-value="1"
+					min-value="0" mouse-enabled="true" origin="405, 20" size="42, 42"
+					sub-pixmaps="silverKnob" tooltip="Subosc 2 Phase (°)" transparent="false"
+					value-inset="0" wheel-inc-value="0.1" zoom-factor="1.5"
+				/>
+				<view
+					back-color="ValueBackgound" background-offset="0, 0" class="CTextEdit"
+					control-tag="spiSub2Phase" default-value="0.5" font="~ NormalFontVerySmall"
+					font-antialias="true" font-color="ValueColor" frame-color="~ BlackCColor"
+					frame-width="1" immediate-text-change="false" max-value="1" min-value="0"
+					mouse-enabled="true" origin="405, 60" round-rect-radius="6"
+					shadow-color="~ RedCColor" size="42, 15" style-3D-in="false"
+					style-3D-out="false" style-no-draw="false" style-no-frame="false"
+					style-no-text="false" style-round-rect="false" style-shadow-text="false"
+					text-alignment="center" text-inset="0, 0" title="0"
+					tooltip="Subosc 2 Phase (°)" transparent="true" value-precision="2"
+					wheel-inc-value="0.1"
+				/>
+				<!-- spiSub2Pitch -->
+				<view
+					back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel"
+					default-value="0.5" font="~ NormalFontVerySmall" font-antialias="true"
+					font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1"
+					max-value="1" min-value="0" mouse-enabled="true" origin="455, 5"
+					round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+					style-3D-in="false" style-3D-out="false" style-no-draw="false"
+					style-no-frame="false" style-no-text="false" style-round-rect="false"
+					style-shadow-text="false" text-alignment="center" text-inset="0, 0"
+					title="S2 Pitch" transparent="true" value-precision="2"
+					wheel-inc-value="0.1"
+				/>
+				<view
+					angle-range="270" angle-start="135" background-offset="0, 0"
+					bitmap="silverKnob" circle-drawing="false" class="CAnimKnob"
+					control-tag="spiSub2Pitch" corona-color="~ WhiteCColor"
+					corona-dash-dot="false" corona-drawing="false" corona-from-center="false"
+					corona-inset="0" corona-inverted="false" corona-outline="false"
+					default-value="0.5" handle-color="~ WhiteCColor" handle-line-width="1"
+					handle-shadow-color="~ GreyCColor" height-of-one-image="42" max-value="1"
+					min-value="0" mouse-enabled="true" origin="455, 20" size="42, 42"
+					sub-pixmaps="91" tooltip="Subosc 2 Pitch" transparent="false"
+					value-inset="0" wheel-inc-value="0.1" zoom-factor="1.5"
+				/>
+				<view
+					back-color="ValueBackgound" background-offset="0, 0" class="CTextEdit"
+					control-tag="spiSub2Pitch" default-value="0.5" font="~ NormalFontVerySmall"
+					font-antialias="true" font-color="ValueColor" frame-color="~ BlackCColor"
+					frame-width="1" immediate-text-change="false" max-value="1" min-value="0"
+					mouse-enabled="true" origin="455, 60" round-rect-radius="6"
+					shadow-color="~ RedCColor" size="42, 15" style-3D-in="false"
+					style-3D-out="false" style-no-draw="false" style-no-frame="false"
+					style-no-text="false" style-round-rect="false" style-shadow-text="false"
+					text-alignment="center" text-inset="0, 0" title="0"
+					tooltip="Subosc 2 Pitch" transparent="true" value-precision="2"
+					wheel-inc-value="0.1"
+				/>
+			</view>
+		</view>
+		<!--
+			LFOs
+		-->
+		<view 
+			background-color="~ BlackCColor" background-color-draw-style="filled and stroked" 
+			bitmap="groupframe" class="CViewContainer" mouse-enabled="true" origin="10, 310" 
+			size="185, 125" transparent="false"
+		>
+			<view 
+				autosize="left right top " back-color="SectionBackgound" background-offset="0, 0" 
+				class="CTextLabel" default-value="0.5" font="~ NormalFont" 
+				font-antialias="true" font-color="SectionColor" frame-color="~ BlackCColor" 
+				frame-width="1" max-value="1" min-value="0" mouse-enabled="true" 
+				origin="0, 0" round-rect-radius="6" shadow-color="~ BlackCColor" 
+				size="185, 25" style-3D-in="false" style-3D-out="false" style-no-draw="false" 
+				style-no-frame="false" style-no-text="false" style-round-rect="false" 
+				style-shadow-text="true" text-alignment="center" text-inset="0, 0" 
+				title="AM LFO" transparent="false" value-precision="2" wheel-inc-value="0.1"
+			/>
+			<!-- spiAMfrequency -->
+			<view 
+				back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel" 
+				default-value="0.5" font="~ NormalFontSmaller" font-antialias="true" 
+				font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1" 
+				max-value="1" min-value="0" mouse-enabled="true" origin="20, 35" 
+				round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15" 
+				style-3D-in="false" style-3D-out="false" style-no-draw="false" 
+				style-no-frame="false" style-no-text="false" style-round-rect="false" 
+				style-shadow-text="false" text-alignment="center" text-inset="0, 0" 
+				title="Freq" transparent="true" value-precision="2" wheel-inc-value="0.1"
+			/>
+			<view 
+				angle-range="270" angle-start="135" background-offset="0, 0" bitmap="silverKnob" 
+				circle-drawing="false" class="CAnimKnob" control-tag="spiAMfrequency" 
+				corona-color="~ WhiteCColor" corona-dash-dot="false" corona-drawing="false" 
+				corona-from-center="false" corona-inset="0" corona-inverted="false" 
+				corona-outline="false" default-value="0" handle-color="~ WhiteCColor" 
+				handle-line-width="1" handle-shadow-color="~ GreyCColor" 
+				height-of-one-image="42" max-value="1" min-value="0" mouse-enabled="true" 
+				origin="20, 50" size="42, 42" sub-pixmaps="91" 
+				tooltip="AM LFO Frequency (Hz)" transparent="false" value-inset="0" 
+				wheel-inc-value="0.1" zoom-factor="1.5"
+			/>
+			<view 
+				back-color="ValueBackgound" background-offset="0, 0" class="CTextEdit" 
+				control-tag="spiAMfrequency" default-value="0" font="~ NormalFontSmaller" 
+				font-antialias="true" font-color="ValueColor" frame-color="~ BlackCColor" 
+				frame-width="1" immediate-text-change="false" max-value="1" min-value="0" 
+				mouse-enabled="true" origin="20, 90" round-rect-radius="6" 
+				shadow-color="~ RedCColor" size="42, 15" style-3D-in="false" 
+				style-3D-out="false" style-no-draw="false" style-no-frame="false" 
+				style-no-text="false" style-round-rect="false" style-shadow-text="false" 
+				text-alignment="center" text-inset="0, 0" title="18000.0" 
+				tooltip="AM LFO Frequency (Hz)" transparent="true" value-precision="2" 
+				wheel-inc-value="0.1"
+			/>
+			<!-- spiAMrange -->
+			<view
+				back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel"
+				default-value="0.5" font="~ NormalFontSmaller" font-antialias="true"
+				font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1"
+				max-value="1" min-value="0" mouse-enabled="true" origin="70, 35"
+				round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+				style-3D-in="false" style-3D-out="false" style-no-draw="false"
+				style-no-frame="false" style-no-text="false" style-round-rect="false"
+				style-shadow-text="false" text-alignment="center" text-inset="0, 0"
+				title="Range" transparent="true" value-precision="2" wheel-inc-value="0.1"
+			/>
+			<view
+				angle-range="270" angle-start="135" background-offset="0, 0" bitmap="orangeKnob"
+				circle-drawing="false" class="CAnimKnob" control-tag="spiAMrange"
+				corona-color="~ WhiteCColor" corona-dash-dot="false" corona-drawing="false"
+				corona-from-center="false" corona-inset="0" corona-inverted="false"
+				corona-outline="false" default-value="0" handle-color="~ WhiteCColor"
+				handle-line-width="1" handle-shadow-color="~ GreyCColor"
+				height-of-one-image="42" max-value="1" min-value="0" mouse-enabled="true"
+				origin="70, 50" size="42, 42" sub-pixmaps="91"
+				tooltip="AM LFO Range" transparent="false" value-inset="0"
+				wheel-inc-value="0.1" zoom-factor="1.5"
+			/>
+			<view
+				back-color="ValueBackgound" background-offset="0, 0" class="CTextEdit"
+				control-tag="spiAMrange" default-value="0" font="~ NormalFontSmaller"
+				font-antialias="true" font-color="ValueColor" frame-color="~ BlackCColor"
+				frame-width="1" immediate-text-change="false" max-value="1" min-value="0"
+				mouse-enabled="true" origin="70, 90" round-rect-radius="6"
+				shadow-color="~ RedCColor" size="42, 15" style-3D-in="false"
+				style-3D-out="false" style-no-draw="false" style-no-frame="false"
+				style-no-text="false" style-round-rect="false" style-shadow-text="false"
+				text-alignment="center" text-inset="0, 0" title="18000.0"
+				tooltip="AM LFO Range" transparent="true" value-precision="2"
+				wheel-inc-value="0.1"
+			/>
+			<!-- spiAMtype -->
+			<view
+				back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel"
+				default-value="0.5" font="~ NormalFontSmaller" font-antialias="true"
+				font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1"
+				max-value="1" min-value="0" mouse-enabled="true" origin="120, 35"
+				round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+				style-3D-in="false" style-3D-out="false" style-no-draw="false"
+				style-no-frame="false" style-no-text="false" style-round-rect="false"
+				style-shadow-text="false" text-alignment="left" text-inset="0, 0"
+				title="Wave" transparent="true" value-precision="2" wheel-inc-value="0.1"
+			/>
+			<view
+				bitmap="waves"
+				class="CMovieBitmap" x_class="CMovieButton" control-tag="spiAMtype" 
+				default-value="0"
+				max-value="1" min-value="0" mouse-enabled="true" origin="120, 55"
+				height-of-one-image="24" size="24, 24"  sub-pixmaps="5"
+				tooltip="AM LFO Type" transparent="false" value-inset="0"
+				wheel-inc-value="0.2" zoom-factor="1"
+			/>
+			<view
+				back-color="ValueBackgound" background-offset="0, 0" class="COptionMenu"
+				control-tag="spiAMtype" default-value="0" font="~ NormalFontSmaller"
+				font-antialias="true" font-color="ValueColor" frame-color="~ BlackCColor"
+				frame-width="1" max-value="2" menu-check-style="false"
+				menu-popup-style="true" min-value="0" mouse-enabled="true" origin="120, 90"
+				round-rect-radius="6" shadow-color="~ RedCColor" size="60, 15"
+				style-3D-in="false" style-3D-out="false" style-no-draw="false"
+				style-no-frame="false" style-no-text="false" style-round-rect="false"
+				style-shadow-text="false" text-alignment="left" text-inset="0, 0"
+				transparent="true" value-precision="2" wheel-inc-value="0.1"
+			/>
+		</view>
+		<!-- FM LFO -->
+		<view 
+			background-color="~ BlackCColor" background-color-draw-style="filled and stroked" 
+			bitmap="groupframe" class="CViewContainer" mouse-enabled="true" origin="205, 310" 
+			size="235, 125" transparent="false"
+		>
+			<view 
+				autosize="left right top " back-color="SectionBackgound" background-offset="0, 0" 
+				class="CTextLabel" default-value="0.5" font="~ NormalFont" 
+				font-antialias="true" font-color="SectionColor" frame-color="~ BlackCColor" 
+				frame-width="1" max-value="1" min-value="0" mouse-enabled="true" 
+				origin="0, 0" round-rect-radius="6" shadow-color="~ BlackCColor" 
+				size="235, 25" style-3D-in="false" style-3D-out="false" style-no-draw="false" 
+				style-no-frame="false" style-no-text="false" style-round-rect="false" 
+				style-shadow-text="true" text-alignment="center" text-inset="0, 0" 
+				title="FM LFO" transparent="false" value-precision="2" wheel-inc-value="0.1"
+			/>
+			<!-- spiFMfrequency -->
+			<view 
+				back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel" 
+				default-value="0.5" font="~ NormalFontSmaller" font-antialias="true" 
+				font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1" 
+				max-value="1" min-value="0" mouse-enabled="true" origin="20, 35" 
+				round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15" 
+				style-3D-in="false" style-3D-out="false" style-no-draw="false" 
+				style-no-frame="false" style-no-text="false" style-round-rect="false" 
+				style-shadow-text="false" text-alignment="center" text-inset="0, 0" 
+				title="Freq." transparent="true" value-precision="2" wheel-inc-value="0.1"
+			/>
+			<view 
+				angle-range="270" angle-start="135" background-offset="0, 0" bitmap="silverKnob" 
+				circle-drawing="false" class="CAnimKnob" control-tag="spiFMfrequency" 
+				corona-color="~ WhiteCColor" corona-dash-dot="false" corona-drawing="false" 
+				corona-from-center="false" corona-inset="0" corona-inverted="false" 
+				corona-outline="false" default-value="0.8" handle-color="~ WhiteCColor" 
+				handle-line-width="1" handle-shadow-color="~ GreyCColor" 
+				height-of-one-image="42" max-value="1" min-value="0" mouse-enabled="true" 
+				origin="20, 50" size="42, 42" sub-pixmaps="91" tooltip="FM LFO Frequency (Hz)" 
+				transparent="false" value-inset="0" wheel-inc-value="0.1" zoom-factor="1.5"
+			/>
+			<view 
+				back-color="ValueBackgound" background-offset="0, 0" class="CTextEdit" 
+				control-tag="spiFMfrequency" default-value="0.8" font="~ NormalFontSmaller" 
+				font-antialias="true" font-color="ValueColor" frame-color="~ BlackCColor" 
+				frame-width="1" immediate-text-change="false" max-value="1" min-value="0" 
+				mouse-enabled="true" origin="20, 90" round-rect-radius="6" 
+				shadow-color="~ RedCColor" size="42, 15" style-3D-in="false" 
+				style-3D-out="false" style-no-draw="false" style-no-frame="false" 
+				style-no-text="false" style-round-rect="false" style-shadow-text="false" 
+				text-alignment="center" text-inset="0, 0" title="50.0" 
+				tooltip="FM LFO Frequency (Hz)" transparent="true" value-precision="2" 
+				wheel-inc-value="0.1"
+			/>
+
+			<!-- spiFMrelative -->
+			<view
+				back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel"
+				default-value="0.5" font="~ NormalFontSmaller" font-antialias="true"
+				font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1"
+				max-value="1" min-value="0" mouse-enabled="true" origin="70, 35"
+				round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+				style-3D-in="false" style-3D-out="false" style-no-draw="false"
+				style-no-frame="false" style-no-text="false" style-round-rect="false"
+				style-shadow-text="false" text-alignment="left" text-inset="0, 0"
+				title="Relative" transparent="true" value-precision="2" wheel-inc-value="0.1"
+			/>
+			<view
+				background-offset="0, 0"  bitmap="onoff" control-tag="spiFMrelative"
+				class="COnOffButton" default-value="0" origin="70, 55" max-value="1"
+				min-value="0" size="15, 15" tooltip="Relative to base frequency"
+				wheel-inc-value="0.1"
+			/>
+
+			<!-- spiFMrange -->
+			<view
+				back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel"
+				default-value="0.5" font="~ NormalFontSmaller" font-antialias="true"
+				font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1"
+				max-value="1" min-value="0" mouse-enabled="true" origin="120, 35"
+				round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+				style-3D-in="false" style-3D-out="false" style-no-draw="false"
+				style-no-frame="false" style-no-text="false" style-round-rect="false"
+				style-shadow-text="false" text-alignment="center" text-inset="0, 0"
+				title="Range" transparent="true" value-precision="2" wheel-inc-value="0.1"
+			/>
+			<view
+				angle-range="270" angle-start="135" background-offset="0, 0" bitmap="orangeKnob"
+				circle-drawing="false" class="CAnimKnob" control-tag="spiFMrange"
+				corona-color="~ WhiteCColor" corona-dash-dot="false" corona-drawing="false"
+				corona-from-center="false" corona-inset="0" corona-inverted="false"
+				corona-outline="false" default-value="0.8" handle-color="~ WhiteCColor"
+				handle-line-width="1" handle-shadow-color="~ GreyCColor"
+				height-of-one-image="42" max-value="1" min-value="0" mouse-enabled="true"
+				origin="120, 50" size="42, 42" sub-pixmaps="91" tooltip="FM LFO Range"
+				transparent="false" value-inset="0" wheel-inc-value="0.1" zoom-factor="1.5"
+			/>
+			<view
+				back-color="ValueBackgound" background-offset="0, 0" class="CTextEdit"
+				control-tag="spiFMrange" default-value="0.8" font="~ NormalFontSmaller"
+				font-antialias="true" font-color="ValueColor" frame-color="~ BlackCColor"
+				frame-width="1" immediate-text-change="false" max-value="1" min-value="0"
+				mouse-enabled="true" origin="120, 90" round-rect-radius="6"
+				shadow-color="~ RedCColor" size="42, 15" style-3D-in="false"
+				style-3D-out="false" style-no-draw="false" style-no-frame="false"
+				style-no-text="false" style-round-rect="false" style-shadow-text="false"
+				text-alignment="center" text-inset="0, 0" title="50.0"
+				tooltip="FM LFO Range" transparent="true" value-precision="2"
+				wheel-inc-value="0.1"
+			/>
+
+			<!-- spiFMtype -->
+			<view
+				back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel"
+				default-value="0.5" font="~ NormalFontSmaller" font-antialias="true"
+				font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1"
+				max-value="1" min-value="0" mouse-enabled="true" origin="170, 35"
+				round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+				style-3D-in="false" style-3D-out="false" style-no-draw="false"
+				style-no-frame="false" style-no-text="false" style-round-rect="false"
+				style-shadow-text="false" text-alignment="left" text-inset="0, 0"
+				title="Wave" transparent="true" value-precision="2" wheel-inc-value="0.1"
+			/>
+			<view
+				bitmap="waves"
+				class="CMovieBitmap" x_class="CAutoAnimation" control-tag="spiFMtype"
+				default-value="0"
+				max-value="1" min-value="0" mouse-enabled="true" origin="170, 55"
+				height-of-one-image="24" size="24, 24"  sub-pixmaps="5"
+				tooltip="FM LFO Type" transparent="false" value-inset="0"
+				wheel-inc-value="0.1" zoom-factor="1.5"
+			/>
+			<view
+				back-color="ValueBackgound" background-offset="0, 0" class="COptionMenu"
+				control-tag="spiFMtype" default-value="0" font="~ NormalFontSmaller"
+				font-antialias="true" font-color="ValueColor" frame-color="~ BlackCColor"
+				frame-width="1" max-value="2" menu-check-style="false"
+				menu-popup-style="true" min-value="0" mouse-enabled="true" origin="170, 90"
+				round-rect-radius="6" shadow-color="~ RedCColor" size="60, 15"
+				style-3D-in="false" style-3D-out="false" style-no-draw="false"
+				style-no-frame="false" style-no-text="false" style-round-rect="false"
+				style-shadow-text="false" text-alignment="left" text-inset="0, 0"
+				transparent="true" value-precision="2" wheel-inc-value="0.1"
+			/>
+		</view>
+		<!--
+			ENVELOPE
+		-->
+		<view
+			background-color="~ BlackCColor" background-color-draw-style="filled and stroked"
+			bitmap="groupframe" class="CViewContainer" mouse-enabled="true"
+			origin="10, 445" size="510, 125" transparent="true"
+		>
+			<view
+				autosize="left right top " back-color="SectionBackgound" background-offset="0, 0"
+				class="CTextLabel" default-value="0.5" font="~ NormalFont"
+				font-antialias="true" font-color="SectionColor" frame-color="~ BlackCColor"
+				frame-width="1" max-value="1" min-value="0" mouse-enabled="true"
+				origin="0, 0" round-rect-radius="6" shadow-color="~ BlackCColor"
+				size="510, 25" style-3D-in="false" style-3D-out="false" style-no-draw="false"
+				style-no-frame="false" style-no-text="false" style-round-rect="false"
+				style-shadow-text="true" text-alignment="center" text-inset="0, 0"
+				title="Envelope" transparent="false" value-precision="2"
+				wheel-inc-value="0.1"
+			/>
+
+			<!-- spiEnvelope -->
+			<view
+				background-offset="0, 0"  bitmap="onoff" control-tag="spiEnvelope"
+				class="COnOffButton" default-value="0" origin="20, 50" max-value="1"
+				min-value="0" size="15, 15" tooltip="Enable Envelope"
+				wheel-inc-value="0.1"
+			/>
+
+			<!-- spiDelayMS -->
+			<view
+				back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel"
+				default-value="0.5" font="~ NormalFontSmaller" font-antialias="true"
+				font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1"
+				max-value="1" min-value="0" mouse-enabled="true" origin="50, 35"
+				round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+				style-3D-in="false" style-3D-out="false" style-no-draw="false"
+				style-no-frame="false" style-no-text="false" style-round-rect="false"
+				style-shadow-text="false" text-alignment="center" text-inset="0, 0"
+				title="Delay" transparent="true" value-precision="2"
+				wheel-inc-value="0.1"
+				/>
+			<view
+				angle-range="270" angle-start="135" background-offset="0, 0"
+				bitmap="silverKnob" circle-drawing="false" class="CAnimKnob"
+				control-tag="spiDelayMS" corona-color="~ WhiteCColor"
+				corona-dash-dot="false" corona-drawing="false" corona-from-center="false"
+				corona-inset="0" corona-inverted="false" corona-outline="false"
+				default-value="0.8" handle-color="~ WhiteCColor" handle-line-width="1"
+				handle-shadow-color="~ GreyCColor" height-of-one-image="42" max-value="1"
+				min-value="0" mouse-enabled="true" origin="50, 50" size="42, 42"
+				sub-pixmaps="91" tooltip="Delay (ms)" transparent="false" value-inset="0"
+				wheel-inc-value="0.1" zoom-factor="1.5"
+				/>
+			<view
+				back-color="ValueBackgound" background-offset="0, 0" class="CTextEdit"
+				control-tag="spiDelayMS" default-value="0.8"
+				font="~ NormalFontSmaller" font-antialias="true" font-color="ValueColor"
+				frame-color="~ BlackCColor" frame-width="1" immediate-text-change="false"
+				max-value="1" min-value="0" mouse-enabled="true" origin="50, 90"
+				round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+				style-3D-in="false" style-3D-out="false" style-no-draw="false"
+				style-no-frame="false" style-no-text="false" style-round-rect="false"
+				style-shadow-text="false" text-alignment="center" text-inset="0, 0"
+				title="100.0" tooltip="Delay (ms)" transparent="true"
+				value-precision="2" wheel-inc-value="0.1"
+				/>
+			<!-- spiInitalVolume -->
+			<view
+				back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel"
+				default-value="0.5" font="~ NormalFontVerySmall" font-antialias="true"
+				font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1"
+				max-value="1" min-value="0" mouse-enabled="true" origin="110, 35"
+				round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+				style-3D-in="false" style-3D-out="false" style-no-draw="false"
+				style-no-frame="false" style-no-text="false" style-round-rect="false"
+				style-shadow-text="false" text-alignment="center" text-inset="0, 0"
+				title="I-Vol" transparent="true" value-precision="2"
+				wheel-inc-value="0.1"
+				/>
+			<view
+				angle-range="270" angle-start="135" background-offset="0, 0"
+				bitmap="silverKnob" circle-drawing="false" class="CAnimKnob"
+				control-tag="spiInitalVolume" corona-color="~ WhiteCColor"
+				corona-dash-dot="false" corona-drawing="false" corona-from-center="false"
+				corona-inset="0" corona-inverted="false" corona-outline="false"
+				default-value="0.5" handle-color="~ WhiteCColor" handle-line-width="1"
+				handle-shadow-color="~ GreyCColor" height-of-one-image="42" max-value="1"
+				min-value="0" mouse-enabled="true" origin="110, 50" size="42, 42"
+				sub-pixmaps="91" tooltip="Initial Volume (%)" transparent="false"
+				value-inset="0" wheel-inc-value="0.1" zoom-factor="1.5"
+				/>
+			<view
+				back-color="ValueBackgound" background-offset="0, 0" class="CTextEdit"
+				control-tag="spiInitalVolume" default-value="0.5" font="~ NormalFontVerySmall"
+				font-antialias="true" font-color="ValueColor" frame-color="~ BlackCColor"
+				frame-width="1" immediate-text-change="false" max-value="1" min-value="0"
+				mouse-enabled="true" origin="110, 90" round-rect-radius="6"
+				shadow-color="~ RedCColor" size="42, 15" style-3D-in="false"
+				style-3D-out="false" style-no-draw="false" style-no-frame="false"
+				style-no-text="false" style-round-rect="false" style-shadow-text="false"
+				text-alignment="center" text-inset="0, 0" title="0"
+				tooltip="Initial Volume (%)" transparent="true" value-precision="2"
+				wheel-inc-value="0.1"
+				/>
+			<!-- spiAttackMS -->
+			<view
+				back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel"
+				default-value="0.5" font="~ NormalFontVerySmall" font-antialias="true"
+				font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1"
+				max-value="1" min-value="0" mouse-enabled="true" origin="170, 35"
+				round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+				style-3D-in="false" style-3D-out="false" style-no-draw="false"
+				style-no-frame="false" style-no-text="false" style-round-rect="false"
+				style-shadow-text="false" text-alignment="center" text-inset="0, 0"
+				title="Attack" transparent="true" value-precision="2"
+				wheel-inc-value="0.1"
+				/>
+			<view
+				angle-range="270" angle-start="135" background-offset="0, 0"
+				bitmap="silverKnob" circle-drawing="false" class="CAnimKnob"
+				control-tag="spiAttackMS" corona-color="~ WhiteCColor"
+				corona-dash-dot="false" corona-drawing="false" corona-from-center="false"
+				corona-inset="0" corona-inverted="false" corona-outline="false"
+				default-value="0.5" handle-color="~ WhiteCColor" handle-line-width="1"
+				handle-shadow-color="~ GreyCColor" height-of-one-image="42" max-value="1"
+				min-value="0" mouse-enabled="true" origin="170, 50" size="42, 42"
+				sub-pixmaps="91" tooltip="Attack (ms)" transparent="false"
+				value-inset="0" wheel-inc-value="0.1" zoom-factor="1.5"
+				/>
+			<view
+				back-color="ValueBackgound" background-offset="0, 0" class="CTextEdit"
+				control-tag="spiAttackMS" default-value="0.5" font="~ NormalFontVerySmall"
+				font-antialias="true" font-color="ValueColor" frame-color="~ BlackCColor"
+				frame-width="1" immediate-text-change="false" max-value="1" min-value="0"
+				mouse-enabled="true" origin="170, 90" round-rect-radius="6"
+				shadow-color="~ RedCColor" size="42, 15" style-3D-in="false"
+				style-3D-out="false" style-no-draw="false" style-no-frame="false"
+				style-no-text="false" style-round-rect="false" style-shadow-text="false"
+				text-alignment="center" text-inset="0, 0" title="0"
+				tooltip="Attack (ms)" transparent="true" value-precision="2"
+				wheel-inc-value="0.1"
+				/>
+			<!-- spiDecayMS -->
+			<view
+				back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel"
+				default-value="0.5" font="~ NormalFontVerySmall" font-antialias="true"
+				font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1"
+				max-value="1" min-value="0" mouse-enabled="true" origin="230, 35"
+				round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+				style-3D-in="false" style-3D-out="false" style-no-draw="false"
+				style-no-frame="false" style-no-text="false" style-round-rect="false"
+				style-shadow-text="false" text-alignment="center" text-inset="0, 0"
+				title="Decay" transparent="true" value-precision="2"
+				wheel-inc-value="0.1"
+				/>
+			<view
+				angle-range="270" angle-start="135" background-offset="0, 0"
+				bitmap="silverKnob" circle-drawing="false" class="CAnimKnob"
+				control-tag="spiDecayMS" corona-color="~ WhiteCColor"
+				corona-dash-dot="false" corona-drawing="false" corona-from-center="false"
+				corona-inset="0" corona-inverted="false" corona-outline="false"
+				default-value="0.5" handle-color="~ WhiteCColor" handle-line-width="1"
+				handle-shadow-color="~ GreyCColor" height-of-one-image="42" max-value="1"
+				min-value="0" mouse-enabled="true" origin="230, 50" size="42, 42"
+				sub-pixmaps="91" tooltip="Decay (ms)" transparent="false"
+				value-inset="0" wheel-inc-value="0.1" zoom-factor="1.5"
+				/>
+			<view
+				back-color="ValueBackgound" background-offset="0, 0" class="CTextEdit"
+				control-tag="spiDecayMS" default-value="0.5" font="~ NormalFontVerySmall"
+				font-antialias="true" font-color="ValueColor" frame-color="~ BlackCColor"
+				frame-width="1" immediate-text-change="false" max-value="1" min-value="0"
+				mouse-enabled="true" origin="230, 90" round-rect-radius="6"
+				shadow-color="~ RedCColor" size="42, 15" style-3D-in="false"
+				style-3D-out="false" style-no-draw="false" style-no-frame="false"
+				style-no-text="false" style-round-rect="false" style-shadow-text="false"
+				text-alignment="center" text-inset="0, 0" title="0"
+				tooltip="Decay (ms)" transparent="true" value-precision="2"
+				wheel-inc-value="0.1"
+				/>
+
+			<!-- spiDecayVolume -->
+			<view
+				back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel"
+				default-value="0.5" font="~ NormalFontVerySmall" font-antialias="true"
+				font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1"
+				max-value="1" min-value="0" mouse-enabled="true" origin="290, 35"
+				round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+				style-3D-in="false" style-3D-out="false" style-no-draw="false"
+				style-no-frame="false" style-no-text="false" style-round-rect="false"
+				style-shadow-text="false" text-alignment="center" text-inset="0, 0"
+				title="D Vol." transparent="true" value-precision="2"
+				wheel-inc-value="0.1"
+				/>
+			<view
+				angle-range="270" angle-start="135" background-offset="0, 0"
+				bitmap="silverKnob" circle-drawing="false" class="CAnimKnob"
+				control-tag="spiDecayVolume" corona-color="~ WhiteCColor"
+				corona-dash-dot="false" corona-drawing="false" corona-from-center="false"
+				corona-inset="0" corona-inverted="false" corona-outline="false"
+				default-value="0.5" handle-color="~ WhiteCColor" handle-line-width="1"
+				handle-shadow-color="~ GreyCColor" height-of-one-image="42" max-value="1"
+				min-value="0" mouse-enabled="true" origin="290, 50" size="42, 42"
+				sub-pixmaps="91" tooltip="Decay Volume (%)" transparent="false"
+				value-inset="0" wheel-inc-value="0.1" zoom-factor="1.5"
+				/>
+			<view
+				back-color="ValueBackgound" background-offset="0, 0" class="CTextEdit"
+				control-tag="spiDecayVolume" default-value="0.5" font="~ NormalFontVerySmall"
+				font-antialias="true" font-color="ValueColor" frame-color="~ BlackCColor"
+				frame-width="1" immediate-text-change="false" max-value="1" min-value="0"
+				mouse-enabled="true" origin="290, 90" round-rect-radius="6"
+				shadow-color="~ RedCColor" size="42, 15" style-3D-in="false"
+				style-3D-out="false" style-no-draw="false" style-no-frame="false"
+				style-no-text="false" style-round-rect="false" style-shadow-text="false"
+				text-alignment="center" text-inset="0, 0" title="0"
+				tooltip="Decay Volume (%)" transparent="true" value-precision="2"
+				wheel-inc-value="0.1"
+				/>
+			<!-- spiSustainRateMS -->
+			<view
+				back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel"
+				default-value="0.5" font="~ NormalFontVerySmall" font-antialias="true"
+				font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1"
+				max-value="1" min-value="0" mouse-enabled="true" origin="350, 35"
+				round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+				style-3D-in="false" style-3D-out="false" style-no-draw="false"
+				style-no-frame="false" style-no-text="false" style-round-rect="false"
+				style-shadow-text="false" text-alignment="center" text-inset="0, 0"
+				title="Sustain" transparent="true" value-precision="2"
+				wheel-inc-value="0.1"
+				/>
+			<view
+				angle-range="270" angle-start="135" background-offset="0, 0"
+				bitmap="silverKnob" circle-drawing="false" class="CAnimKnob"
+				control-tag="spiSustainRateMS" corona-color="~ WhiteCColor"
+				corona-dash-dot="false" corona-drawing="false" corona-from-center="false"
+				corona-inset="0" corona-inverted="false" corona-outline="false"
+				default-value="0.5" handle-color="~ WhiteCColor" handle-line-width="1"
+				handle-shadow-color="~ GreyCColor" height-of-one-image="42" max-value="1"
+				min-value="0" mouse-enabled="true" origin="350, 50" size="42, 42"
+				sub-pixmaps="91" tooltip="Sustain Rate (ms)" transparent="false"
+				value-inset="0" wheel-inc-value="0.1" zoom-factor="1.5"
+				/>
+			<view
+				back-color="ValueBackgound" background-offset="0, 0" class="CTextEdit"
+				control-tag="spiSustainRateMS" default-value="0.5" font="~ NormalFontVerySmall"
+				font-antialias="true" font-color="ValueColor" frame-color="~ BlackCColor"
+				frame-width="1" immediate-text-change="false" max-value="1" min-value="0"
+				mouse-enabled="true" origin="350, 90" round-rect-radius="6"
+				shadow-color="~ RedCColor" size="42, 15" style-3D-in="false"
+				style-3D-out="false" style-no-draw="false" style-no-frame="false"
+				style-no-text="false" style-round-rect="false" style-shadow-text="false"
+				text-alignment="center" text-inset="0, 0" title="0"
+				tooltip="Sustain Rate (ms)" transparent="true" value-precision="2"
+				wheel-inc-value="0.1"
+				/>
+			<!-- spiReleaseRateMS -->
+			<view
+				back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel"
+				default-value="0.5" font="~ NormalFontVerySmall" font-antialias="true"
+				font-color="LabelColor" frame-color="~ BlackCColor" frame-width="1"
+				max-value="1" min-value="0" mouse-enabled="true" origin="410, 35"
+				round-rect-radius="6" shadow-color="~ RedCColor" size="42, 15"
+				style-3D-in="false" style-3D-out="false" style-no-draw="false"
+				style-no-frame="false" style-no-text="false" style-round-rect="false"
+				style-shadow-text="false" text-alignment="center" text-inset="0, 0"
+				title="Release" transparent="true" value-precision="2"
+				wheel-inc-value="0.1"
+				/>
+			<view
+				angle-range="270" angle-start="135" background-offset="0, 0"
+				bitmap="orangeKnob" circle-drawing="false" class="CAnimKnob"
+				control-tag="spiReleaseRateMS" corona-color="~ WhiteCColor"
+				corona-dash-dot="false" corona-drawing="false" corona-from-center="false"
+				corona-inset="0" corona-inverted="false" corona-outline="false"
+				default-value="0.5" handle-color="~ WhiteCColor" handle-line-width="1"
+				handle-shadow-color="~ GreyCColor" height-of-one-image="42" max-value="1"
+				min-value="0" mouse-enabled="true" origin="410, 50" size="42, 42"
+				sub-pixmaps="91" tooltip="Release Rate (ms)" transparent="false"
+				value-inset="0" wheel-inc-value="0.1" zoom-factor="1.5"
+				/>
+			<view
+				back-color="ValueBackgound" background-offset="0, 0" class="CTextEdit"
+				control-tag="spiReleaseRateMS" default-value="0.5" font="~ NormalFontVerySmall"
+				font-antialias="true" font-color="ValueColor" frame-color="~ BlackCColor"
+				frame-width="1" immediate-text-change="false" max-value="1" min-value="0"
+				mouse-enabled="true" origin="410, 90" round-rect-radius="6"
+				shadow-color="~ RedCColor" size="42, 15" style-3D-in="false"
+				style-3D-out="false" style-no-draw="false" style-no-frame="false"
+				style-no-text="false" style-round-rect="false" style-shadow-text="false"
+				text-alignment="center" text-inset="0, 0" title="0"
+				tooltip="Release Rate (ms)" transparent="true" value-precision="2"
+				wheel-inc-value="0.1"
+			/>
+		</view>
+		<view
+			class="CVuMeter" control-tag="spiLeftLevel" 
+			mouse-enabled="false"
+			origin="530, 40" size="10, 530"
+			max-value="1" min-value="0"
+			bitmap="vuOn" off-bitmap="vuOff" orientation="vertical"
+			transparent="false" num-led="53" decrease-step-value="0.3"
+		/>
+			
+		<view
+			class="CVuMeter" control-tag="spiRightLevel" 
+			mouse-enabled="false"
+			origin="545, 40" size="10, 530"
+			bitmap="vuOn" off-bitmap="vuOff" orientation="vertical"
+			transparent="false" num-led="53" decrease-step-value="0.3"
+		/>
+	</template>
+	<bitmaps>
+		<bitmap name="background" path="background.png"/>
+		<bitmap name="groupframe" path="groupframe.png"/>
+		<bitmap name="yellowKnob" path="yellowKnob.png"/>
+		<bitmap name="orangeKnob" path="orangeKnob.png"/>
+		<bitmap name="silverKnob" path="silverKnob.png"/>
+		<bitmap name="onoff" path="onoff.png"/>
+		<bitmap name="radio" path="radio.png"/>
+		<bitmap name="waves" path="waves.png"/>
+		<bitmap name="vuOn" path="vuOn.png"/>
+		<bitmap name="vuOff" path="vuOff.png"/>
+	</bitmaps>
+	<control-tags>
+		<control-tag name="spiMasterVolume" tag="0"/>
+		<control-tag name="spiMasterPresence" tag="1"/>
+
+		<control-tag name="spiSynthEnabled1" tag="2"/>
+		<control-tag name="spiSynthEnabled2" tag="3"/>
+		<control-tag name="spiSynthEnabled3" tag="4"/>
+		<control-tag name="spiSynthEnabled4" tag="5"/>
+
+		<control-tag name="spiActiveVoices" tag="6"/>
+		<control-tag name="spiMaxVoices" tag="7"/>
+		<control-tag name="spiLeftLevel" tag="8"/>
+		<control-tag name="spiRightLevel" tag="9"/>
+
+		<control-tag name="spiSynthVolume" tag="100"/>
+		<control-tag name="spiSynthPan" tag="101"/>
+		<control-tag name="spiSynthPitch" tag="102"/>
+		<control-tag name="spiSynthPhase" tag="103"/>
+		<control-tag name="spiSub1Volume" tag="104"/>
+		<control-tag name="spiSub1Phase" tag="105"/>
+		<control-tag name="spiSub1Pitch" tag="106"/>
+		<control-tag name="spiSub2Volume" tag="107"/>
+		<control-tag name="spiSub2Phase" tag="108"/>
+		<control-tag name="spiSub2Pitch" tag="109"/>
+		<control-tag name="spiAMtype" tag="110"/>
+		<control-tag name="spiAMfrequency" tag="111"/>
+		<control-tag name="spiAMrange" tag="112"/>
+		<control-tag name="spiFMtype" tag="113"/>
+		<control-tag name="spiFMrelative" tag="114"/>
+		<control-tag name="spiFMfrequency" tag="115"/>
+		<control-tag name="spiFMrange" tag="116"/>
+		<control-tag name="spiEnvelope" tag="117"/>
+		<control-tag name="spiDelayMS" tag="118"/>
+		<control-tag name="spiInitalVolume" tag="119"/>
+		<control-tag name="spiAttackMS" tag="120"/>
+		<control-tag name="spiDecayMS" tag="121"/>
+		<control-tag name="spiDecayVolume" tag="122"/>
+		<control-tag name="spiSustainRateMS" tag="123"/>
+		<control-tag name="spiReleaseRateMS" tag="124"/>
+
+		<control-tag name="esSynthA" tag="1000"/>
+		<control-tag name="esSynthB" tag="1001"/>
+		<control-tag name="esSynthC" tag="1002"/>
+		<control-tag name="esSynthD" tag="1003"/>
+	</control-tags>
+</vstgui-ui-description>

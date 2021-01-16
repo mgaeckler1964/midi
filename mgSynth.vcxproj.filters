@@ -1,0 +1,319 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Quelldateien">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Headerdateien">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Ressourcendateien">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Quelldateien\public.sdk">
+      <UniqueIdentifier>{f98d4ab4-82ef-4aaf-9dc0-73cef8b09f2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\public.sdk\common">
+      <UniqueIdentifier>{94a55a1d-87f2-490b-b145-6632b30b1e28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\public.sdk\vst">
+      <UniqueIdentifier>{ac42e4c9-b8fd-48ee-8b92-c392e94c50b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\common">
+      <UniqueIdentifier>{6d21ef7a-846a-45b4-84cd-f17e9b74842a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\pluginterfaces">
+      <UniqueIdentifier>{6bc66d22-4b59-47a7-a604-63bc31ffc4e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\pluginterfaces\base">
+      <UniqueIdentifier>{acb705ff-599e-47d0-9bc9-078e5d33e583}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\pluginterfaces\vst">
+      <UniqueIdentifier>{ea9e293c-aa08-419f-bad9-294de93feff9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\pluginterfaces\gui">
+      <UniqueIdentifier>{f74bef91-9ab0-4870-9778-426badfa1cbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\vstgui4">
+      <UniqueIdentifier>{bf6077f6-97fa-441d-819a-23671ce1d22e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\VST">
+      <UniqueIdentifier>{3ffd62b0-2ecc-4431-8f19-52fb05ffdd67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\VST">
+      <UniqueIdentifier>{f6003642-5a52-4cda-ba92-c5e1821ce183}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Synth">
+      <UniqueIdentifier>{cbd7f7dd-063c-4412-b732-c1617405f629}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\VstSDK\public.sdk\source\main\dllmain.cpp">
+      <Filter>Quelldateien\public.sdk\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VstSDK\public.sdk\source\main\pluginfactoryvst3.cpp">
+      <Filter>Quelldateien\public.sdk\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VstSDK\public.sdk\source\common\pluginview.cpp">
+      <Filter>Quelldateien\public.sdk\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VstSDK\public.sdk\source\vst\vstaudioeffect.cpp">
+      <Filter>Quelldateien\public.sdk\vst</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VstSDK\public.sdk\source\vst\vstbus.cpp">
+      <Filter>Quelldateien\public.sdk\vst</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VstSDK\public.sdk\source\vst\vstcomponent.cpp">
+      <Filter>Quelldateien\public.sdk\vst</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VstSDK\public.sdk\source\vst\vstcomponentbase.cpp">
+      <Filter>Quelldateien\public.sdk\vst</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VstSDK\public.sdk\source\vst\vsteditcontroller.cpp">
+      <Filter>Quelldateien\public.sdk\vst</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VstSDK\public.sdk\source\vst\vstguieditor.cpp">
+      <Filter>Quelldateien\public.sdk\vst</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VstSDK\public.sdk\source\vst\vstinitiids.cpp">
+      <Filter>Quelldateien\public.sdk\vst</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VstSDK\public.sdk\source\vst\vstnoteexpressiontypes.cpp">
+      <Filter>Quelldateien\public.sdk\vst</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VstSDK\public.sdk\source\vst\vstparameters.cpp">
+      <Filter>Quelldateien\public.sdk\vst</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VstSDK\pluginterfaces\base\conststringtable.cpp">
+      <Filter>Quelldateien\pluginterfaces\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VstSDK\pluginterfaces\base\funknown.cpp">
+      <Filter>Quelldateien\pluginterfaces\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VstSDK\pluginterfaces\base\ustring.cpp">
+      <Filter>Quelldateien\pluginterfaces\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VstSDK\vstgui4\vstgui\plugin-bindings\vst3groupcontroller.cpp">
+      <Filter>Quelldateien\vstgui4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VstSDK\vstgui4\vstgui\plugin-bindings\vst3padcontroller.cpp">
+      <Filter>Quelldateien\vstgui4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VstSDK\vstgui4\vstgui\plugin-bindings\vst3editor.cpp">
+      <Filter>Quelldateien\vstgui4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VstSDK\vstgui4\vstgui\vstgui_uidescription_win32.cpp">
+      <Filter>Quelldateien\vstgui4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VstSDK\vstgui4\vstgui\vstgui_win32.cpp">
+      <Filter>Quelldateien\vstgui4</Filter>
+    </ClCompile>
+    <ClCompile Include="VST\vstController.cpp">
+      <Filter>Quelldateien\VST</Filter>
+    </ClCompile>
+    <ClCompile Include="VST\vstFactory.cpp">
+      <Filter>Quelldateien\VST</Filter>
+    </ClCompile>
+    <ClCompile Include="VST\vstProcessor.cpp">
+      <Filter>Quelldateien\VST</Filter>
+    </ClCompile>
+    <ClCompile Include="VST\vstVoice.cpp">
+      <Filter>Quelldateien\VST</Filter>
+    </ClCompile>
+    <ClCompile Include="VST\vstEditor.cpp">
+      <Filter>Quelldateien\VST</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\VstSDK\public.sdk\source\main\pluginfactoryvst3.h">
+      <Filter>Quelldateien\public.sdk\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\public.sdk\source\common\pluginview.h">
+      <Filter>Quelldateien\public.sdk\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\public.sdk\source\vst\vstaudioeffect.h">
+      <Filter>Quelldateien\public.sdk\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\public.sdk\source\vst\vstbus.h">
+      <Filter>Quelldateien\public.sdk\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\public.sdk\source\vst\vstcomponent.h">
+      <Filter>Quelldateien\public.sdk\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\public.sdk\source\vst\vstcomponentbase.h">
+      <Filter>Quelldateien\public.sdk\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\public.sdk\source\vst\vsteditcontroller.h">
+      <Filter>Quelldateien\public.sdk\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\public.sdk\source\vst\vstguieditor.h">
+      <Filter>Quelldateien\public.sdk\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\public.sdk\source\vst\vstnoteexpressiontypes.h">
+      <Filter>Quelldateien\public.sdk\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\public.sdk\source\vst\vstparameters.h">
+      <Filter>Quelldateien\public.sdk\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\public.sdk\samples\vst\common\voicebase.h">
+      <Filter>Quelldateien\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\public.sdk\samples\vst\common\voiceprocessor.h">
+      <Filter>Quelldateien\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\base\conststringtable.h">
+      <Filter>Quelldateien\pluginterfaces\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\base\falignpop.h">
+      <Filter>Quelldateien\pluginterfaces\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\base\falignpush.h">
+      <Filter>Quelldateien\pluginterfaces\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\base\fplatform.h">
+      <Filter>Quelldateien\pluginterfaces\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\base\ftypes.h">
+      <Filter>Quelldateien\pluginterfaces\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\base\funknown.h">
+      <Filter>Quelldateien\pluginterfaces\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\base\ipluginbase.h">
+      <Filter>Quelldateien\pluginterfaces\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\base\keycodes.h">
+      <Filter>Quelldateien\pluginterfaces\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\base\ustring.h">
+      <Filter>Quelldateien\pluginterfaces\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\ivstattributes.h">
+      <Filter>Quelldateien\pluginterfaces\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\ivstaudioprocessor.h">
+      <Filter>Quelldateien\pluginterfaces\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\ivstcomponent.h">
+      <Filter>Quelldateien\pluginterfaces\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\ivsteditcontroller.h">
+      <Filter>Quelldateien\pluginterfaces\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\ivstevents.h">
+      <Filter>Quelldateien\pluginterfaces\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\ivsthostapplication.h">
+      <Filter>Quelldateien\pluginterfaces\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\ivstmessage.h">
+      <Filter>Quelldateien\pluginterfaces\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\ivstmidicontrollers.h">
+      <Filter>Quelldateien\pluginterfaces\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\ivstnoteexpression.h">
+      <Filter>Quelldateien\pluginterfaces\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\ivstparameterchanges.h">
+      <Filter>Quelldateien\pluginterfaces\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\ivstplugview.h">
+      <Filter>Quelldateien\pluginterfaces\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\ivstprocesscontext.h">
+      <Filter>Quelldateien\pluginterfaces\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\ivstunits.h">
+      <Filter>Quelldateien\pluginterfaces\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\vstpresetkeys.h">
+      <Filter>Quelldateien\pluginterfaces\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\vsttypes.h">
+      <Filter>Quelldateien\pluginterfaces\vst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\gui\iplugview.h">
+      <Filter>Quelldateien\pluginterfaces\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\vstgui4\vstgui\plugin-bindings\vst3groupcontroller.h">
+      <Filter>Quelldateien\vstgui4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\vstgui4\vstgui\plugin-bindings\vst3padcontroller.h">
+      <Filter>Quelldateien\vstgui4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VstSDK\vstgui4\vstgui\plugin-bindings\vst3editor.h">
+      <Filter>Quelldateien\vstgui4</Filter>
+    </ClInclude>
+    <ClInclude Include="VST\vstController.h">
+      <Filter>Headerdateien\VST</Filter>
+    </ClInclude>
+    <ClInclude Include="VST\vstProcessor.h">
+      <Filter>Headerdateien\VST</Filter>
+    </ClInclude>
+    <ClInclude Include="VST\vstVersion.h">
+      <Filter>Headerdateien\VST</Filter>
+    </ClInclude>
+    <ClInclude Include="VST\vstVoice.h">
+      <Filter>Headerdateien\VST</Filter>
+    </ClInclude>
+    <ClInclude Include="Synth\manipulator.h">
+      <Filter>Headerdateien\Synth</Filter>
+    </ClInclude>
+    <ClInclude Include="Synth\midi.h">
+      <Filter>Headerdateien\Synth</Filter>
+    </ClInclude>
+    <ClInclude Include="Synth\oscilator.h">
+      <Filter>Headerdateien\Synth</Filter>
+    </ClInclude>
+    <ClInclude Include="Synth\synthesizer.h">
+      <Filter>Headerdateien\Synth</Filter>
+    </ClInclude>
+    <ClInclude Include="VST\vstEditor.h">
+      <Filter>Headerdateien\VST</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="VST\mgSynth.def">
+      <Filter>Ressourcendateien</Filter>
+    </None>
+    <None Include="VST\background.png">
+      <Filter>Ressourcendateien</Filter>
+    </None>
+    <None Include="VST\groupframe.png">
+      <Filter>Ressourcendateien</Filter>
+    </None>
+    <None Include="VST\onoff.png">
+      <Filter>Ressourcendateien</Filter>
+    </None>
+    <None Include="VST\radio.png">
+      <Filter>Ressourcendateien</Filter>
+    </None>
+    <None Include="VST\waves.png">
+      <Filter>Ressourcendateien</Filter>
+    </None>
+    <None Include="VST\mgSynth.uidesc">
+      <Filter>Ressourcendateien</Filter>
+    </None>
+    <None Include="VST\vuOff.png">
+      <Filter>Ressourcendateien</Filter>
+    </None>
+    <None Include="VST\vuOn.png">
+      <Filter>Ressourcendateien</Filter>
+    </None>
+    <None Include="VST\yellowKnob.png">
+      <Filter>Ressourcendateien</Filter>
+    </None>
+    <None Include="VST\orangeKnob.png">
+      <Filter>Ressourcendateien</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="VST\mgSynth.rc">
+      <Filter>Ressourcendateien</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

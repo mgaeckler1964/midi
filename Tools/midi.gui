@@ -1,0 +1,613 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<gui>
+<forms>
+<form name="ToolBarWindow" width="761" height="126" caption="MG MIDI Tools Version 3.2" id="128" style="277807104">
+<layoutManager type="TableManager" marginLeft="4" marginRight="4" marginTop="4" marginBottom="4" />
+<child type="Label" name="" caption="MG MIDI Tools Version 3.2" x="80" y="26" width="80" height="0" style="1342177291">
+<layout x="0" y="0" width="7" height="1" growWidth="1" paddingTop="4" paddingBottom="4" paddingLeft="4" paddingRight="4" />
+</child>
+<child type="Label" name="" caption="(c) 2007-2018 by Martin Gäckler" x="132" y="92" width="80" height="0" style="1342242827">
+<layout x="0" y="1" width="7" height="1" growWidth="1" growHeight="0" paddingTop="4" paddingBottom="4" paddingLeft="4" paddingRight="4" />
+</child>
+<child type="Label" name="" caption="Label" x="210" y="177" width="80" height="2" style="1342177298">
+<layout x="0" y="2" width="7" height="1" growWidth="1" paddingTop="4" paddingBottom="4" paddingLeft="4" paddingRight="4" />
+</child>
+<child type="PushButton" name="recorderButton" caption="Recorder" x="76" y="84" width="80" height="25" style="1342242816" id="142">
+<layout y="3" growWidth="1" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" x="0" />
+</child>
+<child type="PushButton" name="drumButton" caption="Drum Editor" x="143" y="124" width="80" height="25" style="1342242816" id="143">
+<layout y="3" x="1" growWidth="1" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="PushButton" name="loopButton" caption="Loop Editor" x="241" y="174" width="80" height="25" style="1342242816" id="144">
+<layout y="3" x="2" growWidth="1" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="PushButton" name="synthesizerButton" caption="Synthesizer" x="109" y="226" width="80" height="25" style="1342242816" id="145">
+<layout y="3" x="3" growWidth="1" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="PushButton" name="midiDevicesButton" caption="MIDI Devices" x="38" y="171" width="80" height="25" style="1342242816" id="146">
+<layout y="3" x="4" growWidth="1" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="PushButton" name="IDCANCEL" caption="Close" x="402" y="208" width="80" height="25" style="1342242816" id="2">
+<layout y="3" x="5" growWidth="1" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="CheckBox" name="languageCheckBox" caption="German" x="69" y="106" width="0" height="0" style="1342242819" id="147">
+<layout y="3" width="1" x="6" height="1" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+</form>
+<form name="MIDIloopEditor" width="747" height="714" caption="Loop Editor" id="129" style="277807104" baseClass="PopupWindow">
+<layoutManager type="AttachmentManager" marginLeft="4" marginRight="4" marginTop="4" marginBottom="4" />
+<child type="FrameChild" name="topFrame" caption="" x="597" y="472" width="80" height="35" style="1342308352" id="152">
+<layout x="0" y="0" width="6" height="1" growWidth="1" attachment="1" />
+<child type="Label" name="" caption="MIDI-Out:" x="64" y="40" width="0" height="0" style="1342242827">
+<layout x="0" y="0" width="1" height="1" growWidth="0" growHeight="0" paddingLeft="4" paddingRight="0" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="PushButton" name="playButton" caption="Play" x="432" y="103" width="80" height="25" style="1342242816" id="148">
+<layout x="4" y="0" width="1" height="1" growWidth="0" growHeight="0" attachment="2" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="Label" name="clockText" caption="0000 - 00:00:00" x="507" y="153" width="0" height="0" style="1342242827" id="149">
+<layout x="5" y="0" width="1" height="1" growWidth="0" growHeight="0" attachment="2" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="EditControl" name="bpmEdit" caption="" x="451" y="123" width="80" height="23" style="1350631808" id="150">
+<layout x="3" y="0" width="1" height="1" growWidth="0" growHeight="0" attachment="2" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="Label" name="" caption="Tempo:" x="342" y="13" width="0" height="0" style="1342242827">
+<layout x="2" y="0" width="1" height="1" growWidth="0" growHeight="0" attachment="2" paddingLeft="4" paddingRight="0" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="ComboBox" name="playSelect" caption="" x="64" y="8" width="344" height="200" style="1344341059" id="151">
+<layout x="1" y="0" width="1" height="1" growWidth="1" growHeight="0" attachment="4" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<layoutManager type="AttachmentManager" />
+</child>
+<child type="FrameChild" name="bottomFrame" caption="" x="763" y="433" width="80" height="35" style="1342308352" id="155">
+<layout y="9" width="6" height="1" x="0" growWidth="1" attachment="3" />
+<layoutManager type="AttachmentManager" />
+<child type="PushButton" name="IDCANCEL" caption="Close" x="914" y="220" width="80" height="25" style="1342242816" id="2">
+<layout y="8" x="0" width="1" height="1" attachment="0" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="PushButton" name="loadLoopButton" caption="Load..." x="207" y="210" width="80" height="25" style="1342242816" id="153">
+<layout y="8" x="1" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="PushButton" name="saveLoopButton" caption="Save..." x="374" y="218" width="80" height="25" style="1342242816" id="154">
+<layout y="8" x="2" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+</child>
+<child type="FrameChild" name="rightFrame" caption="" x="490" y="417" width="88" height="25" style="1342308352" id="160">
+<layout x="6" growHeight="1" y="1" attachment="2" />
+<child type="PushButton" name="longerButton" caption="Longer" x="573" y="74" width="80" height="25" style="1342242816" id="156">
+<layout x="5" width="1" height="1" growWidth="1" growHeight="0" y="1" attachment="1" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="PushButton" name="shorterButton" caption="Shorter" x="583" y="109" width="80" height="25" style="1342242816" id="157">
+<layout x="5" width="1" height="1" growWidth="1" growHeight="0" y="2" attachment="1" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="PushButton" name="upButton" caption="Up" x="590" y="157" width="80" height="25" style="1342242816" id="158">
+<layout x="5" width="1" height="1" growWidth="1" growHeight="0" y="3" attachment="1" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="PushButton" name="downButton" caption="Down" x="550" y="194" width="80" height="25" style="1342242816" id="159">
+<layout x="5" width="1" height="1" growWidth="1" growHeight="0" y="4" attachment="1" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<layoutManager type="AttachmentManager" />
+</child>
+<child type="ListBox" name="midiListBox" caption="" x="116" y="101" width="80" height="25" style="1353777537" id="161">
+<layout x="0" y="1" width="5" height="7" growWidth="1" growHeight="1" attachment="4" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+</form>
+<form name="PatternVolume" style="314572800" width="538" height="165" caption="Pattern Volumes" baseClass="ModalPopup" id="130">
+<child type="Label" name="" caption="Pattern:" x="8" y="8" width="0" height="0" style="1342242827">
+<layout x="0" y="0" width="1" height="1" growWidth="0" growHeight="0" paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" />
+</child>
+<child type="Label" name="" caption="Volume:" x="8" y="41" width="0" height="0" style="1342242827">
+<layout x="0" y="1" width="1" height="1" growWidth="0" growHeight="0" />
+</child>
+<child type="Label" name="volumeLabel" caption="000" x="500" y="41" width="0" height="0" style="1342242818" id="162">
+<layout x="3" y="1" width="1" height="1" growWidth="0" growHeight="0" />
+</child>
+<child type="ComboBox" name="patternSelect" caption="" x="80" y="8" width="304" height="300" style="1344341059" id="163">
+<layout x="1" y="0" width="2" height="1" growWidth="1" growHeight="0" />
+</child>
+<child type="TrackBar" name="volumeBar" caption="" x="8" y="61" width="515" height="24" style="1342242816" id="164">
+<layout y="0" x="0" width="1" height="1" growWidth="0" growHeight="0" paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" />
+</child>
+<child type="PushButton" name="IDOK" caption="OK" x="8" y="100" width="80" height="25" style="1342242816" id="1" />
+<child type="PushButton" name="IDCANCEL" caption="Cancel" x="96" y="100" width="80" height="25" style="1342242816" id="2" />
+</form>
+<form name="ChannelVolume" style="314572800" width="538" height="159" caption="Channel Volume" baseClass="ModalPopup" id="131">
+<child type="Label" name="" caption="Channel:" x="8" y="8" width="0" height="0" style="1342242827">
+<layout x="0" y="0" width="1" height="1" growWidth="0" growHeight="0" paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" />
+</child>
+<child type="Label" name="" caption="Volume:" x="8" y="41" width="0" height="0" style="1342242827">
+<layout x="0" y="1" width="1" height="1" growWidth="0" growHeight="0" />
+</child>
+<child type="Label" name="volumeLabel" caption="000" x="500" y="41" width="0" height="0" style="1342242818" id="162">
+<layout x="3" y="1" width="1" height="1" growWidth="0" growHeight="0" />
+</child>
+<child type="ComboBox" name="channelSelect" caption="" x="80" y="8" width="100" height="300" style="1342243843" id="165">
+<layout x="1" y="0" width="2" height="1" growWidth="1" growHeight="0" />
+</child>
+<child type="TrackBar" name="volumeBar" caption="" x="8" y="61" width="515" height="24" style="1342242816" id="164">
+<layout y="0" x="0" width="1" height="1" growWidth="0" growHeight="0" paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" />
+</child>
+<child type="PushButton" name="IDOK" caption="OK" x="8" y="96" width="80" height="25" style="1342242816" id="1" />
+<child type="PushButton" name="IDCANCEL" caption="Cancel" x="96" y="96" width="80" height="25" style="1342242816" id="2" />
+</form>
+<form name="PatternStereo" style="314572800" width="538" height="165" caption="Pattern Pan" baseClass="ModalPopup" id="132">
+<child type="Label" name="" caption="Pattern:" x="8" y="8" width="0" height="0" style="1342242827">
+<layout x="0" y="0" width="1" height="1" growWidth="0" growHeight="0" paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" />
+</child>
+<child type="Label" name="" caption="Pan:" x="8" y="40" width="48" height="16" style="1342242827">
+<layout x="0" y="1" width="1" height="1" growWidth="0" growHeight="0" />
+</child>
+<child type="Label" name="stereoLabel" caption="000" x="500" y="41" width="0" height="0" style="1342242818" id="166">
+<layout x="3" y="1" width="1" height="1" growWidth="0" growHeight="0" />
+</child>
+<child type="ComboBox" name="patternSelect" caption="" x="80" y="8" width="300" height="300" style="1344341059" id="163">
+<layout x="1" y="0" width="2" height="1" growWidth="1" growHeight="0" />
+</child>
+<child type="TrackBar" name="stereoBar" caption="" x="8" y="61" width="515" height="24" style="1342242816" id="167">
+<layout y="0" x="0" width="1" height="1" growWidth="0" growHeight="0" paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" />
+</child>
+<child type="PushButton" name="IDOK" caption="OK" x="8" y="100" width="80" height="25" style="1342242816" id="1" />
+<child type="PushButton" name="IDCANCEL" caption="Cancel" x="96" y="100" width="80" height="25" style="1342242816" id="2" />
+</form>
+<form name="SwapChannel" style="314572800" width="293" height="103" caption="Swap Channels" baseClass="ModalPopup" id="133">
+<child type="Label" name="" caption="Channels:" x="8" y="8" width="0" height="0" style="1342242827" />
+<child type="ComboBox" name="srcChannelSelect" caption="" x="100" y="8" width="80" height="300" style="1342243843" id="168" />
+<child type="ComboBox" name="destChannelSelect" caption="" x="200" y="8" width="80" height="300" style="1342243843" id="169" />
+<child type="PushButton" name="IDOK" caption="OK" x="8" y="41" width="80" height="25" style="1342242816" id="1" />
+<child type="PushButton" name="IDCANCEL" caption="Cancel" x="100" y="41" width="80" height="25" style="1342242816" id="2" />
+</form>
+<form name="MetronomWindow" style="281018368" width="315" height="96" caption="Metronom" baseClass="PopupWindow" id="134">
+<layoutManager type="TableManager" marginLeft="4" marginRight="4" marginTop="4" marginBottom="4" />
+<child type="Label" name="" caption="First Click:" x="56" y="26" width="0" height="0" style="1342242827">
+<layout x="0" y="0" width="1" height="1" growWidth="0" growHeight="0" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="Label" name="" caption="Other Clicks;" x="0" y="0" width="0" height="0" style="1342242827">
+<layout x="0" y="1" width="1" height="1" growWidth="0" growHeight="0" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="ComboBox" name="firstVoiceSelect" caption="" x="216" y="16" width="80" height="300" style="1344341059" id="170">
+<layout x="1" y="0" width="1" height="1" growWidth="1" growHeight="0" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="ComboBox" name="otherVoiceSelect" caption="" x="221" y="49" width="80" height="300" style="1344341059" id="171">
+<layout x="1" y="1" width="1" height="1" growWidth="1" growHeight="0" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+</form>
+<form name="MIDIdeviceDialog" style="277807104" width="800" height="353" caption="MIDI Devices" baseClass="ModalPopup" id="135" x="0" y="0">
+<layoutManager type="AttachmentManager" marginLeft="0" marginRight="0" marginTop="0" marginBottom="0" />
+<child type="FrameChild" name="" caption="" x="319" y="142" width="96" height="25" style="1342308352">
+<layout attachment="2" growHeight="1" />
+<child type="PushButton" name="IDOK" caption="OK" x="8" y="8" width="80" height="25" style="1342242816" id="1" />
+<child type="PushButton" name="IDCANCEL" caption="Cancel" x="8" y="41" width="80" height="25" style="1342242816" id="2" />
+</child>
+<child type="ScrollFrame" name="" caption="" x="91" y="121" width="80" height="25" style="1345454080">
+<layout attachment="4" growWidth="1" growHeight="1" />
+<child type="FrameChild" name="theDeviceTable" caption="" x="100" y="115" width="80" height="25" style="1342308352" id="172">
+<layoutManager type="TableManager" marginLeft="4" marginRight="4" marginTop="4" marginBottom="4" />
+</child>
+</child>
+</form>
+<form name="MIDIfilterWindow" style="281542656" width="854" height="307" id="136" caption="Filter Settings">
+<child type="ListBox" name="filterListBox" caption="" x="8" y="8" width="155" height="230" style="1353777409" id="173" />
+<child type="PushButton" name="newButton" caption="New" x="176" y="8" width="80" height="25" style="1342242816" id="174" />
+<child type="PushButton" name="deleteButton" caption="Delete" x="264" y="8" width="80" height="25" style="1342242816" id="175" />
+<child type="PushButton" name="upButton" caption="Up" x="352" y="8" width="80" height="25" style="1342242816" id="158" />
+<child type="PushButton" name="IDCANCEL" caption="Close" x="8" y="248" width="80" height="25" style="1342242816" id="2" />
+<child type="PushButton" name="standardsButton" caption="Standards" x="96" y="248" width="80" height="25" style="1342242816" id="176" />
+<child type="Label" name="" caption="Name" x="176" y="48" width="0" height="0" style="1342242827" />
+<child type="EditControl" name="filterNameEdit" caption="" x="232" y="48" width="160" height="23" style="1350631808" id="177" />
+<child type="GroupBox" name="" caption="Filter" x="176" y="80" width="660" height="64" style="1342242823" />
+<child type="Label" name="" caption="MIDI-In:" x="184" y="104" width="0" height="0" style="1342242827" />
+<child type="ComboBox" name="MIDIrecSelect" caption="" x="256" y="104" width="200" height="200" style="1344341059" id="178" />
+<child type="Label" name="" caption="Channel:" x="464" y="104" width="0" height="0" style="1342242827" />
+<child type="ComboBox" name="filterChannelSelect" caption="" x="520" y="104" width="80" height="300" style="1342243843" id="179" />
+<child type="Label" name="" caption="Note:" x="608" y="104" width="0" height="0" style="1342242827" />
+<child type="ComboBox" name="conditionSelect" caption="" x="648" y="104" width="80" height="101" style="1342243843" id="180">
+<items>
+<item>&lt;</item>
+<item>&lt;=</item>
+<item>=</item>
+<item>&gt;=</item>
+<item>&gt;</item>
+<item>Control</item>
+</items>
+</child>
+<child type="EditControl" name="" caption="" x="736" y="104" width="80" height="21" style="1350631808" />
+<child type="UpDownButton" name="filterNote" caption="" x="792" y="104" width="21" height="21" style="1342242870" id="181" />
+<child type="GroupBox" name="" caption="Action" x="176" y="152" width="660" height="83" style="1342242823" />
+<child type="Label" name="" caption="MIDI-Out:" x="184" y="176" width="0" height="0" style="1342242827" />
+<child type="ComboBox" name="MIDIplaySelect" caption="" x="256" y="168" width="200" height="200" style="1344341059" id="182" />
+<child type="Label" name="" caption="Channel:" x="464" y="168" width="0" height="0" style="1342242827" />
+<child type="ComboBox" name="actionChannelSelect" caption="" x="520" y="168" width="80" height="300" style="1342243843" id="183" />
+<child type="Label" name="" caption="Note:" x="608" y="168" width="0" height="0" style="1342242827" />
+<child type="EditControl" name="noteOffsetEdit" caption="" x="648" y="168" width="80" height="21" style="1350631808" id="184" />
+<child type="CheckBox" name="stopFlag" caption="Stop" x="736" y="168" width="0" height="0" style="1342242819" id="185" />
+<child type="Label" name="" caption="Volume:" x="184" y="200" width="0" height="0" style="1342242827" />
+<child type="EditControl" name="newVolumeEdit" caption="" x="256" y="200" width="80" height="23" style="1350631808" id="186" />
+</form>
+<form name="MIDIchannelsWindow" style="277807104" width="600" height="600" caption="Channel Settings" id="137" baseClass="PopupWindow">
+<child type="FrameChild" name="" caption="" x="84" y="378" width="80" height="50" style="1342308352">
+<layout attachment="3" growWidth="1" />
+<child type="PushButton" name="IDCANCEL" caption="Close" x="8" y="8" width="80" height="25" style="1342242816" id="2" />
+<child type="PushButton" name="defaultButton" caption="Standard" x="96" y="8" width="80" height="25" style="1342242816" id="187" />
+<child type="CheckBox" name="activeCheckBox" caption="Active" x="184" y="8" width="80" height="25" style="1342242819" id="188" />
+<child type="Label" name="valueText" caption="000" x="280" y="8" width="0" height="0" style="1342246912" id="189" />
+</child>
+<layoutManager type="AttachmentManager" />
+<child type="FrameChild" name="" caption="" x="117" y="93" width="80" height="25" style="1342308352">
+<child type="Label" name="" caption="Channel:" x="0" y="0" width="0" height="0" style="1342242827">
+<layout x="0" width="1" height="1" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" y="0" />
+</child>
+<layout attachment="4" growWidth="1" growHeight="1" />
+<layoutManager type="TableManager" marginLeft="4" marginRight="4" marginTop="4" marginBottom="4" />
+<child type="ComboBox" name="channelSelect" caption="" x="89" y="12" width="80" height="300" style="1342243843" id="165">
+<layout x="1" y="0" width="1" height="1" growWidth="1" growHeight="0" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="Label" name="deviceLabel" caption="Device" x="0" y="0" width="0" height="0" style="1342242827" id="190">
+<layout x="2" y="0" width="3" height="1" growWidth="1" growHeight="0" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="Label" name="" caption="Voice:" x="0" y="0" width="0" height="0" style="1342242827">
+<layout x="0" width="1" height="1" y="1" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="ComboBox" name="groupSelect" caption="" x="106" y="50" width="80" height="300" style="1344341059" id="191">
+<layout y="1" width="2" height="1" growWidth="1" growHeight="0" x="1" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="ComboBox" name="voiceSelect" caption="" x="249" y="60" width="80" height="300" style="1344341059" id="192">
+<layout y="1" width="2" height="1" growWidth="1" growHeight="0" x="3" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="Label" name="" caption="Pan:" x="0" y="0" width="0" height="0" style="1342242827">
+<layout x="0" width="1" height="1" y="2" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="TrackBar" name="stereoBar" caption="" x="218" y="58" width="80" height="25" style="1342242816" id="167">
+<layout x="1" width="4" height="1" growWidth="1" growHeight="0" y="2" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="Label" name="" caption="Volume:" x="0" y="0" width="0" height="0" style="1342242827">
+<layout x="0" width="1" height="1" y="3" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="TrackBar" name="volumeBar" caption="" x="227" y="94" width="80" height="25" style="1342242816" id="164">
+<layout x="1" width="4" height="1" growWidth="1" growHeight="0" y="3" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="Label" name="" caption="Effect 1 (Reverb):" x="0" y="0" width="0" height="0" style="1342242827">
+<layout x="0" width="1" height="1" y="4" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="TrackBar" name="effects1Bar" caption="" x="236" y="130" width="80" height="25" style="1342242816" id="193">
+<layout x="1" width="4" height="1" growWidth="1" growHeight="0" y="4" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="Label" name="" caption="Effect 2 (Tremolo):" x="0" y="0" width="0" height="0" style="1342242827">
+<layout x="0" width="1" height="1" y="5" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="TrackBar" name="effects2Bar" caption="" x="243" y="183" width="80" height="25" style="1342242816" id="194">
+<layout x="1" width="4" height="1" growWidth="1" growHeight="0" y="5" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="Label" name="" caption="Effect 3 (Chorus):" x="0" y="0" width="0" height="0" style="1342242827">
+<layout x="0" width="1" height="1" y="6" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="TrackBar" name="effects3Bar" caption="" x="248" y="246" width="80" height="25" style="1342242816" id="195">
+<layout x="1" width="4" height="1" growWidth="1" growHeight="0" y="6" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="Label" name="" caption="Effect 4 (Detune):" x="0" y="0" width="0" height="0" style="1342242827">
+<layout x="0" width="1" height="1" y="7" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="TrackBar" name="effects4Bar" caption="" x="251" y="293" width="80" height="25" style="1342242816" id="196">
+<layout x="1" width="4" height="1" growWidth="1" growHeight="0" y="7" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="Label" name="" caption="Effect 5 (Phaser):" x="0" y="0" width="0" height="0" style="1342242827">
+<layout x="0" width="1" height="1" y="8" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="TrackBar" name="effects5Bar" caption="" x="253" y="340" width="80" height="25" style="1342242816" id="197">
+<layout x="1" width="4" height="1" growWidth="1" growHeight="0" y="8" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="Label" name="" caption="Sound 1 (Variation):" x="0" y="0" width="0" height="0" style="1342242827">
+<layout x="0" width="1" height="1" y="9" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="TrackBar" name="sound1Bar" caption="" x="266" y="381" width="80" height="25" style="1342242816" id="198">
+<layout x="1" width="4" height="1" growWidth="1" growHeight="0" y="9" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="Label" name="" caption="Sound 2 (Timbre/Harmonic):" x="0" y="0" width="0" height="0" style="1342242827">
+<layout x="0" width="1" height="1" y="10" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="TrackBar" name="sound2Bar" caption="" x="278" y="421" width="80" height="25" style="1342242816" id="199">
+<layout x="1" width="4" height="1" growWidth="1" growHeight="0" y="10" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="Label" name="" caption="Sound 3 (Release Time):" x="0" y="0" width="0" height="0" style="1342242827">
+<layout x="0" width="1" height="1" y="11" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="TrackBar" name="sound3Bar" caption="" x="291" y="449" width="80" height="25" style="1342242816" id="200">
+<layout x="1" width="4" height="1" growWidth="1" growHeight="0" y="11" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="Label" name="" caption="Sound 4 (Attack Time):" x="0" y="0" width="0" height="0" style="1342242827">
+<layout x="0" width="1" height="1" y="12" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="TrackBar" name="sound4Bar" caption="" x="386" y="485" width="80" height="25" style="1342242816" id="201">
+<layout x="1" width="4" height="1" growWidth="1" growHeight="0" y="12" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="Label" name="" caption="Sound 5 (Brightness):" x="0" y="0" width="0" height="0" style="1342242827">
+<layout x="0" width="1" height="1" y="13" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="TrackBar" name="sound5Bar" caption="" x="265" y="501" width="80" height="25" style="1342242816" id="202">
+<layout x="1" width="4" height="1" growWidth="1" growHeight="0" y="13" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="Label" name="" caption="Expression:" x="0" y="0" width="0" height="0" style="1342242827">
+<layout x="0" width="1" height="1" y="14" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+<child type="TrackBar" name="expressionBar" caption="" x="177" y="489" width="80" height="25" style="1342242816" id="203">
+<layout x="1" width="4" height="1" growWidth="1" growHeight="0" y="14" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
+</child>
+</child>
+</form>
+<form name="MIDIeditorWindow" style="281542656" width="760" height="614" caption="Midi File Editor" baseClass="ModalPopup" id="138">
+<child type="ListBox" name="eventList" caption="" x="8" y="8" width="302" height="448" style="1353779585" id="204" />
+<child type="Label" name="" caption="Channel:" x="320" y="8" width="0" height="0" style="1342242827" />
+<child type="ComboBox" name="channelSelect" caption="" x="424" y="8" width="80" height="300" style="1344340995" id="165" />
+<child type="Label" name="" caption="Track:" x="528" y="8" width="0" height="0" style="1342242827" />
+<child type="ComboBox" name="trackSelect" caption="" x="576" y="8" width="168" height="300" style="1344341059" id="205" />
+<child type="Label" name="" caption="Bar.Beat.Time:" x="320" y="40" width="0" height="0" style="1342242827" />
+<child type="EditControl" name="timeCodeEdit" caption="" x="424" y="40" width="80" height="25" style="1350631808" id="206" />
+<child type="RadioButton" name="voiceRadio" caption="Voice" x="320" y="80" width="0" height="0" style="1342242825" id="207" />
+<child type="ComboBox" name="groupSelect" caption="" x="336" y="104" width="203" height="300" style="1344341059" id="191" />
+<child type="ComboBox" name="voiceSelect" caption="" x="544" y="104" width="203" height="300" style="1344341059" id="192" />
+<child type="RadioButton" name="noteRadio" caption="Note / Volume / Length (ms) / Velocity" x="320" y="136" width="0" height="0" style="1342242825" id="208" />
+<child type="ComboBox" name="noteSelect" caption="" x="336" y="160" width="60" height="300" style="1344341059" id="209" />
+<child type="EditControl" name="noteVolumeEdit" caption="000" x="400" y="160" width="35" height="23" style="1350631808" id="210" />
+<child type="EditControl" name="noteLengthEdit" caption="000" x="440" y="160" width="35" height="23" style="1350631808" id="211" />
+<child type="EditControl" name="noteTimeEdit" caption="000" x="480" y="160" width="35" height="23" style="1350631808" id="212" />
+<child type="PushButton" name="full" caption="" x="520" y="160" width="23" height="23" style="1342242944" id="213" />
+<child type="PushButton" name="half" caption="" x="544" y="160" width="23" height="23" style="1342242944" id="214" />
+<child type="PushButton" name="quarter" caption="" x="568" y="160" width="23" height="23" style="1342242944" id="215" />
+<child type="PushButton" name="eighth" caption="" x="592" y="160" width="23" height="23" style="1342242944" id="216" />
+<child type="RadioButton" name="controllerRadio" caption="Controller" x="320" y="192" width="0" height="0" style="1342242825" id="217" />
+<child type="ComboBox" name="controllerSelect" caption="" x="336" y="216" width="203" height="300" style="1344341059" id="218" />
+<child type="EditControl" name="controllerEdit" caption="" x="544" y="216" width="35" height="23" style="1350631808" id="219" />
+<child type="RadioButton" name="otherRadio" caption="Other" x="320" y="248" width="0" height="0" style="1342242825" id="220" />
+<child type="ComboBox" name="messageSelect" caption="" x="336" y="272" width="203" height="300" style="1344341059" id="221" />
+<child type="EditControl" name="data1Edit" caption="000" x="544" y="272" width="35" height="23" style="1350631808" id="222" />
+<child type="EditControl" name="data2Edit" caption="000" x="584" y="272" width="35" height="23" style="1350631808" id="223" />
+<child type="RadioButton" name="sysExRadio" caption="System Exclusive" x="320" y="304" width="0" height="0" style="1342242825" id="224" />
+<child type="PushButton" name="saveEntryButton" caption="Apply" x="320" y="336" width="80" height="25" style="1342242816" id="225" />
+<child type="PushButton" name="newEntryButton" caption="New" x="408" y="336" width="80" height="25" style="1342242816" id="226" />
+<child type="PushButton" name="deleteEntryButton" caption="Delete" x="496" y="336" width="80" height="25" style="1342242816" id="227" />
+<child type="PushButton" name="instrumentButton" caption="Instrument" x="320" y="368" width="80" height="25" style="1342242816" id="228" />
+<child type="Label" name="" caption="Edit Multiple Entries:" x="8" y="472" width="0" height="0" style="1342242827" />
+<child type="PushButton" name="volumeButton" caption="Volume" x="8" y="496" width="80" height="25" style="1342242816" id="229" />
+<child type="PushButton" name="swapChannelsButton" caption="Swap Ch." x="96" y="496" width="80" height="25" style="1342242816" id="230" />
+<child type="PushButton" name="repeatButton" caption="Repeat" x="184" y="496" width="80" height="25" style="1342242816" id="231" />
+<child type="EditControl" name="transposeEdit" caption="000" x="272" y="496" width="35" height="25" style="1350631808" id="232" />
+<child type="PushButton" name="transposeButton" caption="Transp." x="312" y="496" width="80" height="25" style="1342242816" id="233" />
+<child type="EditControl" name="moveEdit" caption="000" x="400" y="496" width="35" height="25" style="1350631808" id="234" />
+<child type="PushButton" name="moveButton" caption="Move" x="440" y="496" width="80" height="25" style="1342242816" id="235" />
+<child type="PushButton" name="copyButton" caption="Copy" x="528" y="496" width="80" height="25" style="1342242816" id="236" />
+<child type="Label" name="" caption="" x="8" y="540" width="736" height="2" style="1342242832" />
+<child type="PushButton" name="IDOK" caption="OK" x="8" y="552" width="80" height="25" style="1342242816" id="1" />
+<child type="PushButton" name="IDCANCEL" caption="Cancel" x="96" y="552" width="80" height="25" style="1342242816" id="2" />
+<child type="PushButton" name="playButton" caption="Play" x="664" y="552" width="80" height="25" style="1342242816" id="148" />
+</form>
+<form name="MIDIrecorderWindow" style="281673728" width="640" height="427" baseClass="PopupWindow" id="139" caption="MIDI Recorder">
+<child type="Label" name="" caption="Out: Dev/Chan Note Velocity" x="8" y="0" width="0" height="0" style="1342242827" />
+<child type="Label" name="" caption="In: Dev/Chan Note Velocity" x="256" y="0" width="0" height="0" style="1342242827" />
+<child type="FrameChild" name="pianoFrame" caption="" x="8" y="16" width="496" height="240" style="1342308352" id="237" bgColor="WHITE_BRUSH" bg_red="0" bg_green="0" bg_blue="0">
+<layoutManager type="SingleChildManager" marginLeft="0" marginRight="0" marginTop="0" marginBottom="0" />
+</child>
+<child type="CheckBox" name="MIDIthrough" caption="Midi Through" x="520" y="16" width="0" height="0" style="1342242819" id="238" />
+<child type="CheckBox" name="filterEnabledCheckBox" caption="Filter" x="520" y="40" width="0" height="0" style="1342242819" id="239" />
+<child type="PushButton" name="channelsButton" caption="Channels" x="520" y="72" width="80" height="25" style="1342242816" id="240" />
+<child type="PushButton" name="filterButton" caption="Filter" x="520" y="104" width="80" height="25" style="1342242816" id="241" />
+<child type="PushButton" name="loadSettingButton" caption="Load..." x="520" y="136" width="80" height="25" style="1342242816" id="242" />
+<child type="PushButton" name="saveSettingButton" caption="Save..." x="520" y="168" width="80" height="25" style="1342242816" id="243" />
+<child type="CheckBox" name="MIDIholdNote" caption="Hold" x="520" y="208" width="0" height="0" style="1342242819" id="244" />
+<child type="Label" name="" caption="MIDI-In:" x="8" y="296" width="0" height="0" style="1342242827" />
+<child type="ComboBox" name="MIDIplaySelect" caption="" x="144" y="264" width="272" height="200" style="1344341059" id="182" />
+<child type="PushButton" name="playButton" caption="Play" x="424" y="264" width="80" height="21" style="1342242816" id="148" />
+<child type="Label" name="" caption="MIDI-Out:" x="8" y="264" width="0" height="0" style="1342242827" />
+<child type="ComboBox" name="MIDIrecSelect" caption="" x="144" y="296" width="274" height="200" style="1344341059" id="178" />
+<child type="PushButton" name="recordButton" caption="Record" x="424" y="296" width="80" height="21" style="1342242816" id="245" />
+<child type="CheckBox" name="authoRhytmCheck" caption="Auto Rhythm." x="512" y="296" width="0" height="0" style="1342242819" id="246" />
+<child type="Label" name="" caption="Tempo (BPM/Time):" x="8" y="328" width="0" height="0" style="1342242827" />
+<child type="EditControl" name="bpmEdit" caption="120" x="144" y="328" width="32" height="21" style="1350631808" id="150" />
+<child type="EditControl" name="numeratorEdit" caption="4" x="184" y="328" width="32" height="21" style="1350631808" id="247" />
+<child type="ComboBox" name="denominatorSelect" caption="" x="216" y="328" width="40" height="64" style="1350632451" id="248">
+<items>
+<item>4</item>
+<item>8</item>
+<item>16</item>
+<item>32</item>
+</items>
+</child>
+<child type="PushButton" name="convertBPMbutton" caption="Apply" x="272" y="328" width="80" height="21" style="1342242816" id="249" />
+<child type="PushButton" name="metronomButton" caption="Metronome" x="352" y="328" width="80" height="21" style="1342242816" id="250" />
+<child type="PushButton" name="IDCANCEL" caption="Close" x="8" y="368" width="80" height="25" style="1342242816" id="2" />
+<child type="PushButton" name="loadMidiButton" caption="Load..." x="96" y="368" width="80" height="25" style="1342242816" id="251" />
+<child type="PushButton" name="saveMidiButton" caption="Save..." x="184" y="368" width="80" height="25" style="1342242816" id="252" />
+<child type="PushButton" name="editButton" caption="Edit..." x="272" y="368" width="80" height="25" style="1342242816" id="253" />
+<child type="PushButton" name="instrumentButton" caption="Instrument" x="544" y="368" width="80" height="25" style="1342242816" id="228" />
+</form>
+<form name="MIDIdrumWindow" style="281673728" width="1016" height="680" baseClass="PopupWindow" id="140" caption="Drum Editor">
+<child type="Label" name="" caption="MIDI-Out:" x="8" y="8" width="0" height="0" style="1342242827" />
+<child type="ComboBox" name="MIDIplaySelect" caption="" x="128" y="8" width="784" height="200" style="1344341059" id="182" />
+<child type="PushButton" name="playButton" caption="Play" x="920" y="8" width="80" height="25" style="1342242816" id="148" />
+<child type="Label" name="" caption="Tempo/Length:" x="8" y="40" width="0" height="0" style="1342242827" />
+<child type="EditControl" name="bpmEdit" caption="000" x="128" y="40" width="32" height="21" style="1350631808" id="150" />
+<child type="EditControl" name="numeratorEdit" caption="000" x="160" y="40" width="32" height="21" style="1350631808" id="247" />
+<child type="ComboBox" name="denominatorSelect" caption="" x="192" y="40" width="40" height="100" style="1342243843" id="248">
+<items>
+<item>4</item>
+<item>8</item>
+<item>16</item>
+<item>32</item>
+</items>
+</child>
+<child type="EditControl" name="lengthEdit" caption="Edit" x="240" y="40" width="32" height="21" style="1350631808" id="254" />
+<child type="UpDownButton" name="lengthSelector" caption="" x="256" y="40" width="21" height="21" style="1342242870" id="255" />
+<child type="PushButton" name="convertBPMbutton" caption="Apply" x="288" y="40" width="80" height="21" style="1342242816" id="249" />
+<child type="Label" name="" caption="Grid:" x="632" y="40" width="0" height="0" style="1342242827" />
+<child type="ComboBox" name="gridSelect" caption="" x="680" y="40" width="80" height="100" style="1342243843" id="256">
+<items />
+</child>
+<child type="Label" name="" caption="Length:" x="776" y="40" width="0" height="0" style="1342242827" />
+<child type="ComboBox" name="lengthSelect" caption="" x="832" y="40" width="80" height="100" style="1342243843" id="257">
+<items />
+</child>
+<child type="Label" name="clockText" caption="00:00:00 000" x="920" y="40" width="0" height="0" style="1342242827" id="149" />
+<child type="Label" name="" caption="Instrument:" x="8" y="72" width="0" height="0" style="1342242827" />
+<child type="ComboBox" name="voiceSelect" caption="" x="128" y="72" width="783" height="300" style="1344341059" id="192" />
+<child type="PushButton" name="addNewPatternButton" caption="Add" x="920" y="72" width="80" height="25" style="1342242816" id="258" />
+<child type="Label" name="" caption="Instruments:" x="8" y="112" width="0" height="0" style="1342242827" />
+<child type="ComboBox" name="playModeSelect" caption="" x="8" y="136" width="112" height="62" style="1342243843" id="259">
+<items>
+<item>All</item>
+<item>Mute</item>
+<item>Solo</item>
+</items>
+</child>
+<child type="PushButton" name="volumeButton" caption="Volume" x="8" y="168" width="112" height="24" style="1342242816" id="229" />
+<child type="PushButton" name="panButton" caption="Pan" x="8" y="200" width="112" height="24" style="1342242816" id="260" />
+<child type="PushButton" name="deleteEventsButton" caption="Delete" x="8" y="232" width="112" height="24" style="1342242816" id="261" />
+<child type="PushButton" name="copyEventsButton" caption="Copy" x="8" y="264" width="112" height="24" style="1342242816" id="262" />
+<child type="PushButton" name="moveEventsButton" caption="Move" x="8" y="296" width="112" height="24" style="1342242816" id="263" />
+<child type="PushButton" name="insertBreakButton" caption="Break" x="8" y="328" width="112" height="24" style="1342242816" id="264" />
+<child type="PushButton" name="deleteAllButton" caption="Delete All" x="8" y="512" width="112" height="24" style="1342242816" id="265" />
+<child type="FrameChild" name="patternFrame" caption="" x="128" y="104" width="872" height="434" style="1342308352" id="266">
+<layoutManager type="SingleChildManager" marginLeft="0" marginRight="0" marginTop="0" marginBottom="0" />
+</child>
+<child type="Label" name="" caption="Volume:" x="8" y="544" width="0" height="0" style="1342242827" />
+<child type="TrackBar" name="volumeBar" caption="" x="128" y="544" width="872" height="25" style="1342242816" id="164" />
+<child type="Label" name="" caption="Velocity:" x="8" y="576" width="80" height="25" style="1342242827" />
+<child type="TrackBar" name="timeBar" caption="" x="128" y="576" width="872" height="25" style="1342242816" id="267" />
+<child type="PushButton" name="IDCANCEL" caption="Close" x="8" y="616" width="80" height="25" style="1342242816" id="2" />
+<child type="PushButton" name="loadDrumsButton" caption="Load..." x="96" y="616" width="80" height="25" style="1342242816" id="268" />
+<child type="PushButton" name="saveDrumsButton" caption="Save..." x="184" y="616" width="80" height="25" style="1342242816" id="269" />
+<child type="Label" name="" caption="Shift+click: De/select, Right click: Copy Volume, Ctrl+right click: Change Volume" x="272" y="616" width="0" height="0" style="1342242827" />
+</form>
+<form name="MIDIsynthesizerWindow" style="281673728" width="942" height="621" id="141" caption="Synthesizer" baseClass="PopupWindow">
+<child type="GroupBox" name="" caption="Synth" x="8" y="8" width="920" height="72" style="1342373895" />
+<child type="RadioButton" name="radioSynthA" caption="A" x="16" y="24" width="0" height="0" style="1342242825" id="270" />
+<child type="RadioButton" name="radioSynthB" caption="B" x="48" y="24" width="0" height="0" style="1342242825" id="271" />
+<child type="RadioButton" name="radioSynthC" caption="C" x="80" y="24" width="0" height="0" style="1342242825" id="272" />
+<child type="RadioButton" name="radioSynthD" caption="D" x="112" y="24" width="0" height="0" style="1342242825" id="273" />
+<child type="CheckBox" name="checkMuteA" caption=" " x="16" y="40" width="0" height="0" style="1342242819" id="274" />
+<child type="CheckBox" name="checkMuteB" caption=" " x="48" y="40" width="0" height="0" style="1342242819" id="275" />
+<child type="CheckBox" name="checkMuteC" caption=" " x="80" y="40" width="0" height="0" style="1342242819" id="276" />
+<child type="CheckBox" name="checkMuteD" caption=" " x="112" y="40" width="0" height="0" style="1342242819" id="277" />
+<child type="Label" name="" caption="Master Volume:" x="168" y="24" width="0" height="0" style="1342242827" />
+<child type="Label" name="" caption="Tone:" x="552" y="24" width="0" height="0" style="1342242827" />
+<child type="TrackBar" name="masterVolume" caption="" x="168" y="40" width="368" height="32" style="1342242816" id="278" />
+<child type="TrackBar" name="presenceValue" caption="" x="552" y="40" width="368" height="32" style="1342242816" id="279" />
+<child type="GroupBox" name="" caption="Main OSC" x="8" y="88" width="920" height="88" style="1342373895" />
+<child type="Label" name="" caption="Volume:" x="16" y="104" width="0" height="0" style="1342242827" />
+<child type="TrackBar" name="mainVolume" caption="" x="112" y="104" width="368" height="32" style="1342242816" id="280" />
+<child type="Label" name="" caption="Pan:" x="496" y="104" width="0" height="0" style="1342242827" />
+<child type="TrackBar" name="mainPan" caption="" x="552" y="104" width="368" height="32" style="1342242816" id="281" />
+<child type="Label" name="" caption="Pitch:" x="16" y="136" width="0" height="0" style="1342242827" />
+<child type="Label" name="mainPitchValue" caption="000" x="80" y="136" width="32" height="16" style="1342242827" id="282" bgColor="COLOR_BTNFACE" bg_red="0" bg_green="0" bg_blue="0" />
+<child type="TrackBar" name="mainPitch" caption="" x="112" y="136" width="368" height="32" style="1342242816" id="283" />
+<child type="Label" name="" caption="Phase:" x="496" y="136" width="0" height="0" style="1342242827" />
+<child type="TrackBar" name="mainPhase" caption="" x="552" y="136" width="368" height="32" style="1342242816" id="284" />
+<child type="GroupBox" name="" caption="SUB OSCs" x="8" y="184" width="920" height="104" style="1342373895" />
+<child type="Label" name="" caption="Phase:" x="16" y="200" width="0" height="0" style="1342242827" />
+<child type="Label" name="" caption="Volume:" x="320" y="200" width="0" height="0" style="1342242827" />
+<child type="Label" name="" caption="Pitch:" x="624" y="200" width="0" height="0" style="1342242827" />
+<child type="TrackBar" name="sub1phase" caption="" x="16" y="216" width="296" height="32" style="1342242816" id="285" />
+<child type="TrackBar" name="sub1volume" caption="" x="320" y="216" width="296" height="32" style="1342242816" id="286" />
+<child type="TrackBar" name="sub1pitch" caption="" x="624" y="216" width="296" height="32" style="1342242816" id="287" />
+<child type="TrackBar" name="sub2phase" caption="" x="16" y="248" width="296" height="32" style="1342242816" id="288" />
+<child type="TrackBar" name="sub2volume" caption="" x="320" y="248" width="296" height="32" style="1342242816" id="289" />
+<child type="TrackBar" name="sub2pitch" caption="" x="624" y="248" width="296" height="32" style="1342242816" id="290" />
+<child type="GroupBox" name="" caption="AM LFO" x="8" y="288" width="920" height="72" style="1342373895" />
+<child type="RadioButton" name="amSinus" caption="Sinus" x="16" y="304" width="0" height="0" style="1342242825" id="291" />
+<child type="RadioButton" name="amAscending" caption="Ascending" x="80" y="304" width="0" height="0" style="1342242825" id="292" />
+<child type="RadioButton" name="amDescending" caption="Descending" x="176" y="304" width="0" height="0" style="1342242825" id="293" />
+<child type="RadioButton" name="amTriangle" caption="Triangel" x="280" y="304" width="0" height="0" style="1342242825" id="294" />
+<child type="RadioButton" name="amRectangle" caption="Square" x="368" y="304" width="0" height="0" style="1342242825" id="295" />
+<child type="Label" name="" caption="Frequency:" x="16" y="320" width="0" height="0" style="1342242827" />
+<child type="EditControl" name="amFrequency" caption="" x="88" y="320" width="80" height="25" style="1350631808" id="296" />
+<child type="Label" name="" caption="Range:" x="176" y="320" width="0" height="0" style="1342242827" />
+<child type="TrackBar" name="amRange" caption="" x="232" y="320" width="688" height="32" style="1342242816" id="297" />
+<child type="GroupBox" name="" caption="FM LFO" x="8" y="360" width="920" height="72" style="1342373895" />
+<child type="RadioButton" name="fmSinus" caption="Sinus" x="16" y="376" width="0" height="0" style="1342242825" id="298" />
+<child type="RadioButton" name="fmAscending" caption="Ascending" x="80" y="376" width="0" height="0" style="1342242825" id="299" />
+<child type="RadioButton" name="fmDescending" caption="Descending" x="176" y="376" width="0" height="0" style="1342242825" id="300" />
+<child type="RadioButton" name="fmTriangle" caption="Triangel" x="280" y="376" width="0" height="0" style="1342242825" id="301" />
+<child type="RadioButton" name="fmRectangle" caption="Square" x="368" y="376" width="0" height="0" style="1342242825" id="302" />
+<child type="Label" name="" caption="Frequency:" x="16" y="392" width="0" height="0" style="1342242827" />
+<child type="EditControl" name="fmFrequency" caption="" x="88" y="392" width="80" height="25" style="1350631808" id="303" />
+<child type="Label" name="" caption="Range:" x="176" y="392" width="0" height="0" style="1342242827" />
+<child type="TrackBar" name="fmRange" caption="" x="232" y="392" width="688" height="32" style="1342242816" id="304" />
+<child type="GroupBox" name="" caption="Envelope" x="8" y="432" width="920" height="122" style="1342373895" />
+<child type="CheckBox" name="envEnabled" caption="Enable" x="16" y="448" width="0" height="0" style="1342242819" id="305" />
+<child type="Label" name="" caption="Delay:" x="16" y="464" width="0" height="0" style="1342242827" />
+<child type="EditControl" name="envDelay" caption="" x="80" y="464" width="40" height="24" style="1350631808" id="306" />
+<child type="Label" name="" caption="Initial Volume:" x="128" y="464" width="0" height="0" style="1342242827" />
+<child type="TrackBar" name="envVolume1" caption="" x="232" y="464" width="544" height="32" style="1342242816" id="307" />
+<child type="Label" name="" caption="Sustain Rate:" x="784" y="472" width="0" height="0" style="1342242827" />
+<child type="EditControl" name="envSustainRate" caption="" x="880" y="472" width="40" height="24" style="1350631808" id="308" />
+<child type="Label" name="" caption="Attack:" x="16" y="488" width="0" height="0" style="1342242827" />
+<child type="EditControl" name="envAttack" caption="" x="80" y="488" width="40" height="24" style="1350631808" id="309" />
+<child type="Label" name="" caption="Decay:" x="16" y="512" width="0" height="0" style="1342242827" />
+<child type="EditControl" name="envDecay" caption="" x="80" y="512" width="40" height="24" style="1350631808" id="310" />
+<child type="Label" name="" caption="Decay Volume:" x="128" y="512" width="0" height="0" style="1342242827" />
+<child type="TrackBar" name="envVolume2" caption="" x="232" y="512" width="544" height="32" style="1342242816" id="311" />
+<child type="Label" name="" caption="Release Rate:" x="784" y="520" width="0" height="0" style="1342242827" />
+<child type="EditControl" name="envReleaseRate" caption="" x="880" y="520" width="40" height="24" style="1350631808" id="312" />
+<child type="PushButton" name="saveSynthButton" caption="Save..." x="8" y="560" width="80" height="25" style="1342242816" id="313" />
+<child type="PushButton" name="loadSynthButton" caption="Load..." x="96" y="560" width="80" height="25" style="1342242816" id="314" />
+<child type="PushButton" name="IDCANCEL" caption="Close" x="184" y="560" width="80" height="25" style="1342242816" id="2" />
+<child type="CheckBox" name="check1" caption="A" x="776" y="560" width="32" height="16" style="1342242819" id="315" />
+<child type="CheckBox" name="check2" caption="B" x="816" y="560" width="32" height="16" style="1342242819" id="316" />
+<child type="CheckBox" name="check3" caption="C" x="856" y="560" width="32" height="16" style="1342242819" id="317" />
+<child type="CheckBox" name="check4" caption="D" x="896" y="560" width="32" height="16" style="1342242819" id="318" />
+<child type="Label" name="cpuSpeed" caption="0000" x="272" y="560" width="450" height="0" style="1342242827" id="319" bgColor="COLOR_BTNFACE" bg_red="0" bg_green="0" bg_blue="0" />
+</form>
+</forms>
+<strings>
+<list name="FileDialogStringList">
+<string name="OPEN_MIDI" caption="Open MIDI File" id="320" />
+<string name="SAVE_MIDI" caption="Save MIDI File" id="321" />
+<string name="OPEN_SETTINGS" caption="Open Settings" id="322" />
+<string name="SAVE_SETTINGS" caption="Save Settings" id="323" />
+<string name="OPEN_LOOP" caption="Open Loop File" id="324" />
+<string name="SAVE_LOOP" caption="Save Loop File" id="325" />
+</list>
+<list name="ErrorStringList">
+<string name="MIDI_BAD_HEADER" caption="Invalid MIDI File Header" id="326" />
+<string name="MIDI_BAD_TRACK_HEADER" caption="Invalid MIDI Track Header" id="327" />
+<string name="OPEN_IN_FAILED" caption="Unable to open MIDI-In" id="328" />
+<string name="OPEN_OUT_FAILED" caption="Unable to open MIDI-Out" id="329" />
+</list>
+<list name="MessageStringList">
+<string name="MIDI_FILE_CHANGED" caption="MIDI-Data have been changed. Do you want to save?" id="330" />
+<string name="SETTINGS_CHANGED" caption="MIDI-Settings have been changed. Do you want to save?" id="331" />
+<string name="DRUM_CHANGED" caption="Drum data have been changed. Do you want to save?" id="332" />
+<string name="LOOP_CHANGED" caption="Loop-Data have been changed. Do you want to save?" id="333" />
+</list>
+<list name="LabelStringList">
+<string name="DRUM_EDITOR_TITLE" caption="Drum Editor" id="334" />
+<string name="STOP_LABEL" caption="Stop" id="335" />
+<string name="PLAY_LABEL" caption="Play" id="336" />
+<string name="RECORD_LABEL" caption="Record" id="337" />
+<string name="CHANNEL_LABEL" caption="Channel" id="338" />
+<string name="ANY_CHANNEL_LABEL" caption="Any" id="339" />
+<string name="ALL_MIDI_RECORD_LABEL" caption="All" id="340" />
+<string name="DEFAULT_MIDI_PLAY_LABEL" caption="Default" id="341" />
+<string name="ALL_NOTES_LABEL" caption="Notes" id="342" />
+<string name="MAJOR_LABEL" caption="Major" id="343" />
+<string name="MINOR_LABEL" caption="Minor" id="344" />
+<string name="INSTRUMENT_CAPTION" caption="Guitar &amp; Piano" id="345" />
+</list>
+<list name="RecorderFiles">
+<string name="MidiFiles" caption="MIDI Files (*.mid)|*.mid|" id="346" />
+<string name="CsvFiles" caption="Comma Separated (*.csv)|*.csv|" id="347" />
+</list>
+<list name="DrumFiles">
+<string name="DrumFiles" caption="Drum Files (*.drum)|*.drum|" id="348" />
+<string name="CsvFiles" caption="Comma Separated (*.csv)|*.csv|" id="347" />
+<string name="MidiFiles" caption="MIDI Files (*.mid)|*.mid|" id="346" />
+</list>
+<list name="LoopFiles">
+<string name="LoopFiles" caption="Loop Files (*.loop)|*.loop|" id="349" />
+<string name="CsvFiles" caption="Comma Separated (*.csv)|*.csv|" id="347" />
+<string name="MidiFiles" caption="MIDI Files (*.mid)|*.mid|" id="346" />
+</list>
+<list name="SynthFiles">
+<string name="SynthFiles" caption="Synthesizer (*.sset)|*.sset|" id="350" />
+</list>
+<list name="SettingsFiles">
+<string name="SettingsFiles" caption="Settings (*.mset)|*.mset|" id="351" />
+</list>
+</strings>
+</gui>

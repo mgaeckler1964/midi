@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<translations>
+<language lang="de">
+<item caption="Active" translation="Aktiv" />
+<item caption="Add" translation="Hinzufügen" />
+<item caption="All" translation="Alles" />
+<item caption="Any" translation="Alle" />
+<item caption="Apply" translation="Übernehmen" />
+<item caption="Ascending" translation="Aufsteigend" />
+<item caption="Bar.Beat.Time:" translation="Takt.Beat.Zeit:" />
+<item caption="Break" translation="Pause" />
+<item caption="Cancel" translation="Abbruch" />
+<item caption="Channel" translation="Kanal" />
+<item caption="Channels" translation="Kanäle" />
+<item caption="Channels:" translation="Kanäle:" />
+<item caption="Channel:" translation="Kanal:" />
+<item caption="Channel Settings" translation="Kanaleinstellungen" />
+<item caption="Channel Volume" translation="Kanallautstärke" />
+<item caption="Close" translation="Schließen" />
+<item caption="Comma Separated (*.csv)|*.csv|" translation="Kommasepariert (*.csv)|*.csv|" />
+<item caption="Copy" translation="Kopieren" />
+<item caption="Delete" translation="Löschen" />
+<item caption="Delete All" translation="Alles Löschen" />
+<item caption="Descending" translation="Fallend" />
+<item caption="Device" translation="Gerät" />
+<item caption="Down" translation="Unten" />
+<item caption="Drum Editor" translation="Schlagzeugeditor" />
+<item caption="Drum Files (*.drum)|*.drum|" translation="Drum Dateien (*.drum)|*.drum|" />
+<item caption="Drum data have been changed. Do you want to save?" translation="Schlagzeugaten wurden geändert. Wollen Sie sie speichern?" />
+<item caption="Edit" translation="Bearbeiten" />
+<item caption="Edit..." translation="Bearbeiten..." />
+<item caption="Edit Multiple Entries:" translation="Mehrere Einträge bearbeiten:" />
+<item caption="Effect 1 (Reverb):" translation="Effekt 1 (Reverb):" />
+<item caption="Effect 2 (Tremolo):" translation="Effekt 2 (Tremolo):" />
+<item caption="Effect 3 (Chorus):" translation="Effekt 3 (Chorus):" />
+<item caption="Effect 4 (Detune):" translation="Effekt 4 (Detune):" />
+<item caption="Effect 5 (Phaser):" translation="Effekt 5 (Phaser):" />
+<item caption="Enable" translation="Aktivieren" />
+<item caption="Envelope" translation="Hüllkurve" />
+<item caption="Filter Settings" translation="Filter Einstellungen" />
+<item caption="First Click:" translation="Erster Klick:" />
+<item caption="Frequency:" translation="Frequenz:" />
+<item caption="German" translation="Deutsch" />
+<item caption="Grid:" translation="Raster:" />
+<item caption="Guitar &amp; Piano" translation="Gitarre &amp; Klavier" />
+<item caption="Hold" translation="Halten" />
+<item caption="Instruments:" translation="Instrumente" />
+<item caption="Invalid MIDI File Header" translation="Ungültiger MIDI Dateikopf" />
+<item caption="Invalid MIDI Track Header" translation="Ungültiger MIDI Spurkopf" />
+<item caption="Length:" translation="Länge" />
+<item caption="Load..." translation="Laden..." />
+<item caption="Longer" translation="Länger" />
+<item caption="Loop-Data have been changed. Do you want to save?" translation="Loop-Daten wurden geändert. Wollen Sie sie speichern?" />
+<item caption="Loop Files (*.loop)|*.loop|" translation="Loop Dateien (*.loop)|*.loop|" />
+<item caption="MIDI-Data have been changed. Do you want to save?" translation="MIDI-Daten wurden geändert. Wollen Sie sie speichern?" />
+<item caption="MIDI-Settings have been changed. Do you want to save?" translation="MIDI-Einstellungen wurden geändert. Wollen Sie sie speichern?" />
+<item caption="MIDI Devices" translation="MIDI Geräte" />
+<item caption="MIDI Files (*.mid)|*.mid|" translation="MIDI Dateien (*.mid)|*.mid|" />
+<item caption="MIDI Recorder" translation="MIDI Rekorder" />
+<item caption="Major" translation="Dur" />
+<item caption="Metronome" translation="Metronom" />
+<item caption="Minor" translation="Moll" />
+<item caption="Move" translation="Verschieben" />
+<item caption="New" translation="Neu" />
+<item caption="Notes" translation="Noten" />
+<item caption="Note / Volume / Length (ms) / Velocity" translation="Note / Lautstärke / Dauer (ms) / Ausklingzeit" />
+<item caption="Open Loop File" translation="Öffne Loopdatei" />
+<item caption="Open MIDI File" translation="Öffne MIDI-Datei" />
+<item caption="Open Settings" translation="Öffne Einstellungen" />
+<item caption="Other" translation="Andere" />
+<item caption="Other Clicks;" translation="Andere Klicks:" />
+<item caption="Pan" translation="Stereo" />
+<item caption="Pan:" translation="Stereo:" />
+<item caption="Pattern Pan" translation="Patternstereo" />
+<item caption="Pattern Volumes" translation="Patternlautstärke" />
+<item caption="Play" translation="Abspielen" />
+<item caption="Range:" translation="Bereich" />
+<item caption="Record" translation="Aufnahme" />
+<item caption="Recorder" translation="Rekorder" />
+<item caption="Release Rate:" translation="Ausklingrate" />
+<item caption="Repeat" translation="Wdh." />
+<item caption="Save..." translation="Speichern..." />
+<item caption="Save Loop File" translation="Speichere Loopdatei" />
+<item caption="Save MIDI File" translation="Speichere MIDI-Datei" />
+<item caption="Save Settings" translation="Speichere Einstellungen" />
+<item caption="Settings (*.mset)|*.mset|" translation="Einstellungen (*.mset)|*.mset|" />
+<item caption="Shift+click: De/select, Right click: Copy Volume, Ctrl+right click: Change Volume" translation="Shift+Klick: Auswählen, Rechtsklick: Kopiere Lautstärke, Strg+Rechtsklick: Ändere Lautstärke" />
+<item caption="Shorter" translation="Kürzer" />
+<item caption="Square" translation="Rechteck" />
+<item caption="Sustain Rate:" translation="Sustainrate" />
+<item caption="Swap Channels" translation="Tausche Kanäle" />
+<item caption="Swap Ch." translation="Kan. tauschen" />
+<item caption="Tempo/Length:" translation="Tempo/Länge:" />
+<item caption="Tempo (BPM/Time):" translation="Tempo (BPM/Takt):" />
+<item caption="Unable to open MIDI-In" translation="Öffnen des MIDI-Eingangs fehlgeschlagen" />
+<item caption="Unable to open MIDI-Out" translation="Öffnen der MIDI-Ausgabe fehlgeschlagen" />
+<item caption="Up" translation="Oben" />
+<item caption="Velocity:" translation="Ausklingzeit" />
+<item caption="Voice" translation="Stimme" />
+<item caption="Voice:" translation="Stimme:" />
+<item caption="Volume" translation="Lautstärke" />
+<item caption="Volume:" translation="Lautstärke:" />
+</language>
+</translations>

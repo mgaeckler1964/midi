@@ -1,0 +1,161 @@
+VOICE_GROUP;VOICE;PROGRAM;COMMENT
+Acoustic Piano (Preset);Bell;7;Preset
+Acoustic Piano (Preset);Blend;6;Preset
+Acoustic Piano (Preset);Chorus;2;Preset
+Acoustic Piano (Preset);Classic;1;Preset
+Acoustic Piano (Preset);Honky Tonk;3;Preset
+Acoustic Piano (Preset);PF & Strings;5;Preset
+Acoustic Piano (Preset);Rock;0;Preset
+Acoustic Piano (Preset);Soft;4;Preset
+Bass (Preset);Finger;35;Preset
+Bass (Preset);Fretless;33;Preset
+Bass (Preset);Groove;39;Preset
+Bass (Preset);Pick;36;Preset
+Bass (Preset);Slap;34;Preset
+Bass (Preset);Synth;37;Preset
+Bass (Preset);Techno;38;Preset
+Bass (Preset);Wood;32;Preset
+Brass (Internal);Fat;34;Internal
+Brass (Internal);Light;35;Internal
+Brass (Internal);Power;33;Internal
+Brass (Internal);Punch;32;Internal
+Brass (Preset);Fanfare;23;Preset
+Brass (Preset);Flugel Horn;19;Preset
+Brass (Preset);French Horm;20;Preset
+Brass (Preset);Mute Trumpet;17;Preset
+Brass (Preset);Section1;21;Preset
+Brass (Preset);Section2;22;Preset
+Brass (Preset);Trombone;18;Preset
+Brass (Preset);Trumpet;16;Preset
+Chorus (Preset);Angel;59;Preset
+Chorus (Preset);Bell;60;Preset
+Chorus (Preset);Itopy;57;Preset
+Chorus (Preset);Marin;63;Preset
+Chorus (Preset);Pure;56;Preset
+Chorus (Preset);Snow;61;Preset
+Chorus (Preset);Uhh;58;Preset
+Chorus (Preset);Vocoder;62;Preset
+Drums (Internal);Auto;62;Internal
+Drums (Internal);Kit;63;Internal
+Electric Piano (Preset);Light;9;Preset
+Electric Piano (Preset);Malet;11;Preset
+Electric Piano (Preset);Old;10;Preset
+Electric Piano (Preset);Tine;8;Preset
+Keyboard (Preset);Celesta;14;Preset
+Keyboard (Preset);Clavi1;12;Preset
+Keyboard (Preset);Clavi2;13;Preset
+Keyboard (Preset);Harpischord;15;Preset
+Multi Layer (Internal);Analog Pad 1;69;Multi Internal
+Multi Layer (Internal);Analog Pad 2;70;Multi Internal
+Multi Layer (Internal);Analog Pad 3;71;Multi Internal
+Multi Layer (Internal);Bell Pad;66;Multi Internal
+Multi Layer (Internal);Epilogue;77;Multi Internal
+Multi Layer (Internal);Fat Brass;72;Multi Internal
+Multi Layer (Internal);Hyuh Pad;73;Multi Internal
+Multi Layer (Internal);Mikado;75;Multi Internal
+Multi Layer (Internal);Prologue;76;Multi Internal
+Multi Layer (Internal);Reggae;74;Multi Internal
+Multi Layer (Internal);Sun Beam;67;Multi Internal
+Multi Layer (Internal);Super Saw;65;Multi Internal
+Multi Layer (Internal);Sync Lead;64;Multi Internal
+Multi Layer (Internal);Wide Dcy;68;Multi Internal
+Multi Layer (Preset);Big Band;65;Multi Preset 
+Multi Layer (Preset);Distortion Lead;72;Multi Preset 
+Multi Layer (Preset);Full Brass;69;Multi Preset 
+Multi Layer (Preset);Orchestra;64;Multi Preset 
+Multi Layer (Preset);Pan Lead;70;Multi Preset 
+Multi Layer (Preset);Piano & Strings;67;Multi Preset 
+Multi Layer (Preset);Strings & Choir;71;Multi Preset 
+Multi Layer (Preset);Super Clavi;66;Multi Preset 
+Multi Layer (Preset);Voice & Bass;68;Multi Preset 
+Multi MIDI (Preset);Demo;79;Multi Preset 
+Multi MIDI (Preset);Jazz;78;Multi Preset 
+Multi MIDI (Preset);Pop;76;Multi Preset 
+Multi MIDI (Preset);Rock;77;Multi Preset 
+Multi Split (Internal);Rythm Section;79;Multi Internal
+Multi Split (Internal);Solid Set;78;Multi Internal
+Multi Split (Preset);Bass & Brass;74;Multi Preset 
+Multi Split (Preset);Cello & Flute;75;Multi Preset 
+Multi Split (Preset);Wood bass & Piano;73;Multi Preset 
+Musical Effect (Internal);Drama;49;Internal
+Musical Effect (Internal);Grand;51;Internal
+Musical Effect (Internal);Memory;55;Internal
+Musical Effect (Internal);Slow Song;50;Internal
+Musical Effect (Internal);Space;54;Internal
+Musical Effect (Internal);Typhoon;52;Internal
+Musical Effect (Internal);Tzone;53;Internal
+Musical Effect (Internal);Wide!;48;Internal
+Organ (Internal);Big;30;Internal
+Organ (Internal);Cat;29;Internal
+Organ (Internal);Combo;31;Internal
+Organ (Internal);Paris;25;Internal
+Organ (Internal);Rock1;26;Internal
+Organ (Internal);Rock2;27;Internal
+Organ (Internal);Rock3;28;Internal
+Organ (Internal);Tango;24;Internal
+Percussive (Internal);Battle;60;Internal
+Percussive (Internal);Human;61;Internal
+Percussive (Internal);Marimba;57;Internal
+Percussive (Internal);MusicBox;58;Internal
+Percussive (Internal);Timpani;59;Internal
+Percussive (Internal);Vibraphone;56;Internal
+Plucked (Preset);Charango;54;Preset
+Plucked (Preset);Distortion;53;Preset
+Plucked (Preset);Folk;49;Preset
+Plucked (Preset);Gypsy;48;Preset
+Plucked (Preset);Mute;51;Preset
+Plucked (Preset);Rock;52;Preset
+Plucked (Preset);Sitar;55;Preset
+Plucked (Preset);Wide!;50;Preset
+Sound Effect (Internal);and>?;47;Internal
+Sound Effect (Internal);Electric;45;Internal
+Sound Effect (Internal);Emergensy;44;Internal
+Sound Effect (Internal);GoUp!;46;Internal
+Sound Effect (Internal);Hit;40;Internal
+Sound Effect (Internal);Open;43;Internal
+Sound Effect (Internal);Start;41;Internal
+Sound Effect (Internal);Who?;42;Internal
+Strings (Internal);Light;39;Internal
+Strings (Internal);Mild;38;Internal
+Strings (Internal);Modern;36;Internal
+Strings (Internal);Soft;37;Internal
+Strings (Preset);Arco1;24;Preset
+Strings (Preset);Arco2;25;Preset
+Strings (Preset);Cello;26;Preset
+Strings (Preset);Orchestra Brass;30;Preset
+Strings (Preset);Orchestra Strings;31;Preset
+Strings (Preset);Pizzicato;28;Preset
+Strings (Preset);Slow Atack;27;Preset
+Strings (Preset);Tremolo;29;Preset
+Synthesizer Comp (Internal);Brash;12;Internal
+Synthesizer Comp (Internal);Coin;11;Internal
+Synthesizer Comp (Internal);Digichord;8;Internal
+Synthesizer Comp (Internal);Elegant;9;Internal
+Synthesizer Comp (Internal);Resonance;15;Internal
+Synthesizer Comp (Internal);Sand;14;Internal
+Synthesizer Comp (Internal);Sforzando;10;Internal
+Synthesizer Comp (Internal);Water;13;Internal
+Synthesizer Lead (Internal);2VCO;21;Internal
+Synthesizer Lead (Internal);Analog Synth;23;Internal
+Synthesizer Lead (Internal);Fat;22;Internal
+Synthesizer Lead (Internal);Power;19;Internal
+Synthesizer Lead (Internal);Saw;16;Internal
+Synthesizer Lead (Internal);Square;17;Internal
+Synthesizer Lead (Internal);Sync;18;Internal
+Synthesizer Lead (Internal);Whistle;20;Internal
+Synthesizer Pad (Internal);Bell;3;Internal
+Synthesizer Pad (Internal);Deep;5;Internal
+Synthesizer Pad (Internal);Dynamic;7;Internal
+Synthesizer Pad (Internal);Filter;4;Internal
+Synthesizer Pad (Internal);Fog;6;Internal
+Synthesizer Pad (Internal);Full;2;Internal
+Synthesizer Pad (Internal);Resonance;1;Internal
+Synthesizer Pad (Internal);Warm;0;Internal
+Wind (Preset);Clarinet;42;Preset
+Wind (Preset);Flute;41;Preset
+Wind (Preset);Oboe;43;Preset
+Wind (Preset);Orchestra;47;Preset
+Wind (Preset);Pan flute;44;Preset
+Wind (Preset);Sax Ensemble;45;Preset
+Wind (Preset);Saxophone;40;Preset
+Wind (Preset);Wind Ensemble;46;Preset

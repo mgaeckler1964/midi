@@ -1,0 +1,129 @@
+VOICE_GROUP;VOICE;PROGRAM
+Bass;Acoustic Bass;32
+Bass;Electric Bass (finger);33
+Bass;Electric Bass pick);34
+Bass;Fretless Bass;35
+Bass;Slap Bass 1;36
+Bass;Slap Bass 2;37
+Bass;Synth Bass 1;38
+Bass;Synth Bass 2;39
+Brass;Brass Section;61
+Brass;French Horn;60
+Brass;Muted Trumpet;59
+Brass;Synth Brass 1;62
+Brass;Synth Brass 2;63
+Brass;Tromboe;57
+Brass;Trumpet;56
+Brass;Tuba;58
+Chromatic Percussion;Celesta;8
+Chromatic Percussion;Dulcimer;15
+Chromatic Percussion;Glockenspiel;9
+Chromatic Percussion;Marimba;12
+Chromatic Percussion;Music Box;10
+Chromatic Percussion;Tubular Bells;14
+Chromatic Percussion;Vibraphone;11
+Chromatic Percussion;Xylophone;13
+Ensemble;Orchestra Hit;55
+Ensemble;String Ensemble 1;48
+Ensemble;String Ensemble 2;49
+Ensemble;Synth Strings 1;50
+Ensemble;Synth Strings 1;51
+Ensemble;Synth Voice;54
+Ensemble;Voice Aahs;52
+Ensemble;Voice Oohs;53
+Ethnic;Bagpipe;109
+Ethnic;Banjo;105
+Ethnic;Fiddle;110
+Ethnic;Kalimba;108
+Ethnic;Koto;107
+Ethnic;Shamisen;106
+Ethnic;Shanai;111
+Ethnic;Sitar;104
+Guitar;Acoustic Guitar (nylon);24
+Guitar;Acoustic Guitar (steel);25
+Guitar;Acoustic Guitar clean);27
+Guitar;Acoustic Guitar jazz);26
+Guitar;Acoustic Guitar muted);28
+Guitar;Distortion Guitar;30
+Guitar;Guitar harmonics;31
+Guitar;Overdriven Guitar;29
+Organ;Accordion;21
+Organ;Church Organ;19
+Organ;Drawbar Organ;16
+Organ;Harmonica;22
+Organ;Percussive Organ;17
+Organ;Reed Organ;20
+Organ;Rock Organ;18
+Organ;Tango Accordion;23
+Percussive;Agogo Bells;113
+Percussive;Melodic Tom;117
+Percussive;Reverse Cymba;119
+Percussive;Steel Drums;114
+Percussive;Synth Drum;118
+Percussive;Taiko Drum;116
+Percussive;Tinkle Bell;112
+Percussive;Woodblock;115
+Piano;Acoustic Grand Piano;0
+Piano;Bright Acoustic Piano;1
+Piano;Clavi;7
+Piano;Electric Grand Piano;2
+Piano;Electric Piano 1;4
+Piano;Electric Piano 2;5
+Piano;Harpischord;6
+Piano;Honky-tonk Piano;3
+Pipe;Blown Bottle;76
+Pipe;Flute;73
+Pipe;Ocarina;79
+Pipe;Pan Flute;75
+Pipe;Piccolo;72
+Pipe;Recorder;74
+Pipe;Shakuhachi;77
+Pipe;Whistle;78
+Reed;Alto Saxophone;65
+Reed;Baritone Saxophone;67
+Reed;Bassoon;70
+Reed;Clarinet;71
+Reed;English Horn;69
+Reed;Oboe;68
+Reed;Soprano Saxophone;64
+Reed;Tenor Saxophone;66
+Sound effects;Applause;126
+Sound effects;Bird Tweet;123
+Sound effects;Breath Noise;121
+Sound effects;Guitar Fret Noise;120
+Sound effects;Gunshot;127
+Sound effects;Helicopter;125
+Sound effects;Seashore;122
+Sound effects;Telephone Ring;124
+Strings;Cello;42
+Strings;Contrabass;43
+Strings;Orchestral Harp;46
+Strings;Pizzicato Strings;45
+Strings;Timpani;47
+Strings;Tremolo Strings;44
+Strings;Viola;41
+Strings;Violin;40
+Synth Effects;Atmosphere;99
+Synth Effects;Brightness;100
+Synth Effects;Crystal;98
+Synth Effects;Echoes;102
+Synth Effects;Goblins;101
+Synth Effects;Rain;96
+Synth Effects;Sci-Fi;103
+Synth Effects;Soundtrack;97
+Synth Lead;Bass + Lead;87
+Synth Lead;Calliope Lead;82
+Synth Lead;Charang Lead;84
+Synth Lead;Chiff Lead;83
+Synth Lead;Fifths Lead;86
+Synth Lead;Sawwtooth Lead;81
+Synth Lead;Square Lead;80
+Synth Lead;Voice Lead;85
+Synth Pad;Bowed;92
+Synth Pad;Choir;91
+Synth Pad;Halo;94
+Synth Pad;Metallic;93
+Synth Pad;New Age;88
+Synth Pad;Polysynth;90
+Synth Pad;Sweep;95
+Synth Pad;Warm;89

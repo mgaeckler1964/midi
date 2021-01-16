@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A328C0E7-BE67-4372-9949-1D0229D0179D}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>mgSynth</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="..\CommonSettings.props" />
+    <Import Project="..\Common32Settings.props" />
+    <Import Project="..\DebugSettings.props" />
+    <Import Project="..\vstPlugins.props" />
+    <Import Project="..\vst32.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="..\CommonSettings.props" />
+    <Import Project="..\Common64Settings.props" />
+    <Import Project="..\DebugSettings.props" />
+    <Import Project="..\vstPlugins.props" />
+    <Import Project="..\vst64.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="..\CommonSettings.props" />
+    <Import Project="..\Common32Settings.props" />
+    <Import Project="..\ReleaseSettings.props" />
+    <Import Project="..\vstPlugins.props" />
+    <Import Project="..\vst32.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="..\CommonSettings.props" />
+    <Import Project="..\Common64Settings.props" />
+    <Import Project="..\ReleaseSettings.props" />
+    <Import Project="..\vstPlugins.props" />
+    <Import Project="..\vst64.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_USRDLL;MGSYNTH_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>VST/mgSynth.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_USRDLL;MGSYNTH_EXPORTS;DEBUG_LOG=1;VSTGUI_LIVE_EDITING=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>VST/mgSynth.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_USRDLL;MGSYNTH_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>VST/mgSynth.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>VST/mgSynth.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\VstSDK\pluginterfaces\base\conststringtable.cpp" />
+    <ClCompile Include="..\..\VstSDK\pluginterfaces\base\funknown.cpp" />
+    <ClCompile Include="..\..\VstSDK\pluginterfaces\base\ustring.cpp" />
+    <ClCompile Include="..\..\VstSDK\public.sdk\source\common\pluginview.cpp" />
+    <ClCompile Include="..\..\VstSDK\public.sdk\source\main\dllmain.cpp" />
+    <ClCompile Include="..\..\VstSDK\public.sdk\source\main\pluginfactoryvst3.cpp" />
+    <ClCompile Include="..\..\VstSDK\public.sdk\source\vst\vstaudioeffect.cpp" />
+    <ClCompile Include="..\..\VstSDK\public.sdk\source\vst\vstbus.cpp" />
+    <ClCompile Include="..\..\VstSDK\public.sdk\source\vst\vstcomponent.cpp" />
+    <ClCompile Include="..\..\VstSDK\public.sdk\source\vst\vstcomponentbase.cpp" />
+    <ClCompile Include="..\..\VstSDK\public.sdk\source\vst\vsteditcontroller.cpp" />
+    <ClCompile Include="..\..\VstSDK\public.sdk\source\vst\vstguieditor.cpp" />
+    <ClCompile Include="..\..\VstSDK\public.sdk\source\vst\vstinitiids.cpp" />
+    <ClCompile Include="..\..\VstSDK\public.sdk\source\vst\vstnoteexpressiontypes.cpp" />
+    <ClCompile Include="..\..\VstSDK\public.sdk\source\vst\vstparameters.cpp" />
+    <ClCompile Include="..\..\VstSDK\vstgui4\vstgui\plugin-bindings\vst3editor.cpp" />
+    <ClCompile Include="..\..\VstSDK\vstgui4\vstgui\plugin-bindings\vst3groupcontroller.cpp" />
+    <ClCompile Include="..\..\VstSDK\vstgui4\vstgui\plugin-bindings\vst3padcontroller.cpp" />
+    <ClCompile Include="..\..\VstSDK\vstgui4\vstgui\vstgui_uidescription_win32.cpp" />
+    <ClCompile Include="..\..\VstSDK\vstgui4\vstgui\vstgui_win32.cpp" />
+    <ClCompile Include="VST\vstController.cpp" />
+    <ClCompile Include="VST\vstEditor.cpp" />
+    <ClCompile Include="VST\vstFactory.cpp" />
+    <ClCompile Include="VST\vstProcessor.cpp" />
+    <ClCompile Include="VST\vstVoice.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\base\conststringtable.h" />
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\base\falignpop.h" />
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\base\falignpush.h" />
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\base\fplatform.h" />
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\base\ftypes.h" />
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\base\funknown.h" />
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\base\ipluginbase.h" />
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\base\keycodes.h" />
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\base\ustring.h" />
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\gui\iplugview.h" />
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\ivstattributes.h" />
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\ivstaudioprocessor.h" />
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\ivstcomponent.h" />
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\ivsteditcontroller.h" />
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\ivstevents.h" />
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\ivsthostapplication.h" />
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\ivstmessage.h" />
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\ivstmidicontrollers.h" />
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\ivstnoteexpression.h" />
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\ivstparameterchanges.h" />
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\ivstplugview.h" />
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\ivstprocesscontext.h" />
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\ivstunits.h" />
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\vstpresetkeys.h" />
+    <ClInclude Include="..\..\VstSDK\pluginterfaces\vst\vsttypes.h" />
+    <ClInclude Include="..\..\VstSDK\public.sdk\samples\vst\common\voicebase.h" />
+    <ClInclude Include="..\..\VstSDK\public.sdk\samples\vst\common\voiceprocessor.h" />
+    <ClInclude Include="..\..\VstSDK\public.sdk\source\common\pluginview.h" />
+    <ClInclude Include="..\..\VstSDK\public.sdk\source\main\pluginfactoryvst3.h" />
+    <ClInclude Include="..\..\VstSDK\public.sdk\source\vst\vstaudioeffect.h" />
+    <ClInclude Include="..\..\VstSDK\public.sdk\source\vst\vstbus.h" />
+    <ClInclude Include="..\..\VstSDK\public.sdk\source\vst\vstcomponent.h" />
+    <ClInclude Include="..\..\VstSDK\public.sdk\source\vst\vstcomponentbase.h" />
+    <ClInclude Include="..\..\VstSDK\public.sdk\source\vst\vsteditcontroller.h" />
+    <ClInclude Include="..\..\VstSDK\public.sdk\source\vst\vstguieditor.h" />
+    <ClInclude Include="..\..\VstSDK\public.sdk\source\vst\vstnoteexpressiontypes.h" />
+    <ClInclude Include="..\..\VstSDK\public.sdk\source\vst\vstparameters.h" />
+    <ClInclude Include="..\..\VstSDK\vstgui4\vstgui\plugin-bindings\vst3editor.h" />
+    <ClInclude Include="..\..\VstSDK\vstgui4\vstgui\plugin-bindings\vst3groupcontroller.h" />
+    <ClInclude Include="..\..\VstSDK\vstgui4\vstgui\plugin-bindings\vst3padcontroller.h" />
+    <ClInclude Include="Synth\manipulator.h" />
+    <ClInclude Include="Synth\midi.h" />
+    <ClInclude Include="Synth\oscilator.h" />
+    <ClInclude Include="Synth\synthesizer.h" />
+    <ClInclude Include="VST\vstController.h" />
+    <ClInclude Include="VST\vstEditor.h" />
+    <ClInclude Include="VST\vstProcessor.h" />
+    <ClInclude Include="VST\vstVersion.h" />
+    <ClInclude Include="VST\vstVoice.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\VstSDK\base\win\base_vc10.vcxproj">
+      <Project>{5755cc40-c699-491b-bd7c-5d841c26c28d}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="VST\background.png" />
+    <None Include="VST\groupframe.png" />
+    <None Include="VST\mgSynth.def" />
+    <None Include="VST\mgSynth.uidesc">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="VST\onoff.png" />
+    <None Include="VST\orangeKnob.png" />
+    <None Include="VST\radio.png" />
+    <None Include="VST\vuOff.png" />
+    <None Include="VST\vuOn.png" />
+    <None Include="VST\waves.png" />
+    <None Include="VST\yellowKnob.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="VST\mgSynth.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

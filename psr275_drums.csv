@@ -1,0 +1,721 @@
+VOICE;PROGRAM;BANK_MSB;BANK_LSB;NOTE;COMMENT
+Surdo Mute;0;127;0;13;Standard Kit 1
+Surdo Open;0;127;0;14;
+Hi Q;0;127;0;15;
+Whip Slap;0;127;0;16;
+Scratch Push;0;127;0;17;
+Scratch Pull;0;127;0;18;
+Finger Snap;0;127;0;19;
+Click Noise;0;127;0;20;
+Metronome Click;0;127;0;21;
+Metronome Bell;0;127;0;22;
+Seq Click L;0;127;0;23;
+Seq Click H;0;127;0;24;
+Brush Tap;0;127;0;25;
+Brush Swirl;0;127;0;26;
+Brush Slap;0;127;0;27;
+Brush Tap Swirl;0;127;0;28
+Snare Roll;0;127;0;29
+Castanet;0;127;0;30
+Snare Soft H;0;127;0;31
+Sticks;0;127;0;32
+Bass Drum Soft;0;127;0;33
+Open Rim Shot;0;127;0;34
+Bass Drum Hard;0;127;0;35
+Bass Drum;0;127;0;36
+Side Stick;0;127;0;37
+Snare M;0;127;0;38
+Hand Clap;0;127;0;39
+Snare Hard H;0;127;0;40
+Tom Floor L;0;127;0;41
+Hi-Hat Closed;0;127;0;42
+Tom Floor H;0;127;0;43
+Hi-Hat Pedal;0;127;0;44
+Tom Low;0;127;0;45
+Hi-Hat Open;0;127;0;46
+Tom Mid L;0;127;0;47
+Tom Mid H;0;127;0;48
+Crash Cymbal 1;0;127;0;49
+Tom High;0;127;0;50
+Ride Cymbal 1;0;127;0;51
+Chinese Cymbal;0;127;0;52
+Ride Cymbal Cup;0;127;0;53
+Tambourine;0;127;0;54
+Splash Cymbal;0;127;0;55
+Cowbell;0;127;0;56
+Crash Cymbal 2;0;127;0;57
+Vibraslap;0;127;0;58
+Ride Cymbal 2;0;127;0;59
+Bongo H;0;127;0;60
+Bongo L;0;127;0;61
+Conga H Mute;0;127;0;62
+Conga H Open;0;127;0;63
+Conga L;0;127;0;64
+Timbale H;0;127;0;65
+Timbale L;0;127;0;66
+Agogo H;0;127;0;67
+Agogo L;0;127;0;68
+Cabasa;0;127;0;69
+Maracas;0;127;0;70
+Samba Whisle H;0;127;0;71
+Samba Whisle L;0;127;0;72
+Guiro Short;0;127;0;73
+Guiro Long;0;127;0;74
+Claves;0;127;0;75
+Wood Block H;0;127;0;76;
+Wood Block L;0;127;0;77;
+Cuica Mute;0;127;0;78;
+Cuica Open;0;127;0;79;
+Triangle Mute;0;127;0;80;
+Triangle Open;0;127;0;81;
+Shaker;0;127;0;82;
+Jingle Bell;0;127;0;83;
+Bell Tree;0;127;0;84;
+Surdo Mute;1;127;0;13;Standard Kit 2
+Surdo Open;1;127;0;14;
+Hi Q;1;127;0;15;
+Whip Slap;1;127;0;16;
+Scratch Push;1;127;0;17;
+Scratch Pull;1;127;0;18;
+Finger Snap;1;127;0;19;
+Click Noise;1;127;0;20;
+Metronome Click;1;127;0;21;
+Metronome Bell;1;127;0;22;
+Seq Click L;1;127;0;23;
+Seq Click H;1;127;0;24;
+Brush Tap;1;127;0;25;
+Brush Swirl;1;127;0;26;
+Brush Slap;1;127;0;27;
+Brush Tap Swirl;1;127;0;28;
+Snare Roll;1;127;0;29;
+Castanet;1;127;0;30;
+Snare Soft H 2;1;127;0;31;(change)
+Sticks;1;127;0;32;
+Bass Drum Soft;1;127;0;33;
+Open Rim Shot 2;1;127;0;34;(change)
+Bass Drum Hard;1;127;0;35;
+Bass Drum 2;1;127;0;36;(change)
+Side Stick;1;127;0;37;
+Snare M 2;1;127;0;38;(change)
+Hand Clap;1;127;0;39;
+Snare Hard H 2;1;127;0;40;(change)
+Tom Floor L;1;127;0;41;
+Hi-Hat Closed;1;127;0;42;
+Tom Floor H;1;127;0;43;
+Hi-Hat Pedal;1;127;0;44;
+Tom Low;1;127;0;45;
+Hi-Hat Open;1;127;0;46;
+Tom Mid L;1;127;0;47;
+Tom Mid H;1;127;0;48;
+Crash Cymbal 1;1;127;0;49;
+Tom High;1;127;0;50;
+Ride Cymbal 1;1;127;0;51;
+Chinese Cymbal;1;127;0;52
+Ride Cymbal Cup;1;127;0;53
+Tambourine;1;127;0;54
+Splash Cymbal;1;127;0;55
+Cowbell;1;127;0;56
+Crash Cymbal 2;1;127;0;57
+Vibraslap;1;127;0;58
+Ride Cymbal 2;1;127;0;59
+Bongo H;1;127;0;60
+Bongo L;1;127;0;61
+Conga H Mute;1;127;0;62
+Conga H Open;1;127;0;63
+Conga L;1;127;0;64
+Timbale H;1;127;0;65
+Timbale L;1;127;0;66
+Agogo H;1;127;0;67
+Agogo L;1;127;0;68
+Cabasa;1;127;0;69
+Maracas;1;127;0;70
+Samba Whisle H;1;127;0;71
+Samba Whisle L;1;127;0;72
+Guiro Short;1;127;0;73
+Guiro Long;1;127;0;74
+Claves;1;127;0;75
+Wood Block H;1;127;0;76
+Wood Block L;1;127;0;77
+Cuica Mute;1;127;0;78
+Cuica Open;1;127;0;79
+Triangle Mute;1;127;0;80
+Triangle Open;1;127;0;81
+Shaker;1;127;0;82
+Jingle Bell;1;127;0;83
+Bell Tree;1;127;0;84;
+Surdo Mute;8;127;0;13;Room Kit
+Surdo Open;8;127;0;14;
+Hi Q;8;127;0;15;
+Whip Slap;8;127;0;16;
+Scratch Push;8;127;0;17;
+Scratch Pull;8;127;0;18;
+Finger Snap;8;127;0;19;
+Click Noise;8;127;0;20;
+Metronome Click;8;127;0;21;
+Metronome Bell;8;127;0;22;
+Seq Click L;8;127;0;23;
+Seq Click H;8;127;0;24;
+Brush Tap;8;127;0;25;
+Brush Swirl;8;127;0;26;
+Brush Slap;8;127;0;27;
+Brush Tap Swirl;8;127;0;28;
+Snare Roll;8;127;0;29;
+Castanet;8;127;0;30;
+Snare Soft H;8;127;0;31;
+Sticks;8;127;0;32;
+Bass Drum Soft;8;127;0;33;
+Open Rim Shot;8;127;0;34;
+Bass Drum Hard;8;127;0;35;
+Bass Drum;8;127;0;36;
+Side Stick;8;127;0;37;
+Snare Room L;8;127;0;38;(change)
+Hand Clap;8;127;0;39;
+Snare Room H;8;127;0;40;(change)
+Tom Room 1;8;127;0;41;(change)
+Hi-Hat Closed;8;127;0;42;
+Tom Room 2;8;127;0;43;(change)
+Hi-Hat Pedal;8;127;0;44;
+Tom Room 3;8;127;0;45;(change)
+Hi-Hat Open;8;127;0;46;
+Tom Room 4;8;127;0;47;(change)
+Tom Room 5;8;127;0;48;(change)
+Crash Cymbal 1;8;127;0;49;
+Tom Room 6;8;127;0;50;(change)
+Ride Cymbal 1;8;127;0;51;
+Chinese Cymbal;8;127;0;52;
+Ride Cymbal Cup;8;127;0;53;
+Tambourine;8;127;0;54;
+Splash Cymbal;8;127;0;55;
+Cowbell;8;127;0;56;
+Crash Cymbal 2;8;127;0;57;
+Vibraslap;8;127;0;58;
+Ride Cymbal 2;8;127;0;59;
+Bongo H;8;127;0;60
+Bongo L;8;127;0;61
+Conga H Mute;8;127;0;62
+Conga H Open;8;127;0;63
+Conga L;8;127;0;64
+Timbale H;8;127;0;65
+Timbale L;8;127;0;66
+Agogo H;8;127;0;67
+Agogo L;8;127;0;68
+Cabasa;8;127;0;69
+Maracas;8;127;0;70
+Samba Whisle H;8;127;0;71
+Samba Whisle L;8;127;0;72
+Guiro Short;8;127;0;73
+Guiro Long;8;127;0;74
+Claves;8;127;0;75
+Wood Block H;8;127;0;76;
+Wood Block L;8;127;0;77;
+Cuica Mute;8;127;0;78;
+Cuica Open;8;127;0;79;
+Triangle Mute;8;127;0;80;
+Triangle Open;8;127;0;81;
+Shaker;8;127;0;82;
+Jingle Bell;8;127;0;83;
+Bell Tree;8;127;0;84;
+Surdo Mute;16;127;0;13;Rock Kit
+Surdo Open;16;127;0;14;
+Hi Q;16;127;0;15;
+Whip Slap;16;127;0;16;
+Scratch Push;16;127;0;17;
+Scratch Pull;16;127;0;18;
+Finger Snap;16;127;0;19;
+Click Noise;16;127;0;20;
+Metronome Click;16;127;0;21;
+Metronome Bell;16;127;0;22;
+Seq Click L;16;127;0;23;
+Seq Click H;16;127;0;24;
+Brush Tap;16;127;0;25;
+Brush Swirl;16;127;0;26;
+Brush Slap;16;127;0;27;
+Brush Tap Swirl;16;127;0;28;
+Snare Roll;16;127;0;29;
+Castanet;16;127;0;30;
+Snare Rock H;16;127;0;31;(change)
+Sticks;16;127;0;32;
+Bass Drum Soft;16;127;0;33;
+Open Rim Shot;16;127;0;34;
+Bass Drum Hardrock;16;127;0;35;(change)
+Bass Drum Rock;16;127;0;36;(change)
+Side Stick;16;127;0;37;
+Snare Rock L;16;127;0;38;(change)
+Hand Clap;16;127;0;39;
+Snare Rock Rim;16;127;0;40;(change)
+Tom Rock 1;16;127;0;41;(change)
+Hi-Hat Closed;16;127;0;42;
+Tom Rock 2;16;127;0;43;(change)
+Hi-Hat Pedal;16;127;0;44;
+Tom Rock 3;16;127;0;45;(change)
+Hi-Hat Open;16;127;0;46;
+Tom Rock 4;16;127;0;47;(change)
+Tom Rock 5;16;127;0;48;(change)
+Crash Cymbal 1;16;127;0;49;
+Tom Rock 6;16;127;0;50;(change)
+Ride Cymbal 1;16;127;0;51;
+Chinese Cymbal;16;127;0;52
+Ride Cymbal Cup;16;127;0;53
+Tambourine;16;127;0;54
+Splash Cymbal;16;127;0;55
+Cowbell;16;127;0;56
+Crash Cymbal 2;16;127;0;57
+Vibraslap;16;127;0;58
+Ride Cymbal 2;16;127;0;59
+Bongo H;16;127;0;60
+Bongo L;16;127;0;61
+Conga H Mute;16;127;0;62
+Conga H Open;16;127;0;63
+Conga L;16;127;0;64
+Timbale H;16;127;0;65
+Timbale L;16;127;0;66
+Agogo H;16;127;0;67
+Agogo L;16;127;0;68
+Cabasa;16;127;0;69
+Maracas;16;127;0;70
+Samba Whisle H;16;127;0;71
+Samba Whisle L;16;127;0;72
+Guiro Short;16;127;0;73
+Guiro Long;16;127;0;74
+Claves;16;127;0;75
+Wood Block H;16;127;0;76
+Wood Block L;16;127;0;77
+Cuica Mute;16;127;0;78
+Cuica Open;16;127;0;79
+Triangle Mute;16;127;0;80
+Triangle Open;16;127;0;81
+Shaker;16;127;0;82
+Jingle Bell;16;127;0;83
+Bell Tree;16;127;0;84;
+Surdo Mute;24;127;0;13;Electronic Kit
+Surdo Open;24;127;0;14;
+Hi Q;24;127;0;15;
+Whip Slap;24;127;0;16;
+Scratch Push;24;127;0;17;
+Scratch Pull;24;127;0;18;
+Finger Snap;24;127;0;19;
+Click Noise;24;127;0;20;
+Metronome Click;24;127;0;21;
+Metronome Bell;24;127;0;22;
+Seq Click L;24;127;0;23;
+Seq Click H;24;127;0;24;
+Brush Tap;24;127;0;25;
+Brush Swirl;24;127;0;26;
+Brush Slap;24;127;0;27;
+Reverse Cymbal;24;127;0;28;(change)
+Snare Roll;24;127;0;29;
+Hi Q 2;24;127;0;30;(change)
+Snare L;24;127;0;31;(change)
+Sticks;24;127;0;32;
+Bass Drum H;24;127;0;33;(change)
+Open Rim Shot;24;127;0;34;
+Bass Drum Rock;24;127;0;35;(change)
+Bass Drum Gate;24;127;0;36;(change)
+Side Stick;24;127;0;37;
+Snare Rock L;24;127;0;38;(change)
+Hand Clap;24;127;0;39;
+Snare Rock H;24;127;0;40;(change)
+Tom Electronic 1;24;127;0;41;(change)
+Hi-Hat Closed;24;127;0;42;
+Tom Electronic 2;24;127;0;43;(change)
+Hi-Hat Pedal;24;127;0;44;
+Tom Electronic 3;24;127;0;45;(change)
+Hi-Hat Open;24;127;0;46;
+Tom Electronic 4;24;127;0;47;(change)
+Tom Electronic 5;24;127;0;48;(change)
+Crash Cymbal 1;24;127;0;49;
+Tom Electronic 6;24;127;0;50;(change)
+Ride Cymbal 1;24;127;0;51;
+Chinese Cymbal;24;127;0;52;
+Ride Cymbal Cup;24;127;0;53;
+Tambourine;24;127;0;54;
+Splash Cymbal;24;127;0;55;
+Cowbell;24;127;0;56;
+Crash Cymbal 2;24;127;0;57;
+Vibraslap;24;127;0;58;
+Ride Cymbal 2;24;127;0;59;
+Bongo H;24;127;0;60
+Bongo L;24;127;0;61
+Conga H Mute;24;127;0;62
+Conga H Open;24;127;0;63
+Conga L;24;127;0;64
+Timbale H;24;127;0;65
+Timbale L;24;127;0;66
+Agogo H;24;127;0;67
+Agogo L;24;127;0;68
+Cabasa;24;127;0;69
+Maracas;24;127;0;70
+Samba Whisle H;24;127;0;71
+Samba Whisle L;24;127;0;72
+Guiro Short;24;127;0;73
+Guiro Long;24;127;0;74
+Claves;24;127;0;75
+Wood Block H;24;127;0;76;
+Wood Block L;24;127;0;77;
+Scratch Push;24;127;0;78;(change)
+Scratch Pull;24;127;0;79;(change)
+Triangle Mute;24;127;0;80;
+Triangle Open;24;127;0;81;
+Shaker;24;127;0;82;
+Jingle Bell;24;127;0;83;
+Bell Tree;24;127;0;84;
+Surdo Mute;25;127;0;13;Analog Kit
+Surdo Open;25;127;0;14;
+Hi Q;25;127;0;15;
+Whip Slap;25;127;0;16;
+Scratch Push;25;127;0;17;
+Scratch Pull;25;127;0;18;
+Finger Snap;25;127;0;19;
+Click Noise;25;127;0;20;
+Metronome Click;25;127;0;21;
+Metronome Bell;25;127;0;22;
+Seq Click L;25;127;0;23;
+Seq Click H;25;127;0;24;
+Brush Tap;25;127;0;25;
+Brush Swirl;25;127;0;26;
+Brush Slap;25;127;0;27;
+Reverse Cymbal;25;127;0;28;(change)
+Snare Roll;25;127;0;29;
+Hi Q 2;25;127;0;30;(change)
+Snare Rock H;25;127;0;31;(change)
+Sticks;25;127;0;32;
+Bass Drum H;25;127;0;33;(change)
+Open Rim Shot;25;127;0;34;
+Bass Drum Analog L;25;127;0;35;(change)
+Bass Drum Analog H;25;127;0;36;(change)
+Side Stick Analog;25;127;0;37;(change)
+Snare Analog 1;25;127;0;38;(change)
+Hand Clap;25;127;0;39;
+Snare Analog 2;25;127;0;40;(change)
+Tom Analog 1;25;127;0;41;(change)
+Hi-Hat Analog Closed 1;25;127;0;42;(change)
+Tom Analog 2;25;127;0;43;(change)
+Hi-Hat Analog Closed 2;25;127;0;44;(change)
+Tom Analog 3;25;127;0;45;(change)
+Hi-Hat Analog Open;25;127;0;46;(change)
+Tom Analog 4;25;127;0;47;(change)
+Tom Analog 5;25;127;0;48;(change)
+Cymbal Analog;25;127;0;49;(change)
+Tom Analog 6;25;127;0;50;(change)
+Ride Cymbal 1;25;127;0;51;
+Chinese Cymbal;25;127;0;52;
+Ride Cymbal Cup;25;127;0;53;
+Tambourine;25;127;0;54;
+Splash Cymbal;25;127;0;55;
+Cowbell Analog;25;127;0;56;(change)
+Crash Cymbal 2;25;127;0;57;
+Vibraslap;25;127;0;58;
+Ride Cymbal 2;25;127;0;59;
+Bongo H;25;127;0;60;
+Bongo L;25;127;0;61;
+Conga H Analog;25;127;0;62;(change)
+Conga M Analog;25;127;0;63;(change)
+Conga L Analog;25;127;0;64;(change)
+Timbale H;25;127;0;65;
+Timbale L;25;127;0;66;
+Agogo H;25;127;0;67;
+Agogo L;25;127;0;68;
+Cabasa;25;127;0;69;
+Maracas Analog;25;127;0;70;(change)
+Samba Whisle H;25;127;0;71;
+Samba Whisle L;25;127;0;72;
+Guiro Short;25;127;0;73;
+Guiro Long;25;127;0;74;
+Claves Analog;25;127;0;75;(change)
+Wood Block H;25;127;0;76;
+Wood Block L;25;127;0;77;
+Scratch Push;25;127;0;78;(change)
+Scratch Pull;25;127;0;79;(change)
+Triangle Mute;25;127;0;80;
+Triangle Open;25;127;0;81;
+Shaker;25;127;0;82;
+Jingle Bell;25;127;0;83;
+Bell Tree;25;127;0;84;
+Surdo Mute;27;127;0;13;Dance Kit
+Surdo Open;27;127;0;14;
+Hi Q;27;127;0;15;
+Whip Slap;27;127;0;16;
+Scratch Push;27;127;0;17;
+Scratch Pull;27;127;0;18;
+Finger Snap;27;127;0;19;
+Click Noise;27;127;0;20;
+Metronome Click;27;127;0;21;
+Metronome Bell;27;127;0;22;
+Seq Click L;27;127;0;23;
+Seq Click H;27;127;0;24;
+Brush Tap;27;127;0;25;
+Brush Swirl;27;127;0;26;
+Brush Slap;27;127;0;27;
+Reverse Cymbal;27;127;0;28;(change)
+Snare Roll;27;127;0;29;
+Hi Q 2;27;127;0;30;(change)
+Snare Analog Snappy;27;127;0;31;(change)
+Sticks;27;127;0;32;
+Bass Drum Analog Dance-1;27;127;0;33;(change)
+Snare Analog Open Rim;27;127;0;34;(change)
+Bass Drum Analog Dance-2;27;127;0;35;(change)
+Bass Drum Analog Dance-3;27;127;0;36;(change)
+Side Stick Analog;27;127;0;37;(change)
+Snare Analog Q;27;127;0;38;(change)
+Hand Clap;27;127;0;39;
+Snare Analog Acoustic;27;127;0;40;(change)
+Tom Analog 1;27;127;0;41;(change)
+Hi-Hat Analog Closed 3;27;127;0;42;(change)
+Tom Analog 2;27;127;0;43;(change)
+Hi-Hat Analog Closed 4;27;127;0;44;(change)
+Tom Analog 3;27;127;0;45;(change)
+Hi-Hat Analog Open 2;27;127;0;46;(change)
+Tom Analog 4;27;127;0;47;(change)
+Tom Analog 5;27;127;0;48;(change)
+Cymbal Analog;27;127;0;49;(change)
+Tom Analog 6;27;127;0;50;(change)
+Ride Cymbal 1;27;127;0;51;
+Chinese Cymbal;27;127;0;52;
+Ride Cymbal Cup;27;127;0;53;
+Tambourine;27;127;0;54;
+Splash Cymbal;27;127;0;55;
+Cowbell Analog;27;127;0;56;(change)
+Crash Cymbal 2;27;127;0;57;
+Vibraslap;27;127;0;58;
+Ride Cymbal 2;27;127;0;59;
+Bongo H;27;127;0;60;
+Bongo L;27;127;0;61;
+Conga H Analog;27;127;0;62;(change)
+Conga M Analog;27;127;0;63;(change)
+Conga L Analog;27;127;0;64;(change)
+Timbale H;27;127;0;65;
+Timbale L;27;127;0;66;
+Agogo H;27;127;0;67;
+Agogo L;27;127;0;68;
+Cabasa;27;127;0;69;
+Maracas Analog;27;127;0;70;(change)
+Samba Whisle H;27;127;0;71;
+Samba Whisle L;27;127;0;72;
+Guiro Short;27;127;0;73;
+Guiro Long;27;127;0;74;
+Claves Analog;27;127;0;75;(change)
+Wood Block H;27;127;0;76;
+Wood Block L;27;127;0;77;
+Scratch Push;27;127;0;78;(change)
+Scratch Pull;27;127;0;79;(change)
+Triangle Mute;27;127;0;80;
+Triangle Open;27;127;0;81;
+Shaker;27;127;0;82;
+Jingle Bell;27;127;0;83;
+Bell Tree;27;127;0;84;
+Surdo Mute;32;127;0;13;Jazz Kit
+Surdo Open;32;127;0;14;
+Hi Q;32;127;0;15;
+Whip Slap;32;127;0;16;
+Scratch Push;32;127;0;17;
+Scratch Pull;32;127;0;18;
+Finger Snap;32;127;0;19;
+Click Noise;32;127;0;20;
+Metronome Click;32;127;0;21;
+Metronome Bell;32;127;0;22;
+Seq Click L;32;127;0;23;
+Seq Click H;32;127;0;24;
+Brush Tap;32;127;0;25;
+Brush Swirl;32;127;0;26;
+Brush Slap;32;127;0;27;
+Brush Tap Swirl;32;127;0;28;
+Snare Roll;32;127;0;29;
+Castanet;32;127;0;30;
+Snare Jazz H Light;32;127;0;31;(change)
+Sticks;32;127;0;32;
+Bass Drum Soft;32;127;0;33;
+Open Rim Shot;32;127;0;34;
+Bass Drum Hard;32;127;0;35;
+Bass Drum Jazz;32;127;0;36;(change)
+Side Stick;32;127;0;37;
+Snare Jazz L;32;127;0;38;(change)
+Hand Clap;32;127;0;39;
+Snare Jazz M;32;127;0;40;(change)
+Tom Jazz 1;32;127;0;41;(change)
+Hi-Hat Closed;32;127;0;42;
+Tom Jazz 2;32;127;0;43;(change)
+Hi-Hat Pedal;32;127;0;44;
+Tom Jazz 3;32;127;0;45;(change)
+Hi-Hat Open;32;127;0;46;
+Tom Jazz 4;32;127;0;47;(change)
+Tom Jazz 5;32;127;0;48;(change)
+Crash Cymbal 1;32;127;0;49;
+Tom Jazz 6;32;127;0;50;(change)
+Ride Cymbal 1;32;127;0;51;
+Chinese Cymbal;32;127;0;52
+Ride Cymbal Cup;32;127;0;53
+Tambourine;32;127;0;54
+Splash Cymbal;32;127;0;55
+Cowbell;32;127;0;56
+Crash Cymbal 2;32;127;0;57
+Vibraslap;32;127;0;58
+Ride Cymbal 2;32;127;0;59
+Bongo H;32;127;0;60
+Bongo L;32;127;0;61
+Conga H Mute;32;127;0;62
+Conga H Open;32;127;0;63
+Conga L;32;127;0;64
+Timbale H;32;127;0;65
+Timbale L;32;127;0;66
+Agogo H;32;127;0;67
+Agogo L;32;127;0;68
+Cabasa;32;127;0;69
+Maracas;32;127;0;70
+Samba Whisle H;32;127;0;71
+Samba Whisle L;32;127;0;72
+Guiro Short;32;127;0;73
+Guiro Long;32;127;0;74
+Claves;32;127;0;75
+Wood Block H;32;127;0;76
+Wood Block L;32;127;0;77
+Cuica Mute;32;127;0;78
+Cuica Open;32;127;0;79
+Triangle Mute;32;127;0;80
+Triangle Open;32;127;0;81
+Shaker;32;127;0;82
+Jingle Bell;32;127;0;83
+Bell Tree;32;127;0;84;
+Surdo Mute;40;127;0;13;Brush Kit
+Surdo Open;40;127;0;14;
+Hi Q;40;127;0;15;
+Whip Slap;40;127;0;16;
+Scratch Push;40;127;0;17;
+Scratch Pull;40;127;0;18;
+Finger Snap;40;127;0;19;
+Click Noise;40;127;0;20;
+Metronome Click;40;127;0;21;
+Metronome Bell;40;127;0;22;
+Seq Click L;40;127;0;23;
+Seq Click H;40;127;0;24;
+Brush Tap;40;127;0;25;
+Brush Swirl;40;127;0;26;
+Brush Slap;40;127;0;27;
+Brush Tap Swirl;40;127;0;28;
+Snare Roll;40;127;0;29;
+Castanet;40;127;0;30;
+Brush Slap L;40;127;0;31;(change)
+Sticks;40;127;0;32;
+Bass Drum Soft;40;127;0;33;
+Open Rim Shot;40;127;0;34;
+Bass Drum Hard;40;127;0;35;
+Bass Drum Jazz;40;127;0;36;(change)
+Side Stick;40;127;0;37;
+Brush Slap;40;127;0;38;(change)
+Hand Clap;40;127;0;39;
+Brush Tap;40;127;0;40;(change)
+Tom Brush 1;40;127;0;41;(change)
+Hi-Hat Closed;40;127;0;42;
+Tom Brush 2;40;127;0;43;(change)
+Hi-Hat Pedal;40;127;0;44;
+Tom Brush 3;40;127;0;45;(change)
+Hi-Hat Open;40;127;0;46;
+Tom Brush 4;40;127;0;47;(change)
+Tom Brush 5;40;127;0;48;(change)
+Crash Cymbal 1;40;127;0;49;
+Tom Brush 6;40;127;0;50;(change)
+Ride Cymbal 1;40;127;0;51;
+Chinese Cymbal;40;127;0;52;
+Ride Cymbal Cup;40;127;0;53;
+Tambourine;40;127;0;54;
+Splash Cymbal;40;127;0;55;
+Cowbell;40;127;0;56;
+Crash Cymbal 2;40;127;0;57;
+Vibraslap;40;127;0;58;
+Ride Cymbal 2;40;127;0;59;
+Bongo H;40;127;0;60
+Bongo L;40;127;0;61
+Conga H Mute;40;127;0;62
+Conga H Open;40;127;0;63
+Conga L;40;127;0;64
+Timbale H;40;127;0;65
+Timbale L;40;127;0;66
+Agogo H;40;127;0;67
+Agogo L;40;127;0;68
+Cabasa;40;127;0;69
+Maracas;40;127;0;70
+Samba Whisle H;40;127;0;71
+Samba Whisle L;40;127;0;72
+Guiro Short;40;127;0;73
+Guiro Long;40;127;0;74
+Claves;40;127;0;75
+Wood Block H;40;127;0;76;
+Wood Block L;40;127;0;77;
+Cuica Mute;40;127;0;78;
+Cuica Open;40;127;0;79;
+Triangle Mute;40;127;0;80;
+Triangle Open;40;127;0;81;
+Shaker;40;127;0;82;
+Jingle Bell;40;127;0;83;
+Bell Tree;40;127;0;84;
+Surdo Mute;48;127;0;13;Symphony Kit
+Surdo Open;48;127;0;14;
+Hi Q;48;127;0;15;
+Whip Slap;48;127;0;16;
+Scratch Push;48;127;0;17;
+Scratch Pull;48;127;0;18;
+Finger Snap;48;127;0;19;
+Click Noise;48;127;0;20;
+Metronome Click;48;127;0;21;
+Metronome Bell;48;127;0;22;
+Seq Click L;48;127;0;23;
+Seq Click H;48;127;0;24;
+Brush Tap;48;127;0;25;
+Brush Swirl;48;127;0;26;
+Brush Slap;48;127;0;27;
+Brush Tap Swirl;48;127;0;28;
+Snare Roll;48;127;0;29;
+Castanet;48;127;0;30;
+Snare Soft H;48;127;0;31;
+Sticks;48;127;0;32;
+Bass Drum L;48;127;0;33;(change)
+Open Rim Shot;48;127;0;34;
+Gran Cassa;48;127;0;35;(change)
+Gran Cassa Mute;48;127;0;36;(change)
+Side Stick;48;127;0;37;
+Marching Sn M;48;127;0;38;(change)
+Hand Clap;48;127;0;39;
+Marching Sn H;48;127;0;40;(change)
+Tom Jazz 1;48;127;0;41;(change)
+Hi-Hat Closed;48;127;0;42;
+Tom Jazz 2;48;127;0;43;(change)
+Hi-Hat Pedal;48;127;0;44;
+Tom Jazz 3;48;127;0;45;(change)
+Hi-Hat Open;48;127;0;46;
+Tom Jazz 4;48;127;0;47;(change)
+Tom Jazz 5;48;127;0;48;(change)
+Hand Cymbal L;48;127;0;49;(change)
+Tom Jazz 6;48;127;0;50;(change)
+Hand Cymbal Short L;48;127;0;51;(change)
+Chinese Cymbal;48;127;0;52;
+Ride Cymbal Cup;48;127;0;53;
+Tambourine;48;127;0;54;
+Splash Cymbal;48;127;0;55;
+Cowbell;48;127;0;56;
+Hand Cymbal H;48;127;0;57;(change)
+Vibraslap;48;127;0;58;
+Hand Cymbal Short H;48;127;0;59;(change)
+Bongo H;48;127;0;60;
+Bongo L;48;127;0;61;
+Conga H Mute;48;127;0;62;
+Conga H Open;48;127;0;63;
+Conga L;48;127;0;64;
+Timbale H;48;127;0;65;
+Timbale L;48;127;0;66;
+Agogo H;48;127;0;67;
+Agogo L;48;127;0;68
+Cabasa;48;127;0;69
+Maracas;48;127;0;70
+Samba Whisle H;48;127;0;71
+Samba Whisle L;48;127;0;72
+Guiro Short;48;127;0;73
+Guiro Long;48;127;0;74
+Claves;48;127;0;75
+Wood Block H;48;127;0;76
+Wood Block L;48;127;0;77
+Cuica Mute;48;127;0;78
+Cuica Open;48;127;0;79
+Triangle Mute;48;127;0;80
+Triangle Open;48;127;0;81
+Shaker;48;127;0;82
+Jingle Bell;48;127;0;83
+Bell Tree;48;127;0;84
