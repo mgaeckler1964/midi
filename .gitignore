@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+*.bak
+*.sdf
+*.suo
+ipch/
+
