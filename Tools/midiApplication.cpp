@@ -73,7 +73,7 @@ MIDIapplication	midiApp;
 
 bool MIDIapplication::startApplication( HINSTANCE , const char * )
 {
-	doEnableLog();
+	doEnableLogEx(gakLogging::llInfo);
 	doIgnoreThreads();
 
 	playerHandles.initDevices();
