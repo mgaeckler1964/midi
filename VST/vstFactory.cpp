@@ -132,8 +132,8 @@
 // --------------------------------------------------------------------- //
 
 BEGIN_FACTORY_DEF ("Martin Gaeckler", 
-				   "http://www.gäckler.de", 
-				   "mailto:martgack@gmail.com")
+				   "https://www.gaeckler.at", 
+				   "mailto:martin@gaeckler.at")
 
 	DEF_CLASS2 (INLINE_UID_FROM_FUID(Processor::cid),
 				PClassInfo::kManyInstances,
