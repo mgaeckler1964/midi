@@ -126,7 +126,7 @@ class InstrumentWindow : public winlib::OverlappedWindow
 	winlib::SuccessCode create( MIDIeditorWindow *parent=NULL )
 	{
 		gak::STRING title = winlib::appObject->loadString( winlibGUI::INSTRUMENT_CAPTION_id );
-		setTitle( title );
+		setText( title );
 		this->parent = parent;
 		return OverlappedWindow::create( (BasicWindow*)parent );
 	}
