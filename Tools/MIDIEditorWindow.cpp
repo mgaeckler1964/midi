@@ -3,10 +3,10 @@
 		Module:			MIDIEditorWindow.cpp
 		Description:	A MIDI Editor (used by recorder)
 		Author:			Martin Gäckler
-		Address:		Hopfengasse 15. A-4020 Linz
+		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2018 Martin Gäckler
+		Copyright:		(c) 2005-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -15,7 +15,7 @@
 		You should have received a copy of the GNU General Public License 
 		along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Germany, Munich ``AS IS''
+		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Linz, Austria ``AS IS''
 		AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
 		TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
 		PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR
@@ -438,8 +438,8 @@ void MIDIeditorWindow::loadMidi( void )
 
 void MIDIeditorWindow::copyValues2Editor( void )
 {
-	char	tmpValue[32];
-	int		selectedEntry = eventList->getSelection();
+	NumberBuffer	label;
+	int				selectedEntry = eventList->getSelection();
 
 	if( selectedEntry >= 0 )
 	{
@@ -472,18 +472,15 @@ void MIDIeditorWindow::copyValues2Editor( void )
 			handleMessageType( winlibGUI::noteRadio_id );
 			noteSelect->selectEntry( theEditorEvent.midiEvent.sound.note );
 
-			sprintf( tmpValue, "%d",
-				(int)theEditorEvent.midiEvent.sound.volume
+			noteVolumeEdit->setText( 
+				formatNumberFast( &label, theEditorEvent.midiEvent.sound.volume )
 			);
-			noteVolumeEdit->setText( tmpValue );
-			sprintf( tmpValue, "%d",
-				(int)theEditorEvent.midiEvent.sound.length
+			noteLengthEdit->setText( 
+				formatNumberFast( &label, theEditorEvent.midiEvent.sound.length )
 			);
-			noteLengthEdit->setText( tmpValue );
-			sprintf( tmpValue, "%d",
-				(int)theEditorEvent.midiEvent.sound.time
+			noteTimeEdit->setText( 
+				formatNumberFast( &label, theEditorEvent.midiEvent.sound.time )
 			);
-			noteTimeEdit->setText( tmpValue );
 
 		}
 		else if( theEditorEvent.message == MIDI_CONTROLLER )
@@ -496,10 +493,10 @@ void MIDIeditorWindow::copyValues2Editor( void )
 
 			handleMessageType( winlibGUI::controllerRadio_id );
 			controllerSelect->selectEntry( theEditorEvent.midiEvent.midiData.data1 );
-			sprintf( tmpValue, "%d",
-				(int)theEditorEvent.midiEvent.midiData.data2
+			NumberBuffer	tmp;
+			controllerEdit->setText( 
+				formatNumberFast( &tmp, theEditorEvent.midiEvent.midiData.data2 )
 			);
-			controllerEdit->setText( tmpValue );
 		}
 		else if( theEditorEvent.message != MIDI_SYSTEM )
 		{
@@ -519,14 +516,12 @@ void MIDIeditorWindow::copyValues2Editor( void )
 				}
 			}
 
-			sprintf( tmpValue, "%d",
-				(int)theEditorEvent.midiEvent.midiData.data1
+			data1Edit->setText( 
+				formatNumberFast( &label, theEditorEvent.midiEvent.midiData.data1 )
 			);
-			data1Edit->setText( tmpValue );
-			sprintf( tmpValue, "%d",
-				(int)theEditorEvent.midiEvent.midiData.data2
+			data2Edit->setText( 
+				formatNumberFast( &label, theEditorEvent.midiEvent.midiData.data2 )
 			);
-			data2Edit->setText( tmpValue );
 		}
 		else
 		{
@@ -570,31 +565,28 @@ void MIDIeditorWindow::deleteEntry( bool selectNext )
 
 size_t MIDIeditorWindow::newEntry( const MidiEditorEvent &newEvent )
 {
-	char	tmpBuffer[1024];
-	size_t	numElements = editorEvents.size();
+	StringBuffer<1024>	tmpBuffer;
+	size_t				numElements = editorEvents.size();
 
-	sprintf(
-		tmpBuffer, "%2d\t%s\t%s",
-		newEvent.channel+1,
-		(const char*)midiData->getTimeCodeStr(
-			newEvent.timeCode
-		),
-		(const char *)newEvent.title
-	);
+	formatNumberFast( &tmpBuffer, newEvent.channel+1, 2, '0' );
+	tmpBuffer.addDigit( '\t' ).addCP( midiData->getTimeCodeStr(newEvent.timeCode) )
+		.addDigit( '\t' ).addCP(newEvent.title);
 
+	// search for the insert position
 	for( size_t i=0; i<numElements; i++ )
 	{
 		if( eventCompare( editorEvents[i], newEvent ) > 0 )
 		{
 			editorEvents.insertElement( newEvent, i );
-			eventList->insertEntry( int(i), tmpBuffer );
+			eventList->insertEntry( int(i), tmpBuffer.c_str() );
 
 /***/		return i;
 		}
 	}
 
+	// append the new entry
 	editorEvents.addElement( newEvent );
-	eventList->addEntry( tmpBuffer );
+	eventList->addEntry( tmpBuffer.c_str() );
 
 	return numElements;
 }
@@ -718,7 +710,7 @@ void MIDIeditorWindow::changeVolume( void )
 
 			if( maxVolumes[selectedChannel] != newVolume )
 			{
-				double factor;
+				double factor=0;
 
 				if( maxVolumes[selectedChannel] )
 				{
@@ -761,7 +753,6 @@ void MIDIeditorWindow::changeVolume( void )
 void MIDIeditorWindow::swapChannels( void )
 {
 	SwapChannelDialog	dialog;
-	char				tmpBuffer[128];
 	ArrayOfInts			selectedEntries;
 	size_t				numSelected = eventList->getSelectedItems( &selectedEntries );
 
@@ -774,6 +765,7 @@ void MIDIeditorWindow::swapChannels( void )
 			unsigned char	destChannel = dialog.getDestChannel();
 			if( srcChannel != destChannel )
 			{
+				STRING label;
 				for( size_t i=0; i<numSelected; i++ )
 				{
 					MidiEditorEvent &theEditorEvent = editorEvents[selectedEntries[i]];
@@ -786,15 +778,11 @@ void MIDIeditorWindow::swapChannels( void )
 						else
 							theEditorEvent.channel = srcChannel;
 
-						sprintf(
-							tmpBuffer, "%2d\t%s\t%s",
-							theEditorEvent.channel+1,
-							(const char*)midiData->getTimeCodeStr(
-								theEditorEvent.timeCode
-							),
-							(const char *)theEditorEvent.title
-						);
-						eventList->replaceEntry( selectedEntries[i], tmpBuffer );
+						label = formatNumber(theEditorEvent.channel+1, 2, ' ').add('\t')
+							.add(midiData->getTimeCodeStr(theEditorEvent.timeCode)).add('\t')
+							.add(theEditorEvent.title)
+						;
+						eventList->replaceEntry( selectedEntries[i], label );
 					}
 				}
 			}
@@ -807,7 +795,6 @@ void MIDIeditorWindow::swapChannels( void )
 void MIDIeditorWindow::repeatEntries( void )
 {
 	long			newTimeCode, timeCodeOffset;
-	char			tmpBuffer[1024];
 	double			timePerTakt, factor;
 	size_t			numEntries = editorEvents.size();
 	ArrayOfInts		selectedEntries;
@@ -815,6 +802,7 @@ void MIDIeditorWindow::repeatEntries( void )
 
 	if( numSelected )
 	{
+		StringBuffer<1024> label;
 		const MidiEditorEvent &theLastEvent = editorEvents[numEntries-1];
 		newTimeCode = theLastEvent.timeCode;
 		if( theLastEvent.message == MIDI_NOTE_ON )
@@ -835,17 +823,14 @@ void MIDIeditorWindow::repeatEntries( void )
 			MidiEditorEvent theEvent = editorEvents[selectedEntries[i]];
 			theEvent.timeCode += timeCodeOffset;
 
-			sprintf(
-				tmpBuffer, "%2d\t%s\t%s",
-				theEvent.channel+1,
-				(const char*)midiData->getTimeCodeStr(
-					theEvent.timeCode
-				),
-				(const char *)theEvent.title
-			);
+			formatNumberFast( &label, theEvent.channel+1, 2, '0' );
+			label.addDigit('\t')
+				.addCP(midiData->getTimeCodeStr(theEvent.timeCode)).addDigit('\t')
+				.addSTR(theEvent.title)
+			;
 
 			editorEvents.addElement( theEvent );
-			eventList->addEntry( tmpBuffer );
+			eventList->addEntry( label.c_str() );
 		}
 
 	}
@@ -853,8 +838,8 @@ void MIDIeditorWindow::repeatEntries( void )
 
 void MIDIeditorWindow::transposeEntries( void )
 {
-	char			tmpBuffer[1024];
-	unsigned char 	noteOffset = transposeEdit->getText().getValueN<unsigned char>();
+	StringBuffer<1024>	tmpBuffer;
+	unsigned char	 	noteOffset = transposeEdit->getText().getValueN<unsigned char>();
 
 	ArrayOfInts		selectedEntries;
 	size_t			numSelected = eventList->getSelectedItems( &selectedEntries );
@@ -877,15 +862,10 @@ void MIDIeditorWindow::transposeEntries( void )
 					);
 				}
 
-				sprintf(
-					tmpBuffer, "%2d\t%s\t%s",
-					theEditorEvent.channel+1,
-					(const char*)midiData->getTimeCodeStr(
-						theEditorEvent.timeCode
-					),
-					(const char *)theEditorEvent.title
-				);
-				eventList->replaceEntry( selectedEntries[i], tmpBuffer );
+				formatNumberFast( &tmpBuffer, theEditorEvent.channel+1, 2, ' ' );
+				tmpBuffer.addDigit( '\t' ).addCP( midiData->getTimeCodeStr(theEditorEvent.timeCode) )
+					.addDigit( '\t' ).addCP(theEditorEvent.title);
+				eventList->replaceEntry( selectedEntries[i], tmpBuffer.c_str() );
 			}
 		}
 

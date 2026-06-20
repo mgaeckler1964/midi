@@ -3,10 +3,10 @@
 		Module:			midifile.cpp
 		Description:	MIDI messages and midi files
 		Author:			Martin Gäckler
-		Address:		Hopfengasse 15. A-4020 Linz
+		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2018 Martin Gäckler
+		Copyright:		(c) 2005-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -15,7 +15,7 @@
 		You should have received a copy of the GNU General Public License 
 		along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Germany, Munich ``AS IS''
+		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Linz, Austria ``AS IS''
 		AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
 		TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
 		PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR
@@ -44,6 +44,7 @@
 #include <gak/gaklib.h>
 #include <gak/fmtNumber.h>
 #include <gak/utils.h>
+#include <gak/StringBuffer.h>
 
 #include "midifile.h"
 #include "midi.gui.h"
@@ -410,23 +411,27 @@ int MIDIdata::timeCompare(
 
 const char *MIDIevent::getNoteText( unsigned char note )
 {
-	static char tmpNoteText[32];
+	static gak::NumberBuffer s_noteText;
 
-	sprintf( tmpNoteText, "%s%d", midiNotes[note%12], (note/12)-2 );
+	s_noteText.clear();
+	s_noteText.addCP(midiNotes[note%12]);
 
-	return tmpNoteText;
+	appendNumberFast( &s_noteText, (note/12)-2 );
+
+	return s_noteText.c_str();
 }
 
 const char *MIDIevent::getControllerText( unsigned char controller )
 {
-	static char	tmpControllerText[128];
-	const char	*controllerText;
+	static gak::NumberBuffer s_controllerText;
 
-	controllerText = midiControllerMessages[controller];
+	const char	*controllerText = midiControllerMessages[controller];
 	if( !*controllerText )
 	{
-		sprintf( tmpControllerText, "Controller %u", (unsigned int)controller );
-		controllerText = tmpControllerText;
+		s_controllerText.clear();
+		s_controllerText += "Controller ";
+		appendNumberFast( &s_controllerText, controller );
+		controllerText = s_controllerText.c_str();
 	}
 
 	return controllerText;
@@ -820,7 +825,7 @@ int MIDIdata::loadMidiFile( const char *fileName )
 		size_t				i, length;
 		unsigned long		timeCode;
 		unsigned char		lastStatusByte, thisStatusByte, type, data1, data2;
-		int					bpm, tempo;
+		int					bpm = 0, tempo;
 		unsigned short		curTrack;
 		STRING				name;
 

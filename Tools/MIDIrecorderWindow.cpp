@@ -3,10 +3,10 @@
 		Module:			MIDIrecorderWindow.h
 		Description:	MIDI recording and controlling
 		Author:			Martin Gäckler
-		Address:		Hopfengasse 15. A-4020 Linz
+		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2018 Martin Gäckler
+		Copyright:		(c) 2005-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -15,7 +15,7 @@
 		You should have received a copy of the GNU General Public License 
 		along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Germany, Munich ``AS IS''
+		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Linz, Austria ``AS IS''
 		AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
 		TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
 		PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR
@@ -1446,7 +1446,6 @@ void PianoArea::showMIDIevent( const MIDIevent &msg, size_t midiDev, bool isSent
 		}
 		else	// if( noteOn )
 		{
-			char					buffer[128];
 			MIDInotePresentation	notePresentation;
 
 			notePresentation.midiDev = midiDev;
@@ -1454,12 +1453,14 @@ void PianoArea::showMIDIevent( const MIDIevent &msg, size_t midiDev, bool isSent
 			notePresentation.note = note;
 			channel++;
 
-			sprintf( buffer, "%u/%02u: %s(%03u) %03u   ",
-				(unsigned)midiDev, (unsigned)channel,
-				MIDIevent::getNoteText(note), (unsigned)note,
-				(unsigned)volume
-			);
-			notePresentation.presentation = buffer;
+			NumberBuffer tmp1, tmp2, tmp3;
+			STRING	text = formatNumber( midiDev ).add( '/' )
+				.add( formatNumberFast( &tmp1, channel, 2, '0' ) ).add(": ")
+				.add(MIDIevent::getNoteText(note))
+				.add('(').add( formatNumberFast( &tmp2, note, 3, '0' ) ).add(") ")
+				.add( formatNumberFast( &tmp3, volume, 3, '0' ) ).add("   ")
+			;
+			notePresentation.presentation = text;
 
 			if( isSent )
 			{
@@ -1654,9 +1655,7 @@ void MIDIrecorderWindow::playFilteredMidiEvent( int midiInDev, size_t midiOutDev
 									}
 									else if( theFilter.newVolume.endsWith( "%" ) )
 									{
-										double percent = atof(
-											theFilter.newVolume
-										);
+										double percent = theFilter.newVolume.getValueN<double>();
 
 										volume = int(double(volume) * percent / 100.0 + 0.5);
 									}

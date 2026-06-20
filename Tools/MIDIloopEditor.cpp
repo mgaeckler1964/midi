@@ -3,10 +3,10 @@
 		Module:			MIDIloopEditor.h
 		Description:	The (drum) loop editor
 		Author:			Martin Gäckler
-		Address:		Hopfengasse 15. A-4020 Linz
+		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2018 Martin Gäckler
+		Copyright:		(c) 2005-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -15,7 +15,7 @@
 		You should have received a copy of the GNU General Public License 
 		along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Germany, Munich ``AS IS''
+		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Linz, Austria ``AS IS''
 		AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
 		TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
 		PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR
@@ -40,6 +40,7 @@
 #include <gak/xmlParser.h>
 #include <gak/directory.h>
 #include <gak/numericString.h>
+#include <gak/fmtNumber.h>
 
 #include <winlib/winlib.h>
 #include <winlib/winapp.h>
@@ -277,13 +278,13 @@ STRING MIDIloopEditor::makeListBoxEntry( const STRING &fileName )
 
 void MidiLoopPlayerThread::ExecuteThread( void )
 {
-	bool			firstRun = true;
-	std::size_t		firstLoopEntry = 0;
-	char			tmpBuffer[32];
-	unsigned char	message;
-	clock_t			actTime, nextTime , clockTime, elapsedTime, startTime;
-	int				lastSeconds, seconds, minutes, hours;
-	int				lastBar, currentBar, timePerBar = midiData->getTimePerBar();
+	bool				firstRun = true;
+	std::size_t			firstLoopEntry = 0;
+	NumberBuffer		tmpBuffer;
+	unsigned char		message;
+	clock_t				actTime, nextTime , clockTime, elapsedTime, startTime;
+	int					lastSeconds, seconds, minutes, hours;
+	int					lastBar, currentBar, timePerBar = midiData->getTimePerBar();
 
 	unsigned long	totalTime = (unsigned long)(midiData->getNumBars() * midiData->getTimePerBarDbl() + 0.5);
 
@@ -360,11 +361,14 @@ void MidiLoopPlayerThread::ExecuteThread( void )
 					hours = minutes / 60;
 					minutes = minutes % 60;
 
-					sprintf(
-						tmpBuffer, "%04d - %02d:%02d:%02d",
-						currentBar, hours, minutes, seconds
-					);
-					loopEditor->showClock(midiMsg.getTimeCode(),tmpBuffer);
+					formatNumberFast( &tmpBuffer, currentBar, 4, '0' );
+					tmpBuffer.addCP(" - ");
+					appendNumberFast( &tmpBuffer, hours, 2, '0' );
+					tmpBuffer.addDigit(':');
+					appendNumberFast( &tmpBuffer, minutes, 2, '0' );
+					tmpBuffer.addDigit(':');
+					appendNumberFast( &tmpBuffer, seconds, 2, '0' );
+					loopEditor->showClock(midiMsg.getTimeCode(),tmpBuffer.c_str());
 				}
 
 				nextTime = startTime + midiMsg.getTimeCode();

@@ -749,7 +749,7 @@ ProcessStatus MIDIsynthesizerWindow::handleCommand( int cmd )
 			AMlfoParameter	amLfoParameter;
 			amLfoParameter.type = getAmOscilatorType( cmd ); 
 
-			amLfoParameter.frequency = atof( amFrequency->getText() );
+			amLfoParameter.frequency = amFrequency->getText().getValueN<double>();
 			amLfoParameter.range.minimum = 1 - double(amRange->getPosition()) / 1000.0;
 			amLfoParameter.range.maximum = 1;
 			if( cmd == winlibGUI::amRange_id )
@@ -778,7 +778,7 @@ ProcessStatus MIDIsynthesizerWindow::handleCommand( int cmd )
 			{
 				tmpCP++;
 			}
-			fmLfoParameter.frequency = atof( tmpCP );
+			fmLfoParameter.frequency = gak::getValueN<double>( tmpCP );
 			fmLfoParameter.range.pitch = double(fmRange->getPosition()) / FlexPitchPrecision;
 			if( cmd == winlibGUI::fmRange_id )
 			{

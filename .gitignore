@@ -36,4 +36,5 @@
 *.sdf
 *.suo
 ipch/
-
+*.opensdf
+*.sset
