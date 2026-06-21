@@ -560,7 +560,10 @@ unsigned long MIDIdata::parseTimeCode( const char *timeCodeStr ) const
 	double		timePerBeat = timePerTakt/(double)timeSigNumerator;
 
 	takt = beat = length = 0;
-	sscanf( timeCodeStr, "%d.%d.%d", &takt, &beat, &length );
+	const char *cp = timeCodeStr;
+	takt = getValue<int>( cp, &cp );
+	beat = getValue<int>( ++cp, &cp );
+	length = getValue<int>( ++cp, &cp );
 
 	if( takt )
 		takt--;
