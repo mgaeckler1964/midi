@@ -37,14 +37,16 @@
 // ----- includes ------------------------------------------------------ //
 // --------------------------------------------------------------------- //
 
-#include <stdio.h>
+#include <fstream>
+
 #include <string.h>
-#include <math.h>
+#include <cmath>
 
 #include <gak/gaklib.h>
 #include <gak/fmtNumber.h>
 #include <gak/utils.h>
 #include <gak/StringBuffer.h>
+#include <gak/stdlib.h>
 
 #include "midifile.h"
 #include "midi.gui.h"
@@ -817,14 +819,13 @@ int MIDIdata::loadMidiFile( const char *fileName )
 
 	int	errCode = 0;
 
-	FILE	*fp = fopen( fileName, "rb" );
-	if( fp )
+	std::ifstream	fp( fileName, std::ios_base::binary|std::ios_base::in );
+	if( fp.is_open() )
 	{
 		MIDIevent			theEvent;
 
 		MTHD_CHUNK			midiHeader;
 		MTRK_CHUNK			midiTrack;
-		unsigned char		*events;
 		size_t				i, length;
 		unsigned long		timeCode;
 		unsigned char		lastStatusByte, thisStatusByte, type, data1, data2;
@@ -832,7 +833,7 @@ int MIDIdata::loadMidiFile( const char *fileName )
 		unsigned short		curTrack;
 		STRING				name;
 
-		fread( (void *)&midiHeader, sizeof( midiHeader ), 1, fp );
+		fp.read( reinterpret_cast<char*>(&midiHeader), sizeof( midiHeader ) );
 
 		#if defined( __BORLANDC__ ) || defined( _MSC_VER )
 			midiHeader.Length = intlmot(midiHeader.Length);
@@ -845,20 +846,22 @@ int MIDIdata::loadMidiFile( const char *fileName )
 		&&  (midiHeader.Format == 0 || midiHeader.Format == 1)
 		&&  midiHeader.Length == 6 )
 		{
+			gak::Buffer<unsigned char>	events(nullptr);
 			clear();
 			for( curTrack = 0; curTrack<midiHeader.NumTracks; curTrack++ )
 			{
-				if( fread( (void *)&midiTrack, sizeof( midiTrack ), 1, fp ) == 1
-				&&	!strncmp( midiTrack.ID, "MTrk", 4 ) )
+				fp.read( reinterpret_cast<char*>(&midiTrack), sizeof( midiTrack ) );
+				if( fp.good() && !strncmp( midiTrack.ID, "MTrk", 4 ) )
 				{
 					#if defined( __BORLANDC__ ) || defined( _MSC_VER )
 						midiTrack.Length = intlmot(midiTrack.Length);
 					#endif
 
-					events = (unsigned char *)malloc( midiTrack.Length );
+					events.resize( midiTrack.Length );
 					if( events )
 					{
-						if( fread( events, 1, midiTrack.Length, fp ) == midiTrack.Length )
+						fp.read( reinterpret_cast<char*>(events.get()), sizeof( midiTrack.Length ) );
+						if( fp.good() )
 						{
 							tempo = (int)(60000000/120);
 							i = 0;
@@ -866,13 +869,13 @@ int MIDIdata::loadMidiFile( const char *fileName )
 							lastStatusByte = 0;		// to avoid warning
 							while( i<midiTrack.Length )
 							{
-								timeCode += ReadVarLen( events, &i );
+								timeCode += ReadVarLen( events.get(), &i );
 
 								thisStatusByte = events[i++];
 								if( thisStatusByte == MIDI_FILE_META )
 								{
 									type = events[i++];
-									length = ReadVarLen( events, &i );
+									length = ReadVarLen( events.get(), &i );
 
 									if( type == MIDI_FILE_TEMPO )
 									{
@@ -897,7 +900,7 @@ int MIDIdata::loadMidiFile( const char *fileName )
 										name = "";
 										while( length > 0 )
 										{
-											name += (char)events[i++];
+											name += char(events[i++]);
 											length--;
 										}
 										if( type == MIDI_FILE_TRACK_NAME )
@@ -915,7 +918,7 @@ int MIDIdata::loadMidiFile( const char *fileName )
 									else if( type == MIDI_FILE_SEQUENCER
 									&& length == 8
 									&& events[i] == 0
-									&& !strcmp( (char *)events+i+1, "gak" ) )
+									&& !strcmp( reinterpret_cast<char*>(events.get())+i+1, "gak" ) )
 									{
 										setMidiOutDev( curTrack, events[i+7] );
 										i += length;
@@ -929,12 +932,12 @@ int MIDIdata::loadMidiFile( const char *fileName )
 								}
 								else if( thisStatusByte==MIDI_SYS_EX_START )
 								{
-									length = ReadVarLen( events, &i );
+									length = ReadVarLen( events.get(), &i );
 
 									theEvent.setTrack( curTrack );
 									theEvent.setMessageCode( MIDI_SYS_EX_START );
 									theEvent.setTimeCode( timeCode );
-									theEvent.setSysExData( events + i, length, false );
+									theEvent.setSysExData( events.get() + i, length, false );
 									theEvent.setIndex( int(size()) );
 									addElement( theEvent );
 
@@ -982,7 +985,6 @@ int MIDIdata::loadMidiFile( const char *fileName )
 
 							bpm = 60000000 / tempo;
 						}	// if( fread( events, 1, midiTrack.Length, fp ) == midiTrack.Length )
-						free( events );
 					}	// if( events )
 				}	// if( !strncmp( midiTrack.ID, "MTrk", 4 ) )
 				else
@@ -1015,8 +1017,6 @@ int MIDIdata::loadMidiFile( const char *fileName )
 		{
 			errCode = winlibGUI::MIDI_BAD_HEADER_id;
 		}
-
-		fclose( fp );
 	}	// if( fp )
 	return errCode;
 }
@@ -1025,21 +1025,22 @@ int MIDIdata::saveMidiFile( const char *fileName, bool mergeTracks )
 {
 	doEnterFunction("MIDIdata::saveMidiFile");
 
-	FILE	*fp = fopen( fileName, "wb" );
-	if( fp )
+	std::ofstream	fp( fileName, std::ios_base::out|std::ios_base::binary );
+	if( fp.is_open() )
 	{
-		MIDIevent			theEvent;
+		MIDIevent					theEvent;
 
-		MTHD_CHUNK			midiHeader;
-		MTRK_CHUNK			midiTrack;
-		unsigned char		*events, *cp, *rollbackPointer;
-		size_t				curEvent, numEvents, bufferSize;
-		unsigned long		timeCode;
-		long				timeCodeOffset;
-		unsigned char		msg, statusByte, data1, data2;
-		int					bpm = getBPM();
-		unsigned short		curTrack, numTracks = getNumTracks();
-		STRING				name;
+		MTHD_CHUNK					midiHeader;
+		MTRK_CHUNK					midiTrack;
+		gak::Buffer<unsigned char>	events(nullptr);
+		unsigned char				*cp, *rollbackPointer = nullptr;
+		size_t						curEvent, numEvents, bufferSize;
+		unsigned long				timeCode;
+		long						timeCodeOffset;
+		unsigned char				msg, statusByte, data1, data2;
+		int							bpm = getBPM();
+		unsigned short				curTrack, numTracks = getNumTracks();
+		STRING						name;
 
 		strncpy( midiHeader.ID, "MThd", 4 );
 		midiHeader.Length = 6;
@@ -1055,7 +1056,7 @@ int MIDIdata::saveMidiFile( const char *fileName, bool mergeTracks )
 			midiHeader.Division = (short)(intimot(midiHeader.Division));
 		#endif
 
-		fwrite( &midiHeader, sizeof( midiHeader ), 1, fp );
+		fp.write( reinterpret_cast<char *>(&midiHeader), sizeof( midiHeader ) );
 
 		strncpy( midiTrack.ID, "MTrk", 4 );
 
@@ -1071,12 +1072,12 @@ int MIDIdata::saveMidiFile( const char *fileName, bool mergeTracks )
 		/*
 			yes I know, this is too much, but sure is sure
 		*/
-		events = (unsigned char *)malloc( bufferSize );
+		events.resize( bufferSize );
 		if( events )
 		{
 			for( curTrack = 0; curTrack < numTracks; curTrack++ )
 			{
-				cp = events;
+				cp = events.get();
 				timeCode = 0;
 
 				name = getTrackName( curTrack );
@@ -1190,11 +1191,12 @@ int MIDIdata::saveMidiFile( const char *fileName, bool mergeTracks )
 							if( len )
 							{
 								bufferSize += len;
-								unsigned char *newEventBuffer = (unsigned char *)realloc( events, bufferSize );
-								cp = newEventBuffer + (cp-events);
-								// rollbackPointer = newEventBuffer + (rollbackPointer-events);
-
-								events = newEventBuffer;
+								size_t index = cp-events.get();
+								size_t rollbackIdx = rollbackPointer-events.get();
+								events.resize( bufferSize );
+								cp = events.get() + index;
+								if( rollbackPointer )
+									rollbackPointer = events.get() + rollbackIdx;
 							}
 							*cp++ = MIDI_SYS_EX_START;
 							cp = WriteVarLen( static_cast<unsigned long>(len), cp );
@@ -1227,7 +1229,11 @@ int MIDIdata::saveMidiFile( const char *fileName, bool mergeTracks )
 									break;
 
 								default:		// ignore event
-									cp = rollbackPointer;
+									if( rollbackPointer )
+									{
+										cp = rollbackPointer;
+										rollbackPointer = nullptr;
+									}
 							}
 						}
 					} // if( mergeTracks || theEvent.getTrack() == curTrack )
@@ -1240,22 +1246,18 @@ int MIDIdata::saveMidiFile( const char *fileName, bool mergeTracks )
 				*cp++ = 0x00;
 
 				// now we can finish the header and write the file
-				midiTrack.Length = (unsigned long)(cp-events);
+				midiTrack.Length = static_cast<unsigned long>(cp-events.get());
 				#if defined( __BORLANDC__ ) || defined( _MSC_VER )
 					midiTrack.Length = intlmot(midiTrack.Length);
 				#endif
 
-				fwrite( &midiTrack, sizeof( midiTrack ), 1, fp );
-				fwrite( events, 1, (unsigned long)(cp-events), fp );
+				fp.write( reinterpret_cast<char *>(&midiTrack), sizeof( midiTrack ) );
+				fp.write( reinterpret_cast<char *>(events.get()), cp-events.get() );
 
 				if( mergeTracks )
 					break;
 			} // for( curTrack = 0; curTrack < numTracks; curTrack++ )
-
-			free( events );
 		} // if( events )
-
-		fclose( fp );
 	} // if( fp )
 	return 0;
 }
