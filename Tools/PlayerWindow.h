@@ -6,7 +6,7 @@
 		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2026 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -86,35 +86,35 @@
 class PlayerWindow
 {
 	winlib::ComboBox	*m_MIDIplaySelect;
-	size_t				defaultPlayer;
+	size_t				m_defaultPlayer;
 	winlib::PushButton	*m_MIDIplayButton;
-	gak::STRING			playLabel, stopLabel;
+	gak::STRING			m_playLabel, m_stopLabel;
 
 	protected:
-	MIDIdata		midiData;
-	gak::STRING		lastMidiFile;
+	MIDIdata		m_midiData;
+	gak::STRING		m_lastMidiFile;
 
 	protected:
 	void saveMidi2CSV( const char *filename );
-	bool loadMidi( const winlib::BasicWindow *parent, winlib::EditControl *bpmEdit, int filter, const char *cmdLine=NULL );
+	bool loadMidi( const winlib::BasicWindow *parent, winlib::EditControl *bpmEdit, int filter, const char *cmdLine=nullptr );
 
 	PlayerWindow()
 	{
-		defaultPlayer = 0;
+		m_defaultPlayer = 0;
 	}
 
 	public:
-	size_t getDefaultPlayer( void ) const
+	size_t getDefaultPlayer() const
 	{
-		return defaultPlayer;
+		return m_defaultPlayer;
 	}
-	bool isOutOpen( void ) const
+	bool isOutOpen() const
 	{
-		return playerHandles.isOutOpen( defaultPlayer );
+		return playerHandles.isOutOpen( m_defaultPlayer );
 	}
-	void changeDefaultPlayer( void )
+	void changeDefaultPlayer()
 	{
-		defaultPlayer = m_MIDIplaySelect->getSelection();
+		m_defaultPlayer = m_MIDIplaySelect->getSelection();
 	}
 	void setDefaultPlayer( size_t midiDev )
 	{
@@ -122,52 +122,52 @@ class PlayerWindow
 		{
 			m_MIDIplaySelect->selectEntry( int(midiDev) );
 		}
-		defaultPlayer = midiDev;
+		m_defaultPlayer = midiDev;
 	}
-	bool openOutMidi( void )
+	bool openOutMidi()
 	{
-		defaultPlayer = m_MIDIplaySelect->getSelection();
-		return playerHandles.openOutMidi( defaultPlayer );
+		m_defaultPlayer = m_MIDIplaySelect->getSelection();
+		return playerHandles.openOutMidi( m_defaultPlayer );
 	}
-	void stopOutMidi( void )
+	void stopOutMidi()
 	{
-		playerHandles.stopOutMidi( defaultPlayer );
+		playerHandles.stopOutMidi( m_defaultPlayer );
 	}
 
 	void playMidiEvent( const MIDIevent &msg, bool drummerMode=false )
 	{
-		playerHandles.playMidiEvent( defaultPlayer, msg, drummerMode );
+		playerHandles.playMidiEvent( m_defaultPlayer, msg, drummerMode );
 	}
 	void setStereoPosition( unsigned char channel, char stereoPosition, bool drummerMode=false )
 	{
-		playerHandles.setStereoPosition( defaultPlayer, channel, stereoPosition, drummerMode );
+		playerHandles.setStereoPosition( m_defaultPlayer, channel, stereoPosition, drummerMode );
 	}
 
-	void showPlayLabel( void )
+	void showPlayLabel()
 	{
-		m_MIDIplayButton->setText( playLabel );
+		m_MIDIplayButton->setText( m_playLabel );
 	}
-	void showStopLabel( void )
+	void showStopLabel()
 	{
-		m_MIDIplayButton->setText( stopLabel );
+		m_MIDIplayButton->setText( m_stopLabel );
 	}
-	const gak::STRING &getStopLabel( void ) const
+	const gak::STRING &getStopLabel() const
 	{
-		return stopLabel;
+		return m_stopLabel;
 	}
-	void enableMidiPlaySelect( void )
+	void enableMidiPlaySelect()
 	{
 		m_MIDIplaySelect->enable();
 		m_MIDIplayButton->enable();
 	}
-	void disableMidiPlaySelect( void )
+	void disableMidiPlaySelect()
 	{
 		m_MIDIplaySelect->disable();
 		m_MIDIplayButton->disable();
 	}
 	void initMidiPlaySelect( winlib::ComboBox *playSelect, winlib::PushButton *playButton );
  
-	gak::STRING getSelectedMidiPlayer( void ) const
+	gak::STRING getSelectedMidiPlayer() const
 	{
 		return m_MIDIplaySelect->getSelectedText();
 	}

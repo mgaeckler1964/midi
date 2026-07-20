@@ -3,10 +3,10 @@
 		Module:			midiDevice.h
 		Description:	The management for the MIDI devices available
 		Author:			Martin Gäckler
-		Address:		Hopfengasse 15. A-4020 Linz
+		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2018 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -15,7 +15,7 @@
 		You should have received a copy of the GNU General Public License 
 		along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Germany, Munich ``AS IS''
+		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Linz, Austria ``AS IS''
 		AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
 		TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
 		PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR
@@ -129,23 +129,23 @@ class MIDIdevice
 	friend class MIDIrecorder;
 
 	protected:
-	gak::STRING		name, instrument;
+	gak::STRING		m_name, m_instrument;
 
 	public:
 	MIDIdevice()
 	{
 	}
-	gak::STRING getName( void ) const
+	gak::STRING getName() const
 	{
-		return name;
+		return m_name;
 	}
-	gak::STRING getInstrument( void ) const
+	gak::STRING getInstrument() const
 	{
-		return instrument;
+		return m_instrument;
 	}
 	void setInstrument( const gak::STRING &newInstrument )
 	{
-		instrument = newInstrument;
+		m_instrument = newInstrument;
 	}
 };
 
@@ -159,14 +159,14 @@ class MIDIrecorderHandle : public MIDIdevice
 	const winlib::BasicWindow	*m_owner;
 
 	private:
-	void createBuffer( void )
+	void createBuffer()
 	{
 		memset( &m_sysExHeader, 0, sizeof( m_sysExHeader ) );
 		m_sysExHeader.lpData = static_cast<LPSTR>( malloc( 10241024L ) );
 //		m_sysExHeader.lpData = (LPSTR)sysExBuffer;
 		m_sysExHeader.dwBufferLength = 10241024L;
 	}
-	void freeBuffer( void )
+	void freeBuffer()
 	{
 		free( m_sysExHeader.lpData );
 		memset( &m_sysExHeader, 0, sizeof( m_sysExHeader ) );
@@ -197,7 +197,7 @@ class MIDIrecorderHandle : public MIDIdevice
 			}
 		}
 	}
-	void prepareSysExHeader( void )
+	void prepareSysExHeader()
 	{
 		m_sysExHeader.dwFlags = 0;
 		midiInPrepareHeader( m_midiInHandle, &m_sysExHeader, sizeof( m_sysExHeader ) );
@@ -231,7 +231,7 @@ class MIDIrecorderHandle : public MIDIdevice
 			if( midiInClose( m_midiInHandle ) == MMSYSERR_NOERROR )
 			{
 				m_midiInHandle = 0;
-				m_owner = NULL;
+				m_owner = nullptr;
 			}
 		}
 	}
@@ -241,7 +241,7 @@ class MIDIrecorderHandle : public MIDIdevice
 	public:
 	MIDIrecorderHandle( HMIDIIN handle=0 )
 	{
-		m_owner = NULL;
+		m_owner = nullptr;
 		m_midiInHandle = handle;
 		memset( &m_sysExHeader, 0, sizeof( m_sysExHeader ) );
 	}
@@ -256,7 +256,7 @@ class MIDIrecorderHandle : public MIDIdevice
 	{
 		return this->m_midiInHandle == other.m_midiInHandle;
 	}
-	const winlib::BasicWindow *getOwner( void ) const
+	const winlib::BasicWindow *getOwner() const
 	{
 		return m_owner;
 	}
@@ -266,7 +266,7 @@ class MIDIrecorder : public gak::Array<MIDIrecorderHandle>
 {
 	public:
 	static const std::size_t no_index = gak::Array<MIDIrecorderHandle>::no_index;
-	void initDevices( void )
+	void initDevices()
 	{
 		MIDIINCAPS		midiRecDev;
 		std::size_t			midiCount = midiInGetNumDevs();
@@ -276,8 +276,8 @@ class MIDIrecorder : public gak::Array<MIDIrecorderHandle>
 			MIDIrecorderHandle &newHandle = createElement();
 
 			midiInGetDevCaps( i, &midiRecDev, sizeof( midiRecDev ) );
-			newHandle.name = midiRecDev.szPname;
-			newHandle.instrument = midiApp.GetProfile( newHandle.name, "recInstrument", newHandle.name );
+			newHandle.m_name = midiRecDev.szPname;
+			newHandle.m_instrument = midiApp.GetProfile( newHandle.m_name, "recInstrument", newHandle.m_name );
 		}
 	}
 	std::size_t getNumOpenDevices( const winlib::BasicWindow *owner )
@@ -350,7 +350,7 @@ class MIDIrecorder : public gak::Array<MIDIrecorderHandle>
 		for( i=size() -1; i != no_index; i-- )
 		{
 			const MIDIrecorderHandle &theHandle = (*this)[i];
-			if( recorderName == theHandle.name || recorderName == theHandle.instrument )
+			if( recorderName == theHandle.m_name || recorderName == theHandle.m_instrument )
 				break;
 		}
 
@@ -413,15 +413,15 @@ class MIDIplayerHandle : public MIDIdevice
 		memset( playCount, 0, sizeof( playCount ) );
 	}
 
-	gak::STRING getVoicesCSV( void ) const
+	gak::STRING getVoicesCSV() const
 	{
 		return voicesCSV;
 	}
-	gak::STRING getDrumsCSV( void ) const
+	gak::STRING getDrumsCSV() const
 	{
 		return drumsCSV;
 	}
-	bool isGeneralMIDI( void ) const
+	bool isGeneralMIDI() const
 	{
 		return generalMIDI;
 	}
@@ -460,7 +460,7 @@ class MIDIplayerHandle : public MIDIdevice
 
 	void playMidiEvent( const MIDIevent &msg );
 	void setStereoPosition( unsigned char channel, char stereoPos );
-	ChannelSettings *getChannelSettings( void )
+	ChannelSettings *getChannelSettings()
 	{
 		return channelSettings;
 	}
@@ -472,7 +472,7 @@ class MIDIplayer : public gak::Array<MIDIplayerHandle>
 
 	public:
 	static const std::size_t no_index = gak::Array<MIDIplayerHandle>::no_index;
-	void initDevices( void )
+	void initDevices()
 	{
 		clear();
 		MIDIOUTCAPS		midiPlayDev;
@@ -485,17 +485,17 @@ class MIDIplayer : public gak::Array<MIDIplayerHandle>
 			if( i<midiCount-1 )
 			{
 				midiOutGetDevCaps( i, &midiPlayDev, sizeof( midiPlayDev ) );
-				newHandle.name = midiPlayDev.szPname;
+				newHandle.m_name = midiPlayDev.szPname;
 			}
 			else
 			{
-				newHandle.name = "MGsynthesizer";
+				newHandle.m_name = "MGsynthesizer";
 				newHandle.internalSynthesizer = true;
 			}
 
-			newHandle.instrument = midiApp.GetProfile( newHandle.name, "playInstrument", newHandle.name );
-			newHandle.voicesCSV = midiApp.GetProfile( newHandle.name, "voices", "gm_voices.csv" );
-			newHandle.drumsCSV = midiApp.GetProfile( newHandle.name, "drums", "gm_drums.csv" );
+			newHandle.m_instrument = midiApp.GetProfile( newHandle.m_name, "playInstrument", newHandle.m_name );
+			newHandle.voicesCSV = midiApp.GetProfile( newHandle.m_name, "voices", "gm_voices.csv" );
+			newHandle.drumsCSV = midiApp.GetProfile( newHandle.m_name, "drums", "gm_drums.csv" );
 		}
 
 #if !defined( NDEBUG ) && 0
@@ -681,7 +681,7 @@ class MIDIplayer : public gak::Array<MIDIplayerHandle>
 		for( i=size() -1; i != no_index; i-- )
 		{
 			const MIDIplayerHandle &theHandle = (*this)[i];
-			if( playerName == theHandle.name || playerName == theHandle.instrument )
+			if( playerName == theHandle.m_name || playerName == theHandle.m_instrument )
 			{
 /*v*/			break;
 			}
@@ -697,7 +697,7 @@ struct DeviceEditor
 
 	DeviceEditor()
 	{
-		instrument = voices = drums = NULL;
+		instrument = voices = drums = nullptr;
 	}
 };
 
@@ -707,14 +707,14 @@ class MIDIdeviceDialog : public winlibGUI::MIDIdeviceDialog_form
 	winlib::Font 				dlgFont;
 	gak::Array<DeviceEditor>	editor;
 
-	virtual winlib::ProcessStatus handleCreate( void );
-	virtual winlib::ProcessStatus handleDestroy( void );
-	virtual winlib::ProcessStatus handleOk( void );
+	virtual winlib::ProcessStatus handleCreate();
+	virtual winlib::ProcessStatus handleDestroy();
+	virtual winlib::ProcessStatus handleOk();
 	virtual winlib::ProcessStatus handleButtonClick( int control );
 	virtual winlib::ProcessStatus handleMessage( UINT message, WPARAM wParam, LPARAM lParam );
 
 	public:
-	MIDIdeviceDialog() : MIDIdeviceDialog_form(NULL), dlgFont( this ) 
+	MIDIdeviceDialog() : MIDIdeviceDialog_form(nullptr), dlgFont( this ) 
 	{
 	}
 

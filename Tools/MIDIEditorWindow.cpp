@@ -6,7 +6,7 @@
 		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2026 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -118,12 +118,12 @@ static unsigned char otherMessages[] =
 // ----- class constructors/destructors -------------------------------- //
 // --------------------------------------------------------------------- //
 
-MIDIeditorWindow::~MIDIeditorWindow( void )
+MIDIeditorWindow::~MIDIeditorWindow()
 {
-	if( midiPlayer && midiPlayer->isRunning )
+	if( m_midiPlayer && m_midiPlayer->isRunning )
 	{
-		midiPlayer->StopThread();
-		while( !midiPlayer->isRunning )
+		m_midiPlayer->StopThread();
+		while( !m_midiPlayer->isRunning )
 			idleLoop();
 	}
 }
@@ -188,11 +188,11 @@ void MIDIeditorWindow::handleMessageType( int messageRadio )
 {
 	if( messageRadio == winlibGUI::voiceRadio_id )
 	{
-		theVoices.enable();
+		m_theVoices.enable();
 	}
 	else
 	{
-		theVoices.disable();
+		m_theVoices.disable();
 	}
 
 	if( messageRadio == winlibGUI::noteRadio_id )
@@ -252,7 +252,7 @@ void MIDIeditorWindow::handleMessageType( int messageRadio )
 	}
 }
 
-void MIDIeditorWindow::loadMidi( void )
+void MIDIeditorWindow::loadMidi()
 {
 	doEnterFunction("MIDIeditorWindow::loadMidi");
 
@@ -267,29 +267,29 @@ void MIDIeditorWindow::loadMidi( void )
 	VoiceCodes			voiceCodes[16];
 	size_t				voiceIdx, numMidiEvents;
 
-	editorEvents.clear();
+	m_editorEvents.clear();
 
 	//
 	// Convert MIDI events to editable events:
 	// =======================================
 	//
-	numTracks = midiData->getNumTracks();
-	numMidiEvents = midiData->size();
+	numTracks = m_midiData->getNumTracks();
+	numMidiEvents = m_midiData->size();
 
 	for( curTrack = 0; curTrack < numTracks; curTrack++ )
 	{
 		// add an enrty for the current track
-		name = midiData->getInstrument( curTrack );
+		name = m_midiData->getInstrument( curTrack );
 		if( name.isEmpty() )
-			name = midiData->getTrackName( curTrack );
+			name = m_midiData->getTrackName( curTrack );
 		if( name.isEmpty() )
 		{
 			name = "Track#";
 			name += formatNumber( curTrack );
-			midiData->setTrackName( curTrack, name );
+			m_midiData->setTrackName( curTrack, name );
 			name = "Intrument#";
 			name += formatNumber( curTrack );
-			midiData->setInstrument( curTrack, name );
+			m_midiData->setInstrument( curTrack, name );
 		}
 		trackSelect->addEntry( name );
 
@@ -300,13 +300,13 @@ void MIDIeditorWindow::loadMidi( void )
 			bankMSBchange[curChannel] =
 			bankLSBchange[curChannel] = false;
 
-			voiceCodes[curChannel] = theVoices[0].voiceCodes;
+			voiceCodes[curChannel] = m_theVoices[0].voiceCodes;
 		}
 
 		// walk through midi events
 		for( std::size_t i=0; i<numMidiEvents; i++ )
 		{
-			const MIDIevent	&theEvent = (*midiData)[i];
+			const MIDIevent	&theEvent = (*m_midiData)[i];
 			eventTrack = theEvent.getTrack();
 			if( eventTrack == curTrack )	// only current track
 			{
@@ -353,7 +353,7 @@ void MIDIeditorWindow::loadMidi( void )
 				{
 					for( size_t j=i+1; j<numMidiEvents; j++ )
 					{
-						const MIDIevent &theEvent2 = (*midiData)[j];
+						const MIDIevent &theEvent2 = (*m_midiData)[j];
 						if( theEvent2.getMessage() == MIDI_NOTE_OFF
 						&&	theEvent2.getTrack() == curTrack
 						&&  theEvent2.getChannel() == curChannel
@@ -375,11 +375,11 @@ void MIDIeditorWindow::loadMidi( void )
 								theEditorEvent.timeCode = programTimeCode;
 								theEditorEvent.midiEvent.voiceCodes = voiceCodes[curChannel];
 
-								voiceIdx = theVoices.findVoice( voiceCodes[curChannel] );
+								voiceIdx = m_theVoices.findVoice( voiceCodes[curChannel] );
 								if( voiceIdx != (size_t)-1 )
 								{
 									theEditorEvent.title += ' ';
-									theEditorEvent.title += theVoices[voiceIdx].voice;
+									theEditorEvent.title += m_theVoices[voiceIdx].voice;
 								}
 								newEntry( theEditorEvent );
 							}
@@ -432,23 +432,23 @@ void MIDIeditorWindow::loadMidi( void )
 			}
 		}
 	}
-	trackInfo = midiData->getTrackInfo();
+	m_trackInfo = m_midiData->getTrackInfo();
 	trackSelect->selectEntry( 0 );
 }
 
-void MIDIeditorWindow::copyValues2Editor( void )
+void MIDIeditorWindow::copyValues2Editor()
 {
 	NumberBuffer	label;
 	int				selectedEntry = eventList->getSelection();
 
 	if( selectedEntry >= 0 )
 	{
-		const MidiEditorEvent	&theEditorEvent = editorEvents[selectedEntry];
+		const MidiEditorEvent	&theEditorEvent = m_editorEvents[selectedEntry];
 
 		channelSelect->selectEntry( theEditorEvent.channel );
 		trackSelect->selectEntry( theEditorEvent.track );
 		timeCodeEdit->setText(
-			midiData->getTimeCodeStr( theEditorEvent.timeCode )
+			m_midiData->getTimeCodeStr( theEditorEvent.timeCode )
 		);
 
 		if( theEditorEvent.message == MIDI_PROGRAM )
@@ -459,7 +459,7 @@ void MIDIeditorWindow::copyValues2Editor( void )
 			otherRadio->clrActive();
 			sysExRadio->clrActive();
 			handleMessageType( winlibGUI::voiceRadio_id );
-			theVoices.selectVoice( theEditorEvent.midiEvent.voiceCodes );
+			m_theVoices.selectVoice( theEditorEvent.midiEvent.voiceCodes );
 		}
 		else if( theEditorEvent.message == MIDI_NOTE_ON )
 		{
@@ -547,12 +547,12 @@ void MIDIeditorWindow::deleteEntry( bool selectNext )
 		{
 			selectedEntry = selectedEntries[i];
 
-			editorEvents.removeElementAt( selectedEntry );
+			m_editorEvents.removeElementAt( selectedEntry );
 			eventList->deleteEntry( selectedEntry );
 		}
 		if( selectNext )
 		{
-			if( selectedEntry >= (int)editorEvents.size() )
+			if( selectedEntry >= (int)m_editorEvents.size() )
 			{
 				selectedEntry--;
 			}
@@ -566,18 +566,18 @@ void MIDIeditorWindow::deleteEntry( bool selectNext )
 size_t MIDIeditorWindow::newEntry( const MidiEditorEvent &newEvent )
 {
 	StringBuffer<1024>	tmpBuffer;
-	size_t				numElements = editorEvents.size();
+	size_t				numElements = m_editorEvents.size();
 
 	formatNumberFast( &tmpBuffer, newEvent.channel+1, 2, '0' );
-	tmpBuffer.addDigit( '\t' ).addCP( midiData->getTimeCodeStr(newEvent.timeCode) )
+	tmpBuffer.addDigit( '\t' ).addCP( m_midiData->getTimeCodeStr(newEvent.timeCode) )
 		.addDigit( '\t' ).addCP(newEvent.title);
 
 	// search for the insert position
 	for( size_t i=0; i<numElements; i++ )
 	{
-		if( eventCompare( editorEvents[i], newEvent ) > 0 )
+		if( eventCompare( m_editorEvents[i], newEvent ) > 0 )
 		{
-			editorEvents.insertElement( newEvent, i );
+			m_editorEvents.insertElement( newEvent, i );
 			eventList->insertEntry( int(i), tmpBuffer.c_str() );
 
 /***/		return i;
@@ -585,28 +585,28 @@ size_t MIDIeditorWindow::newEntry( const MidiEditorEvent &newEvent )
 	}
 
 	// append the new entry
-	editorEvents.addElement( newEvent );
+	m_editorEvents.addElement( newEvent );
 	eventList->addEntry( tmpBuffer.c_str() );
 
 	return numElements;
 }
 
-void MIDIeditorWindow::newEntry( void )
+void MIDIeditorWindow::newEntry()
 {
 	if( !sysExRadio->isActive() )		// do not create a system exclusive event
 	{
 		unsigned long		newTimeCode;
 		MidiEditorEvent		newEvent;
-		const char			*errText = NULL;
+		const char			*errText = nullptr;
 
 		newEvent.channel = static_cast<unsigned char>(channelSelect->getSelection());
 		newEvent.track = static_cast<unsigned short>(trackSelect->getSelection());
-		newEvent.timeCode = midiData->parseTimeCode( timeCodeEdit->getText() );
+		newEvent.timeCode = m_midiData->parseTimeCode( timeCodeEdit->getText() );
 		if( voiceRadio->isActive() )
 		{
 			newEvent.title = "Voice ";
 			newEvent.message = MIDI_PROGRAM;
-			const VoiceEntry &theVoice = theVoices.getSelectedVoice();
+			const VoiceEntry &theVoice = m_theVoices.getSelectedVoice();
 			newEvent.midiEvent.voiceCodes = theVoice.voiceCodes;
 			newEvent.title += theVoice.voice;
 		}
@@ -624,7 +624,7 @@ void MIDIeditorWindow::newEntry( void )
 
 			newTimeCode = newEvent.timeCode + newEvent.midiEvent.sound.length;
 			timeCodeEdit->setText(
-				midiData->getTimeCodeStr( newTimeCode )
+				m_midiData->getTimeCodeStr( newTimeCode )
 			);
 
 			if( newEvent.midiEvent.sound.note > 127 )
@@ -668,7 +668,7 @@ void MIDIeditorWindow::newEntry( void )
 	}
 }
 
-void MIDIeditorWindow::changeVolume( void )
+void MIDIeditorWindow::changeVolume()
 {
 	size_t					curEvent;
 	unsigned char			curChannel, maxVolumes[17];
@@ -685,7 +685,7 @@ void MIDIeditorWindow::changeVolume( void )
 		for( int i=(int)numSelected-1; i>=0; i-- )
 		{
 			curEvent = selectedEntries[i];
-			const MidiEditorEvent &theEditorEvent = editorEvents[curEvent];
+			const MidiEditorEvent &theEditorEvent = m_editorEvents[curEvent];
 			if( theEditorEvent.message == MIDI_NOTE_ON )
 			{
 				if( maxVolumes[theEditorEvent.channel] <
@@ -723,7 +723,7 @@ void MIDIeditorWindow::changeVolume( void )
 
 					curEvent = selectedEntries[i];
 					MidiEditorEvent &theEditorEvent =
-						editorEvents[curEvent]
+						m_editorEvents[curEvent]
 					;
 					if( theEditorEvent.message == MIDI_NOTE_ON
 					&&  (
@@ -750,7 +750,7 @@ void MIDIeditorWindow::changeVolume( void )
 	}
 }
 
-void MIDIeditorWindow::swapChannels( void )
+void MIDIeditorWindow::swapChannels()
 {
 	SwapChannelDialog	dialog;
 	ArrayOfInts			selectedEntries;
@@ -768,7 +768,7 @@ void MIDIeditorWindow::swapChannels( void )
 				STRING label;
 				for( size_t i=0; i<numSelected; i++ )
 				{
-					MidiEditorEvent &theEditorEvent = editorEvents[selectedEntries[i]];
+					MidiEditorEvent &theEditorEvent = m_editorEvents[selectedEntries[i]];
 
 					if( theEditorEvent.channel == srcChannel
 					||  theEditorEvent.channel == destChannel )
@@ -779,7 +779,7 @@ void MIDIeditorWindow::swapChannels( void )
 							theEditorEvent.channel = srcChannel;
 
 						label = formatNumber(theEditorEvent.channel+1, 2, ' ').add('\t')
-							.add(midiData->getTimeCodeStr(theEditorEvent.timeCode)).add('\t')
+							.add(m_midiData->getTimeCodeStr(theEditorEvent.timeCode)).add('\t')
 							.add(theEditorEvent.title)
 						;
 						eventList->replaceEntry( selectedEntries[i], label );
@@ -792,51 +792,51 @@ void MIDIeditorWindow::swapChannels( void )
 	}
 }
 
-void MIDIeditorWindow::repeatEntries( void )
+void MIDIeditorWindow::repeatEntries()
 {
 	long			newTimeCode, timeCodeOffset;
 	double			timePerTakt, factor;
-	size_t			numEntries = editorEvents.size();
+	size_t			numEntries = m_editorEvents.size();
 	ArrayOfInts		selectedEntries;
 	size_t			numSelected = eventList->getSelectedItems( &selectedEntries );
 
 	if( numSelected )
 	{
 		StringBuffer<1024> label;
-		const MidiEditorEvent &theLastEvent = editorEvents[numEntries-1];
+		const MidiEditorEvent &theLastEvent = m_editorEvents[numEntries-1];
 		newTimeCode = theLastEvent.timeCode;
 		if( theLastEvent.message == MIDI_NOTE_ON )
 			newTimeCode += theLastEvent.midiEvent.sound.length;
 		newTimeCode += 1;
 
-		timePerTakt = midiData->getTimePerBarDbl();
+		timePerTakt = m_midiData->getTimePerBarDbl();
 
 		factor = newTimeCode / timePerTakt;
 		factor = floor( factor + 0.5 );
 		newTimeCode = long(factor * timePerTakt);
 
-		const MidiEditorEvent &theFirstEvent = editorEvents[selectedEntries[0]];
+		const MidiEditorEvent &theFirstEvent = m_editorEvents[selectedEntries[0]];
 		timeCodeOffset = newTimeCode-theFirstEvent.timeCode;
 
 		for( std::size_t i=0 ; i<numSelected; i++ )
 		{
-			MidiEditorEvent theEvent = editorEvents[selectedEntries[i]];
+			MidiEditorEvent theEvent = m_editorEvents[selectedEntries[i]];
 			theEvent.timeCode += timeCodeOffset;
 
 			formatNumberFast( &label, theEvent.channel+1, 2, '0' );
 			label.addDigit('\t')
-				.addCP(midiData->getTimeCodeStr(theEvent.timeCode)).addDigit('\t')
+				.addCP(m_midiData->getTimeCodeStr(theEvent.timeCode)).addDigit('\t')
 				.addSTR(theEvent.title)
 			;
 
-			editorEvents.addElement( theEvent );
+			m_editorEvents.addElement( theEvent );
 			eventList->addEntry( label.c_str() );
 		}
 
 	}
 }
 
-void MIDIeditorWindow::transposeEntries( void )
+void MIDIeditorWindow::transposeEntries()
 {
 	StringBuffer<1024>	tmpBuffer;
 	unsigned char	 	noteOffset = transposeEdit->getText().getValueN<unsigned char>();
@@ -851,7 +851,7 @@ void MIDIeditorWindow::transposeEntries( void )
 			for( size_t i=0; i<numSelected; i++ )
 			{
 				MidiEditorEvent &theEditorEvent =
-					editorEvents[selectedEntries[i]]
+					m_editorEvents[selectedEntries[i]]
 				;
 				if( theEditorEvent.message == MIDI_NOTE_ON )
 				{
@@ -863,7 +863,7 @@ void MIDIeditorWindow::transposeEntries( void )
 				}
 
 				formatNumberFast( &tmpBuffer, theEditorEvent.channel+1, 2, ' ' );
-				tmpBuffer.addDigit( '\t' ).addCP( midiData->getTimeCodeStr(theEditorEvent.timeCode) )
+				tmpBuffer.addDigit( '\t' ).addCP( m_midiData->getTimeCodeStr(theEditorEvent.timeCode) )
 					.addDigit( '\t' ).addCP(theEditorEvent.title);
 				eventList->replaceEntry( selectedEntries[i], tmpBuffer.c_str() );
 			}
@@ -877,7 +877,7 @@ void MIDIeditorWindow::copyMoveEntries( bool copy )
 {
 	Array<MidiEditorEvent>		selectedEvents;
 
-	long	timeCodeOffset = midiData->parseRelativeTimeCode(
+	long	timeCodeOffset = m_midiData->parseRelativeTimeCode(
 		moveEdit->getText()
 	);
 
@@ -894,12 +894,12 @@ void MIDIeditorWindow::copyMoveEntries( bool copy )
 			{
 				int selected = selectedEntries[i];
 				MidiEditorEvent theEditorEvent =
-					editorEvents[selected]
+					m_editorEvents[selected]
 				;
 
 				if( !copy )
 				{
-					editorEvents.removeElementAt( selected );
+					m_editorEvents.removeElementAt( selected );
 					eventList->deleteEntry( selected );
 				}
 
@@ -945,14 +945,14 @@ void MIDIeditorWindow::convertEditorEvents( MIDIdata *midiData, bool selected )
 		if( numSelected == 0 )
 		{
 			// play all
-			numSelected = editorEvents.size();
+			numSelected = m_editorEvents.size();
 			startPos = 0;
 			selected = false;
 		}
 		else if( numSelected == 1 )
 		{
 			// play from selection
-			numSelected = editorEvents.size();
+			numSelected = m_editorEvents.size();
 			startPos = selectedEntries[0];
 			selected = false;
 		}
@@ -962,14 +962,14 @@ void MIDIeditorWindow::convertEditorEvents( MIDIdata *midiData, bool selected )
 	else
 	{
 		// play all
-		numSelected = editorEvents.size();
+		numSelected = m_editorEvents.size();
 		startPos = 0;
 	}
 
 	midiData->clear();
 	for( size_t i=startPos; i<numSelected; i++ )
 	{
-		MidiEditorEvent &theEditorEvent = editorEvents[ selected ? selectedEntries[i] : i ];
+		MidiEditorEvent &theEditorEvent = m_editorEvents[ selected ? selectedEntries[i] : i ];
 
 		newEvent.setTimeCode( theEditorEvent.timeCode );
 		newEvent.setTrack( theEditorEvent.track );
@@ -1029,7 +1029,7 @@ void MIDIeditorWindow::convertEditorEvents( MIDIdata *midiData, bool selected )
 		}
 	}
 
-	midiData->setTrackInfo( trackInfo );
+	midiData->setTrackInfo( m_trackInfo );
 }
 
 // --------------------------------------------------------------------- //
@@ -1040,16 +1040,16 @@ void MIDIeditorWindow::convertEditorEvents( MIDIdata *midiData, bool selected )
 // ----- class virtuals ------------------------------------------------ //
 // --------------------------------------------------------------------- //
 
-void MidiEditPlayerThread::ExecuteThread( void )
+void MidiEditPlayerThread::ExecuteThread()
 {
 	clock_t		actTime, nextTime, startTime;
 
-	if( playerHandles.openOutMidi( midiDev ) )
+	if( playerHandles.openOutMidi( m_midiDev ) )
 	{
 		startTime = clock();
 		for(
-			MIDIdata::const_iterator it = midiData->cbegin(),
-				endIT = midiData->cend();
+			MIDIdata::const_iterator it = m_midiData->cbegin(),
+				endIT = m_midiData->cend();
 			!terminated && it != endIT;
 			++it
 		)
@@ -1061,12 +1061,12 @@ void MidiEditPlayerThread::ExecuteThread( void )
 			if( nextTime > actTime )
 				Sleep((nextTime-actTime)*1000/CLK_TCK);
 
-			playerHandles.playMidiEvent( midiDev, midiMsg );
+			playerHandles.playMidiEvent( m_midiDev, midiMsg );
 		}
 
 		if( !terminated )
 		{
-			int 	barTime = midiData->getTimePerBar();
+			int 	barTime = m_midiData->getTimePerBar();
 			int		quarterTime = barTime / 4;
 
 			// wait three bars for the release time
@@ -1075,18 +1075,18 @@ void MidiEditPlayerThread::ExecuteThread( void )
 				Sleep( quarterTime );
 			}
 		}
-		playerHandles.stopOutMidi( midiDev );
+		playerHandles.stopOutMidi( m_midiDev );
 	}
 
-	const_cast<MIDIeditorWindow*>(owner)->showPlayLabel();
+	const_cast<MIDIeditorWindow*>(m_owner)->showPlayLabel();
 }
 
-ProcessStatus MIDIeditorWindow::handleCreate( void )
+ProcessStatus MIDIeditorWindow::handleCreate()
 {
 	size_t			i;
 
-	stopLabel = appObject->loadString( winlibGUI::STOP_LABEL_id );
-	playLabel = appObject->loadString( winlibGUI::PLAY_LABEL_id );
+	m_stopLabel = appObject->loadString( winlibGUI::STOP_LABEL_id );
+	m_playLabel = appObject->loadString( winlibGUI::PLAY_LABEL_id );
 
 	ChannelSelect::fill( channelSelect );
 
@@ -1095,7 +1095,7 @@ ProcessStatus MIDIeditorWindow::handleCreate( void )
 
 	channelSelect->selectEntry( 0 );
 
-	theVoices.loadVoices( voiceFile, groupSelect, voiceSelect );
+	m_theVoices.loadVoices( m_voiceFile, groupSelect, voiceSelect );
 	voiceRadio->setActive();
 	handleMessageType( winlibGUI::voiceRadio_id );
 
@@ -1124,16 +1124,16 @@ ProcessStatus MIDIeditorWindow::handleCreate( void )
 	return psDO_DEFAULT;
 }
 
-ProcessStatus MIDIeditorWindow::handleOk( void )
+ProcessStatus MIDIeditorWindow::handleOk()
 {
-	convertEditorEvents( midiData, false );
+	convertEditorEvents( m_midiData, false );
 	return psDO_DEFAULT;
 }
 
 ProcessStatus MIDIeditorWindow::handleButtonClick( int btn )
 {
 	doEnterFunction("MIDIeditorWindow::handleButtonClick");
-	static PushButton *lastHighlight = NULL;
+	static PushButton *lastHighlight = nullptr;
 
 	switch( btn )
 	{
@@ -1146,7 +1146,7 @@ ProcessStatus MIDIeditorWindow::handleButtonClick( int btn )
 			break;
 		case winlibGUI::full_id:
 		{
-			int theTime = midiData->getTimePerFulNote();
+			int theTime = m_midiData->getTimePerFulNote();
 			STRING value = formatNumber( theTime );
 			noteLengthEdit->setText( value );
 
@@ -1160,7 +1160,7 @@ ProcessStatus MIDIeditorWindow::handleButtonClick( int btn )
 		}
 		case winlibGUI::half_id:
 		{
-			int theTime = midiData->getTimePerFulNote() / 2;
+			int theTime = m_midiData->getTimePerFulNote() / 2;
 			STRING value = formatNumber( theTime );
 			noteLengthEdit->setText( value );
 
@@ -1174,7 +1174,7 @@ ProcessStatus MIDIeditorWindow::handleButtonClick( int btn )
 		}
 		case winlibGUI::quarter_id:
 		{
-			int theTime = midiData->getTimePerFulNote() / 4;
+			int theTime = m_midiData->getTimePerFulNote() / 4;
 			STRING value = formatNumber( theTime );
 			noteLengthEdit->setText( value );
 
@@ -1188,7 +1188,7 @@ ProcessStatus MIDIeditorWindow::handleButtonClick( int btn )
 		}
 		case winlibGUI::eighth_id:
 		{
-			int theTime = midiData->getTimePerFulNote() / 8;
+			int theTime = m_midiData->getTimePerFulNote() / 8;
 			STRING value = formatNumber( theTime );
 			noteLengthEdit->setText( value );
 
@@ -1259,7 +1259,7 @@ ProcessStatus MIDIeditorWindow::handleSelectionChange( int control )
 	switch( control )
 	{
 		case winlibGUI::groupSelect_id:
-			theVoices.handleGroupSelection();
+			m_theVoices.handleGroupSelection();
 			break;
 		case winlibGUI::eventList_id:
 			copyValues2Editor();
@@ -1276,19 +1276,19 @@ ProcessStatus MIDIeditorWindow::handleCommand( int cmd )
 	switch( cmd )
 	{
 		case winlibGUI::playButton_id:
-			if( !midiPlayer || !midiPlayer->isRunning )
+			if( !m_midiPlayer || !m_midiPlayer->isRunning )
 			{
-				convertEditorEvents( &playerData, true );
-				playerData.alignTimeCodes();
+				convertEditorEvents( &m_playerData, true );
+				m_playerData.alignTimeCodes();
 
-				midiPlayer = new MidiEditPlayerThread( &playerData, midiDev, this );
-				midiPlayer->StartThread();
+				m_midiPlayer = new MidiEditPlayerThread( &m_playerData, m_midiDev, this );
+				m_midiPlayer->StartThread();
 				showStopLabel();
 			}
-			else if( midiPlayer )
+			else if( m_midiPlayer )
 			{
-				midiPlayer->StopThread();
-				while( midiPlayer->isRunning )
+				m_midiPlayer->StopThread();
+				while( m_midiPlayer->isRunning )
 					idleLoop();
 				playerHandles.stopAllSoundMidi();
 				showPlayLabel();

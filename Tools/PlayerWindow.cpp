@@ -6,7 +6,7 @@
 		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2026 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -128,8 +128,8 @@ void PlayerWindow::saveMidi2CSV( const char *filename )
 			"SysEx"
 		);
 		for( 
-			MIDIdata::const_iterator it = midiData.cbegin(), 
-				endIT = midiData.cend();
+			MIDIdata::const_iterator it = m_midiData.cbegin(), 
+				endIT = m_midiData.cend();
 			it != endIT;
 			++it
 		)
@@ -192,19 +192,19 @@ bool PlayerWindow::loadMidi( const BasicWindow *parent, EditControl *bpmEdit, in
 	doEnterFunction("PlayerWindow::loadMidi");
 	OpenFileDialog	dlg;
 
-	dlg.setFilename( lastMidiFile );
+	dlg.setFilename( m_lastMidiFile );
 	if( dlg.getDirectory().isEmpty() )
 		dlg.setPersonalMusic();
 
 	if( cmdLine || dlg.create( parent, winlibGUI::OPEN_MIDI_id, filter, 1 ) )
 	{
-		lastMidiFile = cmdLine ? cmdLine : dlg.getFilename();
-		int errCode = midiData.loadMidiFile( lastMidiFile );
+		m_lastMidiFile = cmdLine ? cmdLine : dlg.getFilename();
+		int errCode = m_midiData.loadMidiFile( m_lastMidiFile );
 		if( !errCode )
 		{
 			if( bpmEdit )
 			{
-				STRING	bpm = formatNumber( midiData.getBPM() );
+				STRING	bpm = formatNumber( m_midiData.getBPM() );
 
 				bpmEdit->setText( bpm );
 			}
@@ -249,8 +249,8 @@ void PlayerWindow::initMidiPlaySelect( ComboBox *playSelect, PushButton *playBut
 		disableMidiPlaySelect();
 	}
 
-	stopLabel = appObject->loadString( winlibGUI::STOP_LABEL_id );
-	playLabel = appObject->loadString( winlibGUI::PLAY_LABEL_id );
+	m_stopLabel = appObject->loadString( winlibGUI::STOP_LABEL_id );
+	m_playLabel = appObject->loadString( winlibGUI::PLAY_LABEL_id );
 }
 
 // --------------------------------------------------------------------- //

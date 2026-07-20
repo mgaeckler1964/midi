@@ -3,10 +3,10 @@
 		Module:			manipulators.h
 		Description:	Manipulators (AM, FM, envelope) for oscilators
 		Author:			Martin Gäckler
-		Address:		Hopfengasse 15. A-4020 Linz
+		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2014-2018 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -15,7 +15,7 @@
 		You should have received a copy of the GNU General Public License 
 		along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Germany, Munich ``AS IS''
+		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Linz, Austria ``AS IS''
 		AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
 		TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
 		PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR
@@ -117,7 +117,7 @@ class OscManipulator : public BaseProducer
 		BaseProducer::setFrequency( frequency );
 		m_source.setFrequency( frequency );
 	}
-	double getFrequency( void ) const
+	double getFrequency() const
 	{
 		return m_source.getFrequency();
 	}
@@ -141,7 +141,7 @@ class OscManipulator : public BaseProducer
 	{
 		m_source.start();
 	}
-	double getNextValue( void )
+	double getNextValue()
 	{
 		return m_source.getNextPlainWithRange();
 	}
@@ -246,7 +246,7 @@ class Envelope : public BaseProducer
 
 		m_keyPressed = false;
 	}
-	const Parameter &get( void ) const
+	const Parameter &get() const
 	{
 		return m_parameter;
 	}
@@ -254,17 +254,17 @@ class Envelope : public BaseProducer
 	/*
 		Produce
 	*/
-	void start( void )
+	void start()
 	{
 		timeCode = 0;
 		currentValue = 0;
 		m_keyPressed = true;
 	}
-	void release( void )
+	void release()
 	{
 		m_keyPressed = false;
 	}
-	void stop( void )
+	void stop()
 	{
 		m_keyPressed = false;
 		currentValue = 0;
@@ -277,7 +277,7 @@ class Envelope : public BaseProducer
 	{
 		return m_parameter.enabled;
 	} 
-	double getNextValue( void )
+	double getNextValue()
 	{
 		double	newValue;
 

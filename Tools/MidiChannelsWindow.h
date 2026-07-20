@@ -3,10 +3,10 @@
 		Module:			MidiChannelsWindow.h
 		Description:	The channel settings (used by recorder window)
 		Author:			Martin Gäckler
-		Address:		Hopfengasse 15. A-4020 Linz
+		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2018 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -15,7 +15,7 @@
 		You should have received a copy of the GNU General Public License 
 		along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Germany, Munich ``AS IS''
+		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Linz, Austria ``AS IS''
 		AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
 		TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
 		PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR
@@ -86,27 +86,27 @@ class MIDIrecorderWindow;
 
 class MIDIchannelsWindow : public winlibGUI::MIDIchannelsWindow_form
 {
-	MIDIrecorderWindow	*theRecorderWindow;
-	VoiceArray			theVoices;
+	MIDIrecorderWindow	*m_theRecorderWindow;
+	VoiceArray			m_theVoices;
 
-	size_t				midiDev;
-	ChannelSettings		*channelSettings;
-	gak::STRING			voiceFile, instrument;
+	size_t				m_midiDev;
+	ChannelSettings		*m_channelSettings;
+	gak::STRING			m_voiceFile, m_instrument;
 
 	void handleChannelSelection( unsigned char channel );
-	void handleVoiceSelection( void );
+	void handleVoiceSelection();
 	void handleNewStereoPos( char stereoPosition );
 	void handleNewVolume( unsigned char volume );
 	void handleActive( bool active );
 	void handleNewEffect( unsigned char effect, unsigned char effectValue );
 	void handleNewSound( unsigned char sound, unsigned char soundValue );
 	void handleNewExpression( unsigned char expression );
-	void handleDefault( void );
+	void handleDefault();
 
-	virtual winlib::ProcessStatus handleCreate( void );
+	virtual winlib::ProcessStatus handleCreate();
 	virtual winlib::ProcessStatus handleCommand( int cmd );
-	virtual winlib::SuccessCode handleClose( void );
-	virtual winlib::ProcessStatus handleCancel( void );
+	virtual winlib::SuccessCode handleClose();
+	virtual winlib::ProcessStatus handleCancel();
 
 	public:
 	MIDIchannelsWindow( BasicWindow *owner ) : MIDIchannelsWindow_form( owner )
@@ -118,12 +118,12 @@ class MIDIchannelsWindow : public winlibGUI::MIDIchannelsWindow_form
 	{
 		MIDIplayerHandle	&playerHandle = playerHandles[midiDev];
 
-		this->theRecorderWindow = theRecorderWindow;
-		this->midiDev = midiDev;
+		m_theRecorderWindow = theRecorderWindow;
+		m_midiDev = midiDev;
 
-		channelSettings = playerHandle.getChannelSettings();
-		voiceFile = playerHandle.getVoicesCSV();
-		instrument = playerHandle.getInstrument();
+		m_channelSettings = playerHandle.getChannelSettings();
+		m_voiceFile = playerHandle.getVoicesCSV();
+		m_instrument = playerHandle.getInstrument();
 
 		MIDIchannelsWindow_form::create( reinterpret_cast<BasicWindow*>(theRecorderWindow) );
 		restoreWindowRect();
@@ -135,7 +135,7 @@ class MIDIchannelsWindow : public winlibGUI::MIDIchannelsWindow_form
 	}
 
 
-	void refreshWindow( void )
+	void refreshWindow()
 	{
 		handleChannelSelection( 
 			static_cast<unsigned char>(channelSelect->getSelection())
@@ -143,19 +143,19 @@ class MIDIchannelsWindow : public winlibGUI::MIDIchannelsWindow_form
 	}
 	void setChannelSettings( size_t midiDev )
 	{
-		if( this->midiDev != midiDev )
+		if( m_midiDev != midiDev )
 		{
 			MIDIplayerHandle	&playerHandle = playerHandles[midiDev];
 
-			this->midiDev = midiDev;
+			m_midiDev = midiDev;
 
-			channelSettings = playerHandle.getChannelSettings();
-			voiceFile = playerHandle.getVoicesCSV();
-			instrument = playerHandle.getInstrument();
+			m_channelSettings = playerHandle.getChannelSettings();
+			m_voiceFile = playerHandle.getVoicesCSV();
+			m_instrument = playerHandle.getInstrument();
 
-			theVoices.loadVoices( voiceFile, groupSelect, voiceSelect );
+			m_theVoices.loadVoices( m_voiceFile, groupSelect, voiceSelect );
 
-			deviceLabel->setText( instrument );
+			deviceLabel->setText( m_instrument );
 
 			refreshWindow();
 		}

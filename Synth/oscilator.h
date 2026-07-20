@@ -3,10 +3,10 @@
 		Module:			oscilator.h
 		Description:	Oscilators (SINUS etc.) for the synthesizer
 		Author:			Martin Gäckler
-		Address:		Hopfengasse 15. A-4020 Linz
+		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2014-2018 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -15,7 +15,7 @@
 		You should have received a copy of the GNU General Public License 
 		along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Germany, Munich ``AS IS''
+		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Linz, Austria ``AS IS''
 		AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
 		TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
 		PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR
@@ -122,11 +122,11 @@ class BaseProducer
 		m_sampleRate = sampleRate;
 		m_flankLength = ms2sampleCount( getSampleRate(), 1 )/2;
 	}
-	timeCode_t getSampleRate( void ) const
+	timeCode_t getSampleRate() const
 	{
 		return m_sampleRate;
 	}
-	virtual bool isEnabled( void ) const
+	virtual bool isEnabled() const
 	{
 		return m_sampleRate != 0 && m_volume != 0;
 	}
@@ -153,7 +153,7 @@ class BaseProducer
 	{
 		m_volume = volume;
 	}
-	double getVolume( void ) const
+	double getVolume() const
 	{
 		return m_volume;
 	}
@@ -179,7 +179,7 @@ class Oscilator : public BaseProducer
 	static const timeCode_t	maxFlankFraction = 16;
 
 	private:
-	typedef double (Oscilator<T>::*PlainFuncPtr)( void ) const;
+	typedef double (Oscilator<T>::*PlainFuncPtr)() const;
 
 	timeCode_t		m_numSamples,		// # of samples per one wave
 					m_numSamples2;		// # of samples per half wave
@@ -206,7 +206,7 @@ class Oscilator : public BaseProducer
 					m_rangeOffset;
 
 	private:
-	timeCode_t calcStartCode( void )
+	timeCode_t calcStartCode()
 	{
 		m_startCode = timeCode_t(m_phase * m_numSamplesDbl / (2*M_PI) +0.5);
 		if( m_numSamples && m_startCode >= m_numSamples )
@@ -283,7 +283,7 @@ class Oscilator : public BaseProducer
 		m_range = range;
 		calculateRange( range );
 	}
-	const Interval &getRange( void ) const
+	const Interval &getRange() const
 	{
 		return m_range;
 	}
@@ -292,11 +292,11 @@ class Oscilator : public BaseProducer
 		frequency
 	*/
 	protected:
-	timeCode_t getNumSamples( void ) const
+	timeCode_t getNumSamples() const
 	{
 		return m_numSamples;
 	}
-	double getNumSamplesDbl( void ) const
+	double getNumSamplesDbl() const
 	{
 		return m_numSamplesDbl;
 	}
@@ -350,11 +350,11 @@ class Oscilator : public BaseProducer
 	{
 		return m_phase;
 	}
-	double getFrequency( void ) const
+	double getFrequency() const
 	{
 		return m_frequency;
 	}
-	bool isEnabled( void ) const
+	bool isEnabled() const
 	{
 		return m_frequency != 0.0 && BaseProducer::isEnabled();
 	}
@@ -362,7 +362,7 @@ class Oscilator : public BaseProducer
 	/*
 		Volume
 	*/
-	T getClipValue( void ) const
+	T getClipValue() const
 	{
 		return clipValue;
 	}
@@ -386,7 +386,7 @@ class Oscilator : public BaseProducer
 	*/
 
 	private:
-	timeCode_t getTimeCode( void ) const
+	timeCode_t getTimeCode() const
 	{
 		return m_timeCode;
 	}
@@ -516,7 +516,7 @@ class Oscilator : public BaseProducer
 			: double(getNumSamples() - getTimeCode() ) / m_numSamples2Dbl;
 	}
 
-	void calculateNativeRange( void )
+	void calculateNativeRange()
 	{
 		if( m_theOscilatorType == oscSINUS )
 		{

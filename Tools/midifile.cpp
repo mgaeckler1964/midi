@@ -6,7 +6,7 @@
 		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2026 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -495,7 +495,7 @@ void MIDIdata::fixTimeCodes( int fraction )
 // --------------------------------------------------------------------- //
 
 // align timeCode, so that first note will be in first bar
-void MIDIdata::alignTimeCodes( void )
+void MIDIdata::alignTimeCodes()
 {
 	unsigned long timePerBar;
 	unsigned long	firstNoteTimeCode = 0, eventTimeCode;
@@ -602,7 +602,7 @@ size_t MIDIdata::getNumTrackData( unsigned short track ) const
 	return numTrackData;
 }
 
-void MIDIdata::removeUnusedTracks( void )
+void MIDIdata::removeUnusedTracks()
 {
 	unsigned short curTrack = 0, numTracks = getNumTracks();
 	while( curTrack < numTracks )
@@ -674,7 +674,7 @@ void MIDIdata::replaceTrack( unsigned short track, const MIDIdata *newData )
 	}
 }
 
-unsigned short MIDIdata::getNumTracks( void ) const
+unsigned short MIDIdata::getNumTracks() const
 {
 	unsigned short	maxTrack = (unsigned short)m_trackInfo.size(), 
 					curTrack;
@@ -1262,7 +1262,7 @@ int MIDIdata::saveMidiFile( const char *fileName, bool mergeTracks )
 	return 0;
 }
 
-void MIDIdata::optimizeMIDI( void )
+void MIDIdata::optimizeMIDI()
 {
 	std::size_t		curEvent;
 	VoiceCodes		midiVoices[16];
@@ -1425,7 +1425,7 @@ void MIDIdata::optimizeMIDI( void )
 	}
 }
 
-void MIDIdata::clearAllSelections( void )
+void MIDIdata::clearAllSelections()
 {
 	for( iterator it=begin(), endIT = end(); it != endIT; ++it )
 	{

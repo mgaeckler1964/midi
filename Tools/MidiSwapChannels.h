@@ -4,10 +4,10 @@
 		Description:	Swap the channels of multiple MIDI commands
 						(used by editor)
 		Author:			Martin Gäckler
-		Address:		Hopfengasse 15. A-4020 Linz
+		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2018 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -16,7 +16,7 @@
 		You should have received a copy of the GNU General Public License 
 		along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Germany, Munich ``AS IS''
+		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Linz, Austria ``AS IS''
 		AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
 		TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
 		PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR
@@ -83,26 +83,26 @@
 
 class SwapChannelDialog : public winlibGUI::SwapChannel_form
 {
-	unsigned char	srcChannel, destChannel;
+	unsigned char	m_srcChannel, m_destChannel;
 
-	virtual winlib::ProcessStatus handleCreate( void );
+	virtual winlib::ProcessStatus handleCreate();
 	virtual winlib::ProcessStatus handleCommand( int cmd );
 
 	public:
-	SwapChannelDialog() : SwapChannel_form( NULL )
+	SwapChannelDialog() : SwapChannel_form( nullptr )
 	{
 	}
 	winlib::SuccessCode create( BasicWindow *parent )
 	{
 		return SwapChannel_form::create( parent );
 	}
-	unsigned char getSrcChannel( void ) const
+	unsigned char getSrcChannel() const
 	{
-		return srcChannel;
+		return m_srcChannel;
 	}
-	unsigned char getDestChannel( void ) const
+	unsigned char getDestChannel() const
 	{
-		return destChannel;
+		return m_destChannel;
 	}
 };
 

@@ -6,7 +6,7 @@
 		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2026 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -86,14 +86,14 @@ using namespace gak;
 // ----- class privates ------------------------------------------------ //
 // --------------------------------------------------------------------- //
 
-unsigned long MIDIloopEditor::compileLoop2Midi( void )
+unsigned long MIDIloopEditor::compileLoop2Midi()
 {
 	unsigned long	loopPoint = 0;
 	MIDIdata		entryData;
 	double			entryLength, timeOffset = 0;
 
-	midiData.clear();
-	midiData.setBPM( atoi( bpmEdit->getText() ), false, 0 );
+	m_midiData.clear();
+	m_midiData.setBPM( atoi( bpmEdit->getText() ), false, 0 );
 
 	m_firstLoopEntry = midiListBox->getSelection();
 	for( std::size_t i=0; i<m_theLoopList.size(); i++ )
@@ -107,8 +107,8 @@ unsigned long MIDIloopEditor::compileLoop2Midi( void )
 		entryData.clear();
 		if( !entryData.loadMidiFile(theLoopEntry.fileName ) )
 		{
-			if( entryData.getBPM() != midiData.getBPM() )
-				entryData.setBPM( midiData.getBPM(), true, 64 );
+			if( entryData.getBPM() != m_midiData.getBPM() )
+				entryData.setBPM( m_midiData.getBPM(), true, 64 );
 
 			theLoopEntry.timeCode = (unsigned long)(timeOffset);
 			entryLength = entryData.getNumBars() * entryData.getTimePerBarDbl();
@@ -127,7 +127,7 @@ unsigned long MIDIloopEditor::compileLoop2Midi( void )
 					{
 						theEvent.setTimeCode( (unsigned long)(theEvent.getTimeCode() + timeOffset) );
 					}
-					midiData.addElement( theEvent );
+					m_midiData.addElement( theEvent );
 				}
 
 				timeOffset += entryLength;
@@ -135,7 +135,7 @@ unsigned long MIDIloopEditor::compileLoop2Midi( void )
 		}
 	}
 
-	midiData.optimizeMIDI();
+	m_midiData.optimizeMIDI();
 
 	return loopPoint;
 }
@@ -150,7 +150,7 @@ void MIDIloopEditor::saveLoopXmlFile( const STRING &fileName )
 	xmlMidiLoop->setIntegerAttribute( "START", startEntry );
 
 	for( 
-		LoopEntrys::const_iterator it = m_theLoopList.cbegin(),
+		LoopEntries::const_iterator it = m_theLoopList.cbegin(),
 			endIT = m_theLoopList.cend();
 		it != endIT;
 		++it
@@ -176,7 +176,7 @@ void MIDIloopEditor::saveLoopXmlFile( const STRING &fileName )
 	m_changedFlag = false;
 }
 
-void MIDIloopEditor::saveLoopFile( void )
+void MIDIloopEditor::saveLoopFile()
 {
 	doEnterFunction("MIDIloopEditor::saveLoopFile");
 
@@ -185,7 +185,7 @@ void MIDIloopEditor::saveLoopFile( void )
 	if( m_midiPlayer  )
 		stopPlayMidi();
 
-	dlg.setFilename( lastMidiFile );
+	dlg.setFilename( m_lastMidiFile );
 	if( dlg.getDirectory().isEmpty() )
 		dlg.setPersonalMusic();
 	dlg.addDefaultExtension( "loop" );
@@ -193,18 +193,18 @@ void MIDIloopEditor::saveLoopFile( void )
 	dlg.addDefaultExtension( "mid" );
 	if( dlg.create( this, winlibGUI::SAVE_LOOP_id, winlibGUI::LoopFiles_ids, winlibGUI::LoopFiles_count ) )
 	{
-		lastMidiFile = dlg.getFilename();
+		m_lastMidiFile = dlg.getFilename();
 		if( dlg.getFilterIndex() == 1 )
-			saveLoopXmlFile( lastMidiFile );
+			saveLoopXmlFile( m_lastMidiFile );
 		else if( dlg.getFilterIndex() == 2 )
 		{
 			compileLoop2Midi();
-			saveMidi2CSV( lastMidiFile );
+			saveMidi2CSV( m_lastMidiFile );
 		}
 		else
 		{
 			compileLoop2Midi();
-			midiData.saveMidiFile( lastMidiFile, true );
+			m_midiData.saveMidiFile( m_lastMidiFile, true );
 		}
 
 		m_changedFlag = false;
@@ -212,7 +212,7 @@ void MIDIloopEditor::saveLoopFile( void )
 }
 
 
-void MIDIloopEditor::playMidi( void )
+void MIDIloopEditor::playMidi()
 {
 	doEnterFunction("MIDIloopEditor::playMidi");
 
@@ -228,17 +228,17 @@ void MIDIloopEditor::playMidi( void )
 	else
 	{
 		unsigned long loopPoint = compileLoop2Midi();
-		if( midiData.size() && openOutMidi() )
+		if( m_midiData.size() && openOutMidi() )
 		{
 			// now we can start playing
-			m_midiPlayer = new MidiLoopPlayerThread( this, &midiData, loopPoint );
+			m_midiPlayer = new MidiLoopPlayerThread( this, &m_midiData, loopPoint );
 			m_midiPlayer->StartThread();
 			showStopLabel();
 		}
 	}
 }
 
-void MIDIloopEditor::stopPlayMidi( void )
+void MIDIloopEditor::stopPlayMidi()
 {
 	doEnterFunction("MIDIloopEditor::stopPlayMidi");
 
@@ -276,7 +276,7 @@ STRING MIDIloopEditor::makeListBoxEntry( const STRING &fileName )
 // ----- class virtuals ------------------------------------------------ //
 // --------------------------------------------------------------------- //
 
-void MidiLoopPlayerThread::ExecuteThread( void )
+void MidiLoopPlayerThread::ExecuteThread()
 {
 	bool				firstRun = true;
 	std::size_t			firstLoopEntry = 0;
@@ -383,7 +383,7 @@ void MidiLoopPlayerThread::ExecuteThread( void )
 	}
 }
 
-ProcessStatus MIDIloopEditor::handleCreate( void )
+ProcessStatus MIDIloopEditor::handleCreate()
 {
 	initMidiPlaySelect( playSelect, playButton );
 
@@ -393,7 +393,7 @@ ProcessStatus MIDIloopEditor::handleCreate( void )
 	return psDO_DEFAULT;
 }
 
-ProcessStatus MIDIloopEditor::handleDestroy( void )
+ProcessStatus MIDIloopEditor::handleDestroy()
 {
 	if( m_midiPlayer )
 		stopPlayMidi();
@@ -403,7 +403,7 @@ ProcessStatus MIDIloopEditor::handleDestroy( void )
 	return psDO_DEFAULT;
 }
 
-bool MIDIloopEditor::canClose( void )
+bool MIDIloopEditor::canClose()
 {
 	doEnterFunction("MIDIloopEditor::canClose");
 
@@ -570,7 +570,7 @@ void MIDIloopEditor::handleFile( const char *filename, size_t, size_t )
 // ----- class publics ------------------------------------------------- //
 // --------------------------------------------------------------------- //
 
-void MIDIloopEditor::create( void )
+void MIDIloopEditor::create()
 {
 	SuccessCode error = MIDIloopEditor_form::create( nullptr );
 	if( error == scSUCCESS )
@@ -621,16 +621,16 @@ void MIDIloopEditor::loadLoopFile( const char *cmdLine )
 
 	OpenFileDialog	dlg;
 
-	dlg.setFilename( lastMidiFile );
+	dlg.setFilename( m_lastMidiFile );
 	if( dlg.getDirectory().isEmpty() )
 	{
 		dlg.setPersonalMusic();
 	}
 	if( cmdLine || dlg.create( this, winlibGUI::OPEN_LOOP_id, winlibGUI::LoopFiles_id ) )
 	{
-		lastMidiFile = cmdLine ? cmdLine : dlg.getFilename();
+		m_lastMidiFile = cmdLine ? cmdLine : dlg.getFilename();
 
-		xml::Parser	theParser( lastMidiFile );
+		xml::Parser	theParser( m_lastMidiFile );
 
 		xml::Document *xmlMidiLoopDoc = theParser.readFile( false );
 		if( xmlMidiLoopDoc )
@@ -656,7 +656,7 @@ void MIDIloopEditor::loadLoopFile( const char *cmdLine )
 						LoopEntry	theLoopEntry;
 						STRING		fileName;
 						value = xmlLoopEntry->getAttribute( "FILE_NAME" );
-						fileName = makeFullPath( lastMidiFile, value );
+						fileName = makeFullPath( m_lastMidiFile, value );
 						theLoopEntry.fileName = fileName;
 						theLoopEntry.listBoxValue = makeListBoxEntry( theLoopEntry.fileName );
 						value = xmlLoopEntry->getAttribute( "COUNTER" );

@@ -6,7 +6,7 @@
 		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2026 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -123,9 +123,9 @@ class PianoArea : public ChildWindow
 	private:
 	static const char className[];
 	public:
-	static void registerClass( void );
+	static void registerClass();
 
-	virtual STRING getWindowClassName( void ) const;
+	virtual STRING getWindowClassName() const;
 	PianoArea( BasicWindow *owner ) : ChildWindow( owner )
 	{
 		registerClass();
@@ -134,7 +134,7 @@ class PianoArea : public ChildWindow
 
 	void drawNoteOnLine( Device &context, unsigned char note, bool noteOn, bool halfTone, bool isSent, int xPos );
 	void showMIDIevent( const MIDIevent &msg, size_t midiDev, bool isSent );
-	void clearEvents( void )
+	void clearEvents()
 	{
 		if( notesReceived.size() || notesPlaying.size() )
 		{
@@ -184,23 +184,23 @@ const char PianoArea::className[] = "PianoArea";
 
 MIDIrecorderWindow::MIDIrecorderWindow( BasicWindow *owner ) : MIDIrecorderWindow_form( owner )
 {
-	midiPlayer = NULL;
-	metronomThread = NULL;
-	metronomWindow = NULL;
-	theMidiFilterWindow = NULL;
-	theMidiChannelsWindow = NULL;
-	filterEnabled = false;
-	metronomWindowXpos = metronomWindowYpos = 100;
+	m_midiPlayer = nullptr;
+	m_metronomThread = nullptr;
+	m_metronomWindow = nullptr;
+	m_theMidiFilterWindow = nullptr;
+	m_theMidiChannelsWindow = nullptr;
+	m_filterEnabled = false;
+	m_metronomWindowXpos = m_metronomWindowYpos = 100;
 
-	settingsChangedFlag = midiChangedFlag = false;
-	midiStatus = MIDI_WAITING;
+	m_settingsChangedFlag = m_midiChangedFlag = false;
+	m_midiStatus = MIDI_WAITING;
 }
 
 // --------------------------------------------------------------------- //
 // ----- class static functions ---------------------------------------- //
 // --------------------------------------------------------------------- //
 
-void PianoArea::registerClass( void )
+void PianoArea::registerClass()
 {
 	static bool registered = false;
 
@@ -280,11 +280,11 @@ void PianoArea::drawNoteLines( Device &context )
 	}
 }
 
-void MIDIrecorderWindow::checkMidiThrough( void )
+void MIDIrecorderWindow::checkMidiThrough()
 {
 	doEnterFunction("MIDIrecorderWindow::checkMidiThrough");
 
-	if( midiStatus == MIDI_WAITING  )
+	if( m_midiStatus == MIDI_WAITING  )
 	{
 		if( MIDIthrough->isActive() )
 		{
@@ -294,7 +294,7 @@ void MIDIrecorderWindow::checkMidiThrough( void )
 
 				for( size_t midiDev = 0; midiDev < playerHandles.size(); midiDev++ )
 				{
-					if( (filterEnabled || midiDev == getDefaultPlayer())
+					if( (m_filterEnabled || midiDev == getDefaultPlayer())
 					&&  playerHandles.openOutMidi( midiDev ) )
 					{
 						for( unsigned char channel=0; channel<=15; channel++ )
@@ -314,14 +314,14 @@ void MIDIrecorderWindow::checkMidiThrough( void )
 		else
 		{
 			recorderHandles.stopInMidi( this );
-			thePianoArea->clearEvents();
+			m_thePianoArea->clearEvents();
 			playerHandles.stopAllSoundMidi();
 			playerHandles.stopAllOutMidi();
 		}
 	}
 }
 
-size_t MIDIrecorderWindow::openInMidi( void )
+size_t MIDIrecorderWindow::openInMidi()
 {
 	doEnterFunction("MIDIrecorderWindow::openInMidi");
 
@@ -352,18 +352,18 @@ size_t MIDIrecorderWindow::openInMidi( void )
 	return numOpenDevices;
 }
 
-void MIDIrecorderWindow::saveMidi( void )
+void MIDIrecorderWindow::saveMidi()
 {
 	doEnterFunction("MIDIrecorderWindow::saveMidi");
 
 	SaveFileAsDialog		dlg;
 
-	if( midiStatus == MIDI_PLAYING  )
+	if( m_midiStatus == MIDI_PLAYING  )
 		stopPlayMidi();
-	else if( midiStatus == MIDI_RECORDING  )
+	else if( m_midiStatus == MIDI_RECORDING  )
 		stopRecMidi();
 
-	dlg.setFilename( lastMidiFile );
+	dlg.setFilename( m_lastMidiFile );
 	if( dlg.getDirectory().isEmpty() )
 		dlg.setPersonalMusic();
 
@@ -371,21 +371,21 @@ void MIDIrecorderWindow::saveMidi( void )
 	dlg.addDefaultExtension( "csv" );
 	if( dlg.create( this, winlibGUI::SAVE_MIDI_id, winlibGUI::RecorderFiles_ids, winlibGUI::RecorderFiles_count ) )
 	{
-		lastMidiFile = dlg.getFilename();
+		m_lastMidiFile = dlg.getFilename();
 		if( dlg.getFilterIndex() == 1 )
 		{
-			midiData.removeUnusedTracks();
-			midiData.saveMidiFile( lastMidiFile, false );
+			m_midiData.removeUnusedTracks();
+			m_midiData.saveMidiFile( m_lastMidiFile, false );
 		}
 		else
-			saveMidi2CSV( lastMidiFile );
+			saveMidi2CSV( m_lastMidiFile );
 
-		midiChangedFlag = false;
+		m_midiChangedFlag = false;
 	}
 }
 
 
-void MIDIrecorderWindow::saveSettings( void )
+void MIDIrecorderWindow::saveSettings()
 {
 	doEnterFunction("MIDIrecorderWindow::saveSettings");
 
@@ -393,20 +393,20 @@ void MIDIrecorderWindow::saveSettings( void )
 	STRING				name;
 	SaveFileAsDialog	dlg;
 
-	dlg.setFilename( lastOptionFile );
+	dlg.setFilename( m_lastOptionFile );
 	if( dlg.getDirectory().isEmpty() )
 		dlg.setPersonalMusic();
 	if( dlg.create( this, winlibGUI::SAVE_SETTINGS_id, winlibGUI::SettingsFiles_ids, winlibGUI::SettingsFiles_count ) )
 	{
-		lastOptionFile = dlg.getFilename();
+		m_lastOptionFile = dlg.getFilename();
 
 		xml::Any	*xmlMidiSettings = new xml::Any( "MIDI_SETTINGS" );
 
-		xmlMidiSettings->setBoolAttribute( "FILTER_ENABLED", filterEnabled );
+		xmlMidiSettings->setBoolAttribute( "FILTER_ENABLED", m_filterEnabled );
 		xmlMidiSettings->setBoolAttribute( "MIDI_THROUGH", MIDIthrough->isActive() );
 		xmlMidiSettings->setStringAttribute( "MIDI_PLAYER", getSelectedMidiPlayer() );
 		STRING selectedMidiDevice = MIDIrecSelect->getSelectedText();
-		if( selectedMidiDevice == allRecordLabel )
+		if( selectedMidiDevice == m_allRecordLabel )
 			selectedMidiDevice = ALL_LABEL;
 		xmlMidiSettings->setStringAttribute( "MIDI_RECORDER", selectedMidiDevice );
 
@@ -454,8 +454,8 @@ void MIDIrecorderWindow::saveSettings( void )
 		}
 		xml::Any	*xmlFilterSettings = static_cast<xml::Any*>(xmlMidiSettings->addObject( new xml::Any( "FILTER_SETTINGS" ) ));
 		for( 
-			FilterList::const_iterator it = theFilterList.cbegin(),
-				endIT = theFilterList.cend();
+			FilterList::const_iterator it = m_theFilterList.cbegin(),
+				endIT = m_theFilterList.cend();
 			it != endIT;
 			++it
 		)
@@ -467,7 +467,7 @@ void MIDIrecorderWindow::saveSettings( void )
 			xmlFilter->setStringAttribute( "NAME", theSettings.name );
 
 			selectedMidiDevice = theSettings.midiInName;
-			if( selectedMidiDevice == allRecordLabel )
+			if( selectedMidiDevice == m_allRecordLabel )
 				selectedMidiDevice = ALL_LABEL;
 			xmlFilter->setStringAttribute( "FILTER_MIDI_IN", selectedMidiDevice );
 
@@ -476,7 +476,7 @@ void MIDIrecorderWindow::saveSettings( void )
 			xmlFilter->setIntegerAttribute( "NOTE", theSettings.note );
 
 			selectedMidiDevice = theSettings.midiOutName;
-			if( selectedMidiDevice == defaultPlayerLabel )
+			if( selectedMidiDevice == m_defaultPlayerLabel )
 				selectedMidiDevice = DEFAULT_LABEL;
 			xmlFilter->setStringAttribute( "FILTER_MIDI_OUT", selectedMidiDevice );
 
@@ -486,48 +486,48 @@ void MIDIrecorderWindow::saveSettings( void )
 			xmlFilter->setIntegerAttribute( "STOP_FLAG", theSettings.stopFlag );
 		}
 		xml::Any	*xmlMetronomSettings = static_cast<xml::Any*>(xmlMidiSettings->addObject( new xml::Any( "METRONOM_SETTINGS" ) ));
-		xmlMetronomSettings->setStringAttribute( "FIRST_METRONOM", firstMetronom );
-		xmlMetronomSettings->setStringAttribute( "OTHER_METRONOM", otherMetronom );
+		xmlMetronomSettings->setStringAttribute( "FIRST_METRONOM", m_firstMetronom );
+		xmlMetronomSettings->setStringAttribute( "OTHER_METRONOM", m_otherMetronom );
 
 
 		STRING	xmlCode = xmlMidiSettings->generateDoc();
-		std::ofstream	fStream( lastOptionFile );
+		std::ofstream	fStream( m_lastOptionFile );
 		if( fStream.good() )
 		{
 			fStream << xmlCode;
 		}
-		settingsChangedFlag = false;
+		m_settingsChangedFlag = false;
 	}
 }
 
-void MIDIrecorderWindow::playMidi( void )
+void MIDIrecorderWindow::playMidi()
 {
 	doEnterFunction("MIDIrecorderWindow::playMidi");
 
 	// when we are currently recording
 	// stop recording
-	if( midiStatus == MIDI_RECORDING )
+	if( m_midiStatus == MIDI_RECORDING )
 		stopRecMidi();
 
-	if( metronomThread )
+	if( m_metronomThread )
 		stopMetronom();
 
 	/*
 		if our current status is playing
 		whe change the status to stop
 	*/
-	if( midiStatus == MIDI_PLAYING  )
+	if( m_midiStatus == MIDI_PLAYING  )
 		stopPlayMidi();
 	/*
 		else if we got a midiDevice
 	*/
-	else if( midiData.size() )
+	else if( m_midiData.size() )
 	{
 		bool	success = false;
 
 		// recorderHandles.stopInMidi( this );
 
-		if( filterEnabled || midiData.getNumTracks() > 1 )
+		if( m_filterEnabled || m_midiData.getNumTracks() > 1 )
 		{
 			MIDIevent	theEvent;
 
@@ -551,14 +551,14 @@ void MIDIrecorderWindow::playMidi( void )
 		if( success )
 		{
 			// now we can start playing
-			midiStatus = MIDI_PLAYING;
-			midiPlayer = new MidiPlayerThread(
+			m_midiStatus = MIDI_PLAYING;
+			m_midiPlayer = new MidiPlayerThread(
 				this,
-				&midiData,
+				&m_midiData,
 				getDefaultPlayer(),
 				authoRhytmCheck->isActive()
 			);
-			midiPlayer->StartThread();
+			m_midiPlayer->StartThread();
 			showStopLabel();
 		}
 		else
@@ -572,52 +572,52 @@ void MIDIrecorderWindow::stopPlayMidi( bool dontKill )
 {
 	doEnterFunction("MIDIrecorderWindow::stopPlayMidi");
 
-	if( midiPlayer && !dontKill )
+	if( m_midiPlayer && !dontKill )
 	{
-		midiPlayer->StopThread();
-		while( midiPlayer->isRunning )
+		m_midiPlayer->StopThread();
+		while( m_midiPlayer->isRunning )
 			idleLoop();
-		midiPlayer = NULL;
+		m_midiPlayer = nullptr;
 	}
 
-	midiStatus = MIDI_WAITING;
+	m_midiStatus = MIDI_WAITING;
 	showPlayLabel();
 	playerHandles.stopAllSoundMidi();
 	checkMidiThrough();
 
-	thePianoArea->invalidateWindow();
+	m_thePianoArea->invalidateWindow();
 }
 
-void MIDIrecorderWindow::stopRecMidi( void )
+void MIDIrecorderWindow::stopRecMidi()
 {
 	doEnterFunction("MIDIrecorderWindow::stopRecMidi");
 
-	if( midiStatus == MIDI_RECORDING )
+	if( m_midiStatus == MIDI_RECORDING )
 	{
-		midiStatus = MIDI_WAITING;
+		m_midiStatus = MIDI_WAITING;
 
 		playerHandles.stopAllSoundMidi();
 		enableMidiPlaySelect();
 		MIDIrecSelect->enable();
 
-		recordButton->setText( recordLabel );
+		recordButton->setText( m_recordLabel );
 
-		midiData.alignTimeCodes();
+		m_midiData.alignTimeCodes();
 	}
 	checkMidiThrough();
 }
 
-void MIDIrecorderWindow::recMidi( void )
+void MIDIrecorderWindow::recMidi()
 {
 	doEnterFunction("MIDIrecorderWindow::recMidi");
 
 	// when we are playing, stop playing first
-	if( midiStatus == MIDI_PLAYING )
+	if( m_midiStatus == MIDI_PLAYING )
 		stopPlayMidi();
 
 	// if we are currently recording events
 	// stop recording
-	if( midiStatus == MIDI_RECORDING )
+	if( m_midiStatus == MIDI_RECORDING )
 	{
 		stopRecMidi();
 	}
@@ -627,7 +627,7 @@ void MIDIrecorderWindow::recMidi( void )
 		recorderHandles.stopInMidi( this );
 		if( openInMidi() )
 		{
-			midiStatus = MIDI_RECORDING;
+			m_midiStatus = MIDI_RECORDING;
 
 			disableMidiPlaySelect();
 			MIDIrecSelect->disable();
@@ -636,18 +636,18 @@ void MIDIrecorderWindow::recMidi( void )
 				now we can start recording
 			*/
 
-			midiChangedFlag = true;
-			midiData.clear();
+			m_midiChangedFlag = true;
+			m_midiData.clear();
 			for( size_t i=0; i<playerHandles.size(); i++ )
 			{
 				const MIDIplayerHandle &playerHandle = playerHandles[i];
-				midiData.setMidiOutDev( (unsigned short)i, i );
-				midiData.setInstrument( (unsigned short)i, playerHandle.getInstrument() );
-				midiData.setTrackName( (unsigned short)i, playerHandle.getName() );
-				midiData.setDeviceName( (unsigned short)i, playerHandle.getName() );
+				m_midiData.setMidiOutDev( (unsigned short)i, i );
+				m_midiData.setInstrument( (unsigned short)i, playerHandle.getInstrument() );
+				m_midiData.setTrackName( (unsigned short)i, playerHandle.getName() );
+				m_midiData.setDeviceName( (unsigned short)i, playerHandle.getName() );
 			}
 
-			midiData.setBPM(atoi(bpmEdit->getText()), false, 0);
+			m_midiData.setBPM(atoi(bpmEdit->getText()), false, 0);
 
 			recordButton->setText( getStopLabel() );
 		}
@@ -658,42 +658,42 @@ void MIDIrecorderWindow::recMidi( void )
 	}
 }
 
-void MIDIrecorderWindow::stopMetronom( void )
+void MIDIrecorderWindow::stopMetronom()
 {
 	doEnterFunction("MIDIrecorderWindow::stopMetronom");
 
-	if( metronomThread )
+	if( m_metronomThread )
 	{
-		unsigned char channel = (*metronomThread).getChannel();
+		unsigned char channel = m_metronomThread->getChannel();
 
-		metronomThread->StopThread();
-		while( metronomThread->isRunning )
+		m_metronomThread->StopThread();
+		while( m_metronomThread->isRunning )
 			idleLoop();
-		metronomThread = NULL;
+		m_metronomThread = nullptr;
 
 		sendChannelSettings( getDefaultPlayer(), channel );		// restore channel for normal usage
 
 		playerHandles.stopAllSoundMidi();
 		checkMidiThrough();
 	}
-	if( metronomWindow )
+	if( m_metronomWindow )
 	{
-		metronomWindow->getPosition( &metronomWindowXpos, &metronomWindowYpos );
-		metronomWindow->close();
-		metronomWindow = NULL;
+		m_metronomWindow->getPosition( &m_metronomWindowXpos, &m_metronomWindowYpos );
+		m_metronomWindow->close();
+		m_metronomWindow = nullptr;
 	}
 }
 
-void MIDIrecorderWindow::startMetronom( void )
+void MIDIrecorderWindow::startMetronom()
 {
 	doEnterFunction("MIDIrecorderWindow::startMetronom");
 
-	if( midiStatus == MIDI_PLAYING || midiPlayer )
+	if( m_midiStatus == MIDI_PLAYING || m_midiPlayer )
 	{
 		stopPlayMidi();
 	}
 
-	if( metronomThread )
+	if( m_metronomThread )
 	{
 		stopMetronom();
 	}
@@ -705,13 +705,13 @@ void MIDIrecorderWindow::startMetronom( void )
 		{
 			if( openOutMidi() )
 			{
-				metronomWindow = new MetronomWindow( this );
+				m_metronomWindow = new MetronomWindow( this );
 				MIDIplayerHandle	&playerHandle = playerHandles[getDefaultPlayer()];
 				STRING				drumsFile = playerHandle.getDrumsCSV();
-				metronomWindow->create( this, firstMetronom, otherMetronom, drumsFile );
-				metronomWindow->move( metronomWindowXpos, metronomWindowYpos );
+				m_metronomWindow->create( this, m_firstMetronom, m_otherMetronom, drumsFile );
+				m_metronomWindow->move( m_metronomWindowXpos, m_metronomWindowYpos );
 
-				metronomThread = new MetronomThread(
+				m_metronomThread = new MetronomThread(
 					this,
 					bpm,
 					numerator,
@@ -719,7 +719,7 @@ void MIDIrecorderWindow::startMetronom( void )
 				);
 				// why is this neccessary?
 				// sendChannelSettings( getDefaultPlayer(), metronomThread->getChannel() );
-				metronomThread->StartThread();
+				m_metronomThread->StartThread();
 			}
 			else
 			{
@@ -736,7 +736,7 @@ void MIDIrecorderWindow::playUnfilteredMidiEvent( size_t midiOutDev, MIDIevent &
 	unsigned char message = msg.getMessage();
 	unsigned char volume = msg.getData2();
 
-	if( doNoteHold )
+	if( m_doNoteHold )
 	{
 		if( (message == MIDI_NOTE_ON && volume == 0) || message == MIDI_NOTE_OFF )
 		{
@@ -744,15 +744,15 @@ void MIDIrecorderWindow::playUnfilteredMidiEvent( size_t midiOutDev, MIDIevent &
 		}
 		
 	}
-	thePianoArea->showMIDIevent( msg, midiOutDev, true );
+	m_thePianoArea->showMIDIevent( msg, midiOutDev, true );
 
 	if( (message == MIDI_NOTE_ON && volume == 0) || message == MIDI_NOTE_OFF )
 		msg.setMessage( MIDI_NOTE_OFF );
 
-	if( midiStatus == MIDI_RECORDING )
+	if( m_midiStatus == MIDI_RECORDING )
 	{
 		msg.setTrack( (unsigned short)midiOutDev );
-		midiData.addElement( msg );
+		m_midiData.addElement( msg );
 	}
 
 	playerHandles.playMidiEvent( midiOutDev, msg );
@@ -763,7 +763,7 @@ void MIDIrecorderWindow::playUnfilteredMidiEvent( size_t midiOutDev, MIDIevent &
 // ----- class virtuals ------------------------------------------------ //
 // --------------------------------------------------------------------- //
 
-STRING PianoArea::getWindowClassName( void ) const
+STRING PianoArea::getWindowClassName() const
 {
 	return className;
 }
@@ -779,7 +779,7 @@ ProcessStatus PianoArea::handleRepaint( Device &hDC )
 	return psPROCESSED;
 }
 
-void MetronomThread::ExecuteThread( void )
+void MetronomThread::ExecuteThread()
 {
 	MIDIevent		midiMsg;
 
@@ -812,8 +812,8 @@ void MetronomThread::ExecuteThread( void )
 			lastProgram = theVoice.voiceCodes.program;
 			if( lastProgram < 128 )
 			{
-				channel = 15;
-				midiMsg.setProgramChange( channel,  lastProgram );
+				m_channel = 15;
+				midiMsg.setProgramChange( m_channel,  lastProgram );
 				m_recWindow->playMidiEvent( midiMsg );
 			}
 		}
@@ -822,8 +822,8 @@ void MetronomThread::ExecuteThread( void )
 			lastBankMSB = theVoice.voiceCodes.bankMSB;
 			if( lastBankMSB < 128 )
 			{
-				channel = 15;
-				midiMsg.setBankMSB( channel,  lastBankMSB );
+				m_channel = 15;
+				midiMsg.setBankMSB( m_channel,  lastBankMSB );
 				m_recWindow->playMidiEvent( midiMsg );
 			}
 		}
@@ -832,26 +832,26 @@ void MetronomThread::ExecuteThread( void )
 			lastBankLSB = theVoice.voiceCodes.bankLSB;
 			if( lastBankLSB < 128 )
 			{
-				channel = 15;
-				midiMsg.setBankLSB( channel,  lastBankLSB );
+				m_channel = 15;
+				midiMsg.setBankLSB( m_channel,  lastBankLSB );
 				m_recWindow->playMidiEvent( midiMsg );
 			}
 		}
 
-		midiMsg.setNoteOn( channel, theVoice.note, volume );
+		midiMsg.setNoteOn( m_channel, theVoice.note, volume );
 		m_recWindow->playMidiEvent( midiMsg );
 		Sleep( 50 );
-		midiMsg.setNoteOff( channel, theVoice.note, 50 );
+		midiMsg.setNoteOff( m_channel, theVoice.note, 50 );
 		m_recWindow->playMidiEvent( midiMsg );
 	}
 }
 
-void MidiPlayerThread::ExecuteThread( void )
+void MidiPlayerThread::ExecuteThread()
 {
 	doEnterFunction("MidiPlayerThread::ExecuteThread");
 
 	size_t			i, midiOutDev, numPlayers, numEvents;
-	int 			barTime = midiData->getTimePerBar();
+	int 			barTime = m_midiData->getTimePerBar();
 	int				quarterTime = barTime / 4;
 	int				eighthTime = barTime / 8;
 	MIDIevent		midiMsg;
@@ -866,17 +866,17 @@ void MidiPlayerThread::ExecuteThread( void )
 
 	clock_t			rhythmTime, rhythmEnd, actTime, nextTime, startTime;
 
-	numEvents = midiData->size();
+	numEvents = m_midiData->size();
 	numPlayers = playerHandles.size();
 	startTime = clock();
 	for( i=0;!terminated && i<numEvents; i++ )
 	{
-		midiMsg = (*midiData)[i];
+		midiMsg = (*m_midiData)[i];
 		track = midiMsg.getTrack();
-		midiOutDev = midiData->getMidiOutDev( track );
+		midiOutDev = m_midiData->getMidiOutDev( track );
 		if( midiOutDev >= numPlayers )
 		{
-			midiOutDev = midiDev;
+			midiOutDev = m_midiDev;
 		}
 
 		if( playerHandles.isOutOpen( midiOutDev ) )
@@ -886,10 +886,10 @@ void MidiPlayerThread::ExecuteThread( void )
 			if( nextTime > actTime )
 				Sleep((nextTime-actTime)*1000/CLK_TCK);
 
-			recWindow->playFilteredMidiEvent( ALL_DEVICE, midiOutDev, midiMsg );
-			if( autoRhythm && midiMsg.getMessage() == MIDI_NOTE_ON && i<numEvents-1 )
+			m_recWindow->playFilteredMidiEvent( ALL_DEVICE, midiOutDev, midiMsg );
+			if( m_autoRhythm && midiMsg.getMessage() == MIDI_NOTE_ON && i<numEvents-1 )
 			{
-				nextTime = startTime + (*midiData)[i+1].getTimeCode();
+				nextTime = startTime + (*m_midiData)[i+1].getTimeCode();
 				rtIdx = 0;
 				unsigned char note, channel, volume;
 				channel = midiMsg.getChannel();
@@ -913,10 +913,10 @@ void MidiPlayerThread::ExecuteThread( void )
 
 					Sleep((rhythmEnd-2-clock())*1000/CLK_TCK);
 					midiMsg.setNoteOff( channel, note, 2 );
-					recWindow->playFilteredMidiEvent( ALL_DEVICE, midiOutDev, midiMsg );
+					m_recWindow->playFilteredMidiEvent( ALL_DEVICE, midiOutDev, midiMsg );
 					Sleep( 2*1000/CLK_TCK );
 					midiMsg.setNoteOn( channel, note, volume );
-					recWindow->playFilteredMidiEvent( ALL_DEVICE, midiOutDev, midiMsg );
+					m_recWindow->playFilteredMidiEvent( ALL_DEVICE, midiOutDev, midiMsg );
 				}
 			}
 		}
@@ -928,25 +928,25 @@ void MidiPlayerThread::ExecuteThread( void )
 		for( size_t i=0; i<12 && !terminated; i++ )
 			Sleep( quarterTime );
 
-		recWindow->playFinished();
+		m_recWindow->playFinished();
 	}
 }
 
-ProcessStatus MIDIrecorderWindow::handleCreate( void )
+ProcessStatus MIDIrecorderWindow::handleCreate()
 {
 	doEnterFunction("MIDIrecorderWindow::handleCreate");
 
-	recordLabel = appObject->loadString( winlibGUI::RECORD_LABEL_id );
-	allRecordLabel = appObject->loadString( winlibGUI::ALL_MIDI_RECORD_LABEL_id );
-	defaultPlayerLabel = appObject->loadString( winlibGUI::DEFAULT_MIDI_PLAY_LABEL_id );
+	m_recordLabel = appObject->loadString( winlibGUI::RECORD_LABEL_id );
+	m_allRecordLabel = appObject->loadString( winlibGUI::ALL_MIDI_RECORD_LABEL_id );
+	m_defaultPlayerLabel = appObject->loadString( winlibGUI::DEFAULT_MIDI_PLAY_LABEL_id );
 
 	initMidiPlaySelect( MIDIplaySelect, playButton );
-	doNoteHold = false;
+	m_doNoteHold = false;
 	MIDIholdNote->clrActive();
 
 	denominatorSelect->selectEntry( 0 );
 
-	thePianoArea->create( pianoFrame );
+	m_thePianoArea->create( pianoFrame );
 	pianoFrame->doLayout();
 
 	size_t midiCount = recorderHandles.size();
@@ -954,7 +954,7 @@ ProcessStatus MIDIrecorderWindow::handleCreate( void )
 	{
 		MIDIrecSelect->addEntry( recorderHandles[i].getInstrument() );
 	}
-	MIDIrecSelect->addEntry( allRecordLabel );
+	MIDIrecSelect->addEntry( m_allRecordLabel );
 	MIDIrecSelect->selectEntry( int(midiCount) );
 
 	// check whether we can open any device
@@ -977,35 +977,35 @@ ProcessStatus MIDIrecorderWindow::handleCreate( void )
 	for( size_t i=0; i<midiCount; i++ )
 	{
 		const MIDIplayerHandle &playerHandle = playerHandles[i];
-		midiData.setMidiOutDev( (short)i, i );
-		midiData.setTrackName( (short)i, playerHandle.getName() );
-		midiData.setDeviceName( (short)i, playerHandle.getName() );
-		midiData.setInstrument( (short)i, playerHandle.getInstrument() );
+		m_midiData.setMidiOutDev( (short)i, i );
+		m_midiData.setTrackName( (short)i, playerHandle.getName() );
+		m_midiData.setDeviceName( (short)i, playerHandle.getName() );
+		m_midiData.setInstrument( (short)i, playerHandle.getInstrument() );
 	}
 	return psDO_DEFAULT;
 }
 
-SuccessCode MIDIrecorderWindow::close( void )
+SuccessCode MIDIrecorderWindow::close()
 {
 	saveWindowRect();
-	if( theMidiChannelsWindow )
+	if( m_theMidiChannelsWindow )
 	{
-		theMidiChannelsWindow->close();
+		m_theMidiChannelsWindow->close();
 	}
-	if( theMidiFilterWindow )
+	if( m_theMidiFilterWindow )
 	{
-		theMidiFilterWindow->close();
+		m_theMidiFilterWindow->close();
 	}
 
 	return MIDIrecorderWindow_form::close();
 }
 
-ProcessStatus MIDIrecorderWindow::handleDestroy( void )
+ProcessStatus MIDIrecorderWindow::handleDestroy()
 {
-	assert( !metronomThread );
+	assert( !m_metronomThread );
 
-	assert( midiStatus != MIDI_PLAYING );
-	assert( midiStatus != MIDI_RECORDING );
+	assert( m_midiStatus != MIDI_PLAYING );
+	assert( m_midiStatus != MIDI_RECORDING );
 
 	recorderHandles.stopInMidi( this );
 	playerHandles.stopAllOutMidi();
@@ -1015,44 +1015,44 @@ ProcessStatus MIDIrecorderWindow::handleDestroy( void )
 
 bool MIDIrecorderWindow::handleChildClose( BasicWindow *child, bool deleted )
 {
-	if( child == theMidiChannelsWindow )
+	if( child == m_theMidiChannelsWindow )
 	{
-		theMidiChannelsWindow = NULL;
+		m_theMidiChannelsWindow = nullptr;
 	}
 
-	if( child == theMidiFilterWindow )
+	if( child == m_theMidiFilterWindow )
 	{
-		theMidiFilterWindow = NULL;
+		m_theMidiFilterWindow = nullptr;
 	}
 
-	if( child == metronomWindow )
+	if( child == m_metronomWindow )
 	{
-		metronomWindow = NULL;
+		m_metronomWindow = nullptr;
 	}
 
 	return MIDIrecorderWindow_form::handleChildClose( child, deleted );
 }
 
-bool MIDIrecorderWindow::canClose( void )
+bool MIDIrecorderWindow::canClose()
 {
 	doEnterFunction("MIDIrecorderWindow::canClose");
 	int		button = IDYES;
 
-	if( metronomThread )
+	if( m_metronomThread )
 	{
 		stopMetronom();
 	}
 
-	if( midiStatus == MIDI_PLAYING )
+	if( m_midiStatus == MIDI_PLAYING )
 	{
 		stopPlayMidi();
 	}
-	else if( midiStatus == MIDI_RECORDING )
+	else if( m_midiStatus == MIDI_RECORDING )
 	{
 		stopRecMidi();
 	}
 
-	if( midiChangedFlag )
+	if( m_midiChangedFlag )
 	{
 		button = messageBox( winlibGUI::MIDI_FILE_CHANGED_id, "MIDI Recorder", MB_ICONQUESTION|MB_YESNOCANCEL );
 		if( button == IDYES	)
@@ -1060,7 +1060,7 @@ bool MIDIrecorderWindow::canClose( void )
 			saveMidi();
 		}
 	}
-	if( settingsChangedFlag && button != IDCANCEL )
+	if( m_settingsChangedFlag && button != IDCANCEL )
 	{
 		button = messageBox( winlibGUI::SETTINGS_CHANGED_id, "MIDI Recorder", MB_ICONQUESTION|MB_YESNOCANCEL );
 		if( button == IDYES	)
@@ -1077,15 +1077,15 @@ ProcessStatus MIDIrecorderWindow::handleButtonClick( int btn )
 	switch( btn )
 	{
 		case winlibGUI::filterEnabledCheckBox_id:
-			filterEnabled = filterEnabledCheckBox->isActive();
+			m_filterEnabled = filterEnabledCheckBox->isActive();
 
 		case winlibGUI::MIDIthrough_id:
 			checkMidiThrough();
-			settingsChangedFlag = true;
+			m_settingsChangedFlag = true;
 			break;
 
 		case winlibGUI::MIDIholdNote_id:
-			doNoteHold = MIDIholdNote->isActive();
+			m_doNoteHold = MIDIholdNote->isActive();
 			break;
 
 		case winlibGUI::playButton_id:
@@ -1098,27 +1098,27 @@ ProcessStatus MIDIrecorderWindow::handleButtonClick( int btn )
 
 		case winlibGUI::channelsButton_id:
 		{
-			if( !theMidiChannelsWindow )
+			if( !m_theMidiChannelsWindow )
 			{
 
-				theMidiChannelsWindow = new MIDIchannelsWindow( this );
-				theMidiChannelsWindow->create( this, getDefaultPlayer() );
+				m_theMidiChannelsWindow = new MIDIchannelsWindow( this );
+				m_theMidiChannelsWindow->create( this, getDefaultPlayer() );
 			}
 			else
-				theMidiChannelsWindow->setChannelSettings( getDefaultPlayer() );
+				m_theMidiChannelsWindow->setChannelSettings( getDefaultPlayer() );
 
-			theMidiChannelsWindow->show();
-			theMidiChannelsWindow->focus();
+			m_theMidiChannelsWindow->show();
+			m_theMidiChannelsWindow->focus();
 			break;
 		}
 		case winlibGUI::filterButton_id:
-			if( !theMidiFilterWindow )
+			if( !m_theMidiFilterWindow )
 			{
-				theMidiFilterWindow = new MIDIfilterWindow( this );
-				theMidiFilterWindow->create( this, &theFilterList );
+				m_theMidiFilterWindow = new MIDIfilterWindow( this );
+				m_theMidiFilterWindow->create( this, &m_theFilterList );
 			}
-			theMidiFilterWindow->show();
-			theMidiFilterWindow->focus();
+			m_theMidiFilterWindow->show();
+			m_theMidiFilterWindow->focus();
 			break;
 
 		case winlibGUI::editButton_id:
@@ -1128,24 +1128,24 @@ ProcessStatus MIDIrecorderWindow::handleButtonClick( int btn )
 			STRING				voiceFile = playerHandle.getVoicesCSV();
 			MIDIeditorWindow	theMidiEditorWindow;
 
-			if( midiStatus == MIDI_RECORDING )
+			if( m_midiStatus == MIDI_RECORDING )
 			{
 				stopRecMidi();
 			}
-			if( metronomThread )
+			if( m_metronomThread )
 			{
 				stopMetronom();
 			}
-			if( midiStatus == MIDI_PLAYING  )
+			if( m_midiStatus == MIDI_PLAYING  )
 			{
 				stopPlayMidi();
 			}
 
 			recorderHandles.stopInMidi( this );
-			theMidiEditorWindow.create( this, &midiData, voiceFile, midiDev );
+			theMidiEditorWindow.create( this, &m_midiData, voiceFile, midiDev );
 			if( theMidiEditorWindow.getModalResult() == IDOK )
 			{
-				midiChangedFlag = true;
+				m_midiChangedFlag = true;
 			}
 			checkMidiThrough();
 			break;
@@ -1158,12 +1158,12 @@ ProcessStatus MIDIrecorderWindow::handleButtonClick( int btn )
 			break;
 
 		case winlibGUI::convertBPMbutton_id:
-			midiData.setTimeSignature(
+			m_midiData.setTimeSignature(
 				numeratorEdit->getText().getValueE<unsigned>(),
 				denominatorSelect->getText().getValueE<unsigned>()
 			);
-			midiData.setBPM( bpmEdit->getText().getValueE<unsigned>(), true, 64 );
-			midiChangedFlag = true;
+			m_midiData.setBPM( bpmEdit->getText().getValueE<unsigned>(), true, 64 );
+			m_midiChangedFlag = true;
 			break;
 
 		case winlibGUI::metronomButton_id:
@@ -1197,7 +1197,7 @@ ProcessStatus MIDIrecorderWindow::handleSelectionChange( int control )
 	switch( control )
 	{
 		case winlibGUI::MIDIplaySelect_id:
-			settingsChangedFlag = true;
+			m_settingsChangedFlag = true;
 			stopPlayMidi();
 			stopMetronom();
 			changeDefaultPlayer();
@@ -1205,7 +1205,7 @@ ProcessStatus MIDIrecorderWindow::handleSelectionChange( int control )
 			break;
 
 		case winlibGUI::MIDIrecSelect_id:
-			settingsChangedFlag = true;
+			m_settingsChangedFlag = true;
 			break;
 
 		default:
@@ -1253,7 +1253,7 @@ ProcessStatus MIDIrecorderWindow::handleMessage( UINT message, WPARAM wParam, LP
 	midiInDev -= numDevices;
 	if( midiInDev < numDevices )
 	{
-		if( midiStatus == MIDI_RECORDING )
+		if( m_midiStatus == MIDI_RECORDING )
 		{
 			size_t len, midiOutDev;
 			const unsigned char *buffer = recorderHandles.getSysExBuffer( midiInDev, &len );
@@ -1269,7 +1269,7 @@ ProcessStatus MIDIrecorderWindow::handleMessage( UINT message, WPARAM wParam, LP
 				newMsg.setTrack( short(midiOutDev) );
 
 				newMsg.setSysExData( buffer, len, true );
-				midiData.addElement( newMsg );
+				m_midiData.addElement( newMsg );
 
 				recorderHandles.prepareSysExHeader( midiInDev );
 			}
@@ -1480,11 +1480,11 @@ void PianoArea::showMIDIevent( const MIDIevent &msg, size_t midiDev, bool isSent
 	}
 }
 
-void MIDIrecorderWindow::create( void )
+void MIDIrecorderWindow::create()
 {
 	doEnterFunction("MIDIrecorderWindow::create");
-	thePianoArea = new PianoArea( this );
-	SuccessCode error = MIDIrecorderWindow_form::create( NULL );
+	m_thePianoArea = new PianoArea( this );
+	SuccessCode error = MIDIrecorderWindow_form::create( nullptr );
 	if( error == scSUCCESS )
 	{
 		restoreWindowPos();
@@ -1507,7 +1507,7 @@ void MIDIrecorderWindow::sendChannelSettings( size_t midiDev, unsigned char chan
 		&&  channelSettings[channel].voice[0U] )
 		{
 			// do not change voice of metronom
-			if( !metronomThread || metronomThread->getChannel() != channel )
+			if( !m_metronomThread || m_metronomThread->getChannel() != channel )
 			{
 				if( channelSettings[channel].voiceCodes.bankMSB < 128 )
 				{
@@ -1580,13 +1580,13 @@ void MIDIrecorderWindow::playFilteredMidiEvent( int midiInDev, size_t midiOutDev
 
 	size_t			i;
 	unsigned char 	theMessageCode = msg.getMessage();
-	size_t			numFilter = theFilterList.size();
+	size_t			numFilter = m_theFilterList.size();
 
 	bool playDefault  = true;
 
 	unsigned char volume = msg.getData2();
 
-	if( doNoteHold )
+	if( m_doNoteHold )
 	{
 		if( (theMessageCode == MIDI_NOTE_ON && volume == 0) || theMessageCode == MIDI_NOTE_OFF )
 		{
@@ -1596,10 +1596,10 @@ void MIDIrecorderWindow::playFilteredMidiEvent( int midiInDev, size_t midiOutDev
 
 	if( midiInDev >= 0 )
 	{
-		thePianoArea->showMIDIevent( msg, midiInDev, false );
+		m_thePianoArea->showMIDIevent( msg, midiInDev, false );
 	}
 
-	if( numFilter && filterEnabled )
+	if( numFilter && m_filterEnabled )
 	{
 		unsigned char	channel = msg.getChannel();
 		unsigned char	note = msg.getData1();
@@ -1613,7 +1613,7 @@ void MIDIrecorderWindow::playFilteredMidiEvent( int midiInDev, size_t midiOutDev
 
 		for( i=0; i<numFilter; i++ )
 		{
-			FilterSettings	&theFilter = theFilterList[i];
+			FilterSettings	&theFilter = m_theFilterList[i];
 			filterOK = false;
 
 			if( theFilter.midiInDev == ALL_DEVICE
@@ -1742,12 +1742,12 @@ void MIDIrecorderWindow::loadMidiFile( const char *cmdLine )
 {
 	doEnterFunction("MIDIrecorderWindow::loadMidiFile");
 
-	if( midiStatus == MIDI_PLAYING  )
+	if( m_midiStatus == MIDI_PLAYING  )
 		stopPlayMidi();
-	else if( midiStatus == MIDI_RECORDING  )
+	else if( m_midiStatus == MIDI_RECORDING  )
 		stopRecMidi();
 
-	if( midiChangedFlag )
+	if( m_midiChangedFlag )
 	{
 		if(
 			messageBox(
@@ -1763,9 +1763,9 @@ void MIDIrecorderWindow::loadMidiFile( const char *cmdLine )
 
 	if( PlayerWindow::loadMidi( this, bpmEdit, winlibGUI::MidiFiles_id, cmdLine ) )
 	{
-		midiChangedFlag = false;
-		numeratorEdit->setText( formatNumber( midiData.getNumerator() ) );
-		denominatorSelect->selectEntry( formatNumber( midiData.getDenominator() ) );
+		m_midiChangedFlag = false;
+		numeratorEdit->setText( formatNumber( m_midiData.getNumerator() ) );
+		denominatorSelect->selectEntry( formatNumber( m_midiData.getDenominator() ) );
 	}
 }
 
@@ -1777,7 +1777,7 @@ void MIDIrecorderWindow::loadMidiSettings( const char *cmdLine )
 	int				valueI;
 	OpenFileDialog	dlg;
 
-	if( settingsChangedFlag )
+	if( m_settingsChangedFlag )
 	{
 		if(
 			messageBox(
@@ -1791,14 +1791,14 @@ void MIDIrecorderWindow::loadMidiSettings( const char *cmdLine )
 		}
 	}
 
-	dlg.setFilename( lastOptionFile );
+	dlg.setFilename( m_lastOptionFile );
 	if( dlg.getDirectory().isEmpty() )
 		dlg.setPersonalMusic();
 	if( cmdLine || dlg.create( this, winlibGUI::OPEN_SETTINGS_id, winlibGUI::SettingsFiles_ids, winlibGUI::SettingsFiles_count ) )
 	{
-		lastOptionFile = cmdLine ? cmdLine : dlg.getFilename();
+		m_lastOptionFile = cmdLine ? cmdLine : dlg.getFilename();
 
-		xml::Parser		theParser( lastOptionFile );
+		xml::Parser		theParser( m_lastOptionFile );
 
 		xml::Document *xmlMidiSettingsDoc = theParser.readFile( false );
 		if( xmlMidiSettingsDoc )
@@ -1811,7 +1811,7 @@ void MIDIrecorderWindow::loadMidiSettings( const char *cmdLine )
 				{
 					if( value == ALL_LABEL )
 					{
-						value = allRecordLabel;
+						value = m_allRecordLabel;
 						MIDIrecSelect->selectEntry( value );
 					}
 					else
@@ -1836,8 +1836,8 @@ void MIDIrecorderWindow::loadMidiSettings( const char *cmdLine )
 				value = xmlMidiSettings->getAttribute( "FILTER_ENABLED" );
 				if( !value.isEmpty() )
 				{
-					filterEnabled = value.getValueN<bool>();
-					filterEnabledCheckBox->setActive( filterEnabled );
+					m_filterEnabled = value.getValueN<bool>();
+					filterEnabledCheckBox->setActive( m_filterEnabled );
 				}
 
 				value = xmlMidiSettings->getAttribute( "MIDI_THROUGH" );
@@ -1931,14 +1931,14 @@ void MIDIrecorderWindow::loadMidiSettings( const char *cmdLine )
 						}
 					}
 
-					if( theMidiChannelsWindow )
-						theMidiChannelsWindow->refreshWindow();
+					if( m_theMidiChannelsWindow )
+						m_theMidiChannelsWindow->refreshWindow();
 
 				}
 				xml::Element *xmlFilterSettings = xmlMidiSettings->getElement( "FILTER_SETTINGS" );
 				if( xmlFilterSettings )
 				{
-					theFilterList.clear();
+					m_theFilterList.clear();
 
 					for( size_t i=0; i<xmlFilterSettings->getNumObjects(); i++ )
 					{
@@ -1952,7 +1952,7 @@ void MIDIrecorderWindow::loadMidiSettings( const char *cmdLine )
 							theFilter.midiInName = xmlFilter->getAttribute( "FILTER_MIDI_IN" );
 							if( theFilter.midiInName == ALL_LABEL )
 							{
-								theFilter.midiInName = allRecordLabel;
+								theFilter.midiInName = m_allRecordLabel;
 								theFilter.midiInDev = ALL_DEVICE;
 							}
 							else
@@ -1972,7 +1972,7 @@ void MIDIrecorderWindow::loadMidiSettings( const char *cmdLine )
 								theFilter.midiOutDev = CONTROLLER_DEVICE;
 							else if( theFilter.midiOutName == DEFAULT_LABEL )
 							{
-								theFilter.midiOutName = defaultPlayerLabel;
+								theFilter.midiOutName = m_defaultPlayerLabel;
 								theFilter.midiOutDev = DEFAULT_DEVICE;
 							}
 							else
@@ -1994,27 +1994,27 @@ void MIDIrecorderWindow::loadMidiSettings( const char *cmdLine )
 							else
 								theFilter.stopFlag = false;
 
-							theFilterList.addElement( theFilter );
+							m_theFilterList.addElement( theFilter );
 						}
 					}
 
-					if( theMidiFilterWindow )
+					if( m_theMidiFilterWindow )
 					{
-						theMidiFilterWindow->refreshFilter();
+						m_theMidiFilterWindow->refreshFilter();
 					}
 				}
 				xml::Element *xmlMetronomSettings = xmlMidiSettings->getElement( "METRONOM_SETTINGS" );
 				if( xmlMetronomSettings )
 				{
-					firstMetronom = xmlMetronomSettings->getAttribute( "FIRST_METRONOM" );
-					otherMetronom = xmlMetronomSettings->getAttribute( "OTHER_METRONOM" );
+					m_firstMetronom = xmlMetronomSettings->getAttribute( "FIRST_METRONOM" );
+					m_otherMetronom = xmlMetronomSettings->getAttribute( "OTHER_METRONOM" );
 				}
 			}
 
 			delete xmlMidiSettingsDoc;
 		}
 
-		settingsChangedFlag = false;
+		m_settingsChangedFlag = false;
 	}
 }
 

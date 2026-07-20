@@ -6,7 +6,7 @@
 		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2026 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -218,7 +218,7 @@ const char PatternArea::className[] = "PatternArea";
 // ----- class static functions ---------------------------------------- //
 // --------------------------------------------------------------------- //
 
-void PatternArea::registerClass( void )
+void PatternArea::registerClass()
 {
 	static bool registered = false;
 
@@ -291,14 +291,14 @@ void MIDIdrumWindow::stopMidiPlay()
 {
 	doEnterFunction("MIDIdrumWindow::stopPlayMidi");
 
-	if( midiPlayer  )
+	if( m_midiPlayer  )
 	{
-		midiPlayer->StopThread();
-		while( midiPlayer->isRunning )
+		m_midiPlayer->StopThread();
+		while( m_midiPlayer->isRunning )
 		{
 			idleLoop();
 		}
-		midiPlayer = NULL;
+		m_midiPlayer = nullptr;
 	}
 
 	stopOutMidi();
@@ -313,7 +313,7 @@ void MIDIdrumWindow::startStopMidiPlay()
 		if our current status is playing
 		whe change the status to stop
 	*/
-	if( midiPlayer  )
+	if( m_midiPlayer  )
 		stopMidiPlay();
 	/*
 		else if we got a midiDevice
@@ -321,36 +321,36 @@ void MIDIdrumWindow::startStopMidiPlay()
 	else
 	{
 		unsigned long	totalTime =
-			midiData.getTimePerBar() * lengthSelector->getPosition();
+			m_midiData.getTimePerBar() * lengthSelector->getPosition();
 
 		if( openOutMidi() )
 		{
 			// now we can start playing
-			midiPlayer = new DrumPlayerThread(
-				this, &midiData, totalTime
+			m_midiPlayer = new DrumPlayerThread(
+				this, &m_midiData, totalTime
 			);
-			midiPlayer->setSelectedTrack(
-				thePatternArea->getSelectedPattern() + 1
+			m_midiPlayer->setSelectedTrack(
+				m_thePatternArea->getSelectedPattern() + 1
 			);
-			midiPlayer->setPlayMode( playModeSelect->getSelection() );
-			midiPlayer->StartThread();
+			m_midiPlayer->setPlayMode( playModeSelect->getSelection() );
+			m_midiPlayer->StartThread();
 			showStopLabel();
 		}
 	}
 }
 
-void MIDIdrumWindow::saveMidi( void )
+void MIDIdrumWindow::saveMidi()
 {
 	size_t				channelUsageCounter[16];
 	unsigned short		srcTrack, numTracks;
 	SaveFileAsDialog	dlg;
 	STRING				name;
-	PatternInfos		&patternList = thePatternArea->getPatternList();
+	PatternInfos		&patternList = m_thePatternArea->getPatternList();
 
 	stopMidiPlay();
 
 	// remove empty tracks and count used channels:
-	numTracks = midiData.getNumTracks();
+	numTracks = m_midiData.getNumTracks();
 
 	/*
 		check channel usage
@@ -374,27 +374,27 @@ void MIDIdrumWindow::saveMidi( void )
 	{
 		if( !channelUsageCounter[curChannel] )
 		{
-			midiData.removeChannel( curChannel );
+			m_midiData.removeChannel( curChannel );
 		}
 	}
 
 	// setup track names
-	midiData.setTrackName( 0, "VoiceChange" );
-	midiData.setInstrument( 0, "VoiceChange" );
-	midiData.setMidiOutDev( 0, getDefaultPlayer() );
+	m_midiData.setTrackName( 0, "VoiceChange" );
+	m_midiData.setInstrument( 0, "VoiceChange" );
+	m_midiData.setMidiOutDev( 0, getDefaultPlayer() );
 	for( srcTrack = 1; srcTrack<numTracks; srcTrack++ )
 	{
 		name = patternList[srcTrack-1].drumVoice.voice;
-		midiData.setTrackName( srcTrack, name );
-		midiData.setInstrument( srcTrack, name );
-		midiData.setMidiOutDev( srcTrack, getDefaultPlayer() );
+		m_midiData.setTrackName( srcTrack, name );
+		m_midiData.setInstrument( srcTrack, name );
+		m_midiData.setMidiOutDev( srcTrack, getDefaultPlayer() );
 	}
 
 	/*
 		now we can save the file
 	*/
 
-	dlg.setFilename( lastMidiFile );
+	dlg.setFilename( m_lastMidiFile );
 	if( dlg.getDirectory().isEmpty() )
 		dlg.setPersonalMusic();
 	dlg.addDefaultExtension( "drum" );
@@ -403,16 +403,16 @@ void MIDIdrumWindow::saveMidi( void )
 	if( dlg.create( this, winlibGUI::SAVE_MIDI_id, winlibGUI::DrumFiles_ids, winlibGUI::DrumFiles_count ) )
 	{
 		int	index = dlg.getFilterIndex();
-		lastMidiFile = dlg.getFilename();
+		m_lastMidiFile = dlg.getFilename();
 		if( index == 1 )
-			midiData.saveMidiFile( lastMidiFile, false );
+			m_midiData.saveMidiFile( m_lastMidiFile, false );
 		else if( index == 2 )
-			saveMidi2CSV( lastMidiFile );
+			saveMidi2CSV( m_lastMidiFile );
 		else if( index == 3 )
 		{
-			if( theVoices.isGeneralMIDI() )
+			if( m_theVoices.isGeneralMIDI() )
 			{
-				MIDIdata	midiData = this->midiData;
+				MIDIdata	midiData = m_midiData;
 				/*
 					add stereo position for each punsh and change channel to 9
 					==========================================================
@@ -445,15 +445,15 @@ void MIDIdrumWindow::saveMidi( void )
 					}
 				}
 			}
-			midiData.saveMidiFile( lastMidiFile, true );
+			m_midiData.saveMidiFile( m_lastMidiFile, true );
 		}
-		thePatternArea->clearChangedFlag();
+		m_thePatternArea->clearChangedFlag();
 	}
 }
 
-void MIDIdrumWindow::changeVolume( void )
+void MIDIdrumWindow::changeVolume()
 {
-	std::size_t						numTracks = midiData.getNumTracks();
+	std::size_t						numTracks = m_midiData.getNumTracks();
 	PatternVolumeDialog				dialog;
 	FixedHeapArray<unsigned char>	maxVolumesBuffer(numTracks);
 	unsigned char					*maxVolumes = maxVolumesBuffer.getDataBuffer();
@@ -463,8 +463,8 @@ void MIDIdrumWindow::changeVolume( void )
 		maxVolumes[curTrack] = 0;
 	}
 	for(
-		MIDIdata::const_iterator it = midiData.cbegin(),
-			endIT = midiData.cend();
+		MIDIdata::const_iterator it = m_midiData.cbegin(),
+			endIT = m_midiData.cend();
 		it != endIT;
 		++it
 	)
@@ -485,7 +485,7 @@ void MIDIdrumWindow::changeVolume( void )
 		}
 	}
 
-	dialog.create( this, &thePatternArea->getPatternList(), maxVolumes, numTracks );
+	dialog.create( this, &m_thePatternArea->getPatternList(), maxVolumes, numTracks );
 	if( dialog.getModalResult() == IDOK )
 	{
 		unsigned char newVolume = dialog.getNewVolume();
@@ -502,8 +502,8 @@ void MIDIdrumWindow::changeVolume( void )
 			}
 
 			for( 
-				MIDIdata::iterator it = midiData.begin(),
-					endIT = midiData.end();
+				MIDIdata::iterator it = m_midiData.begin(),
+					endIT = m_midiData.end();
 				it != endIT;
 				++it
 			)
@@ -529,18 +529,18 @@ void MIDIdrumWindow::changeVolume( void )
 				}
 			}
 
-			thePatternArea->setChangedFlag();
+			m_thePatternArea->setChangedFlag();
 			invalidateWindow();
 		}
 	}
 }
 
-void MIDIdrumWindow::changeStereoPosition( void )
+void MIDIdrumWindow::changeStereoPosition()
 {
 	char 				newStereoPosition;
 	PatternStereoDialog	dialog;
 
-	PatternInfos		&patternList = thePatternArea->getPatternList();
+	PatternInfos		&patternList = m_thePatternArea->getPatternList();
 	dialog.create( this, patternList );
 	if( dialog.getModalResult() == IDOK )
 	{
@@ -562,15 +562,15 @@ void MIDIdrumWindow::changeStereoPosition( void )
 				thePattern.stereoPos = newStereoPosition;
 				ChannelCodes	channelCodes;
 				thePattern.fillChannelCodes( &channelCodes );
-				unsigned char newChannel = midiData.allocateChannel( &channelCodes );
+				unsigned char newChannel = m_midiData.allocateChannel( &channelCodes );
 				if( newChannel < 16 )
 				{
 					unsigned char oldChannel = thePattern.channel;
 					thePattern.channel = newChannel;
 
 					for( 
-						MIDIdata::iterator it = midiData.begin(),
-							endIT = midiData.end();
+						MIDIdata::iterator it = m_midiData.begin(),
+							endIT = m_midiData.end();
 						it != endIT;
 						++it
 					)
@@ -598,7 +598,7 @@ void MIDIdrumWindow::changeStereoPosition( void )
 					}
 					if( !found )
 					{
-						midiData.removeChannel( oldChannel );
+						m_midiData.removeChannel( oldChannel );
 					}
 					changed = true;
 				}
@@ -606,12 +606,12 @@ void MIDIdrumWindow::changeStereoPosition( void )
 		}
 		if( changed )
 		{
-			thePatternArea->setChangedFlag();
+			m_thePatternArea->setChangedFlag();
 		}
 	}
 }
 
-void MIDIdrumWindow::loadVoices( void )
+void MIDIdrumWindow::loadVoices()
 {
 	Set<STRING>			theUsedVoices;
 	MIDIplayerHandle	&theHandle = playerHandles[getDefaultPlayer()];
@@ -620,12 +620,12 @@ void MIDIdrumWindow::loadVoices( void )
 	if( drumsFile != m_lastDrumsFile )
 	{
 		m_lastDrumsFile = drumsFile;
-		theVoices.loadDrumVoices( drumsFile );
+		m_theVoices.loadDrumVoices( drumsFile );
 		voiceSelect->clearEntries();
 
 		for( 
-			DrumVoices::const_iterator it = theVoices.cbegin(),
-				endIT = theVoices.cend();
+			DrumVoices::const_iterator it = m_theVoices.cbegin(),
+				endIT = m_theVoices.cend();
 			it != endIT;
 			++it
 		)
@@ -642,19 +642,19 @@ void MIDIdrumWindow::loadVoices( void )
 
 		voiceSelect->selectEntry( 0 );
 	}
-	theHandle.setGeneralMIDI( theVoices.isGeneralMIDI() );
+	theHandle.setGeneralMIDI( m_theVoices.isGeneralMIDI() );
 }
 
 // --------------------------------------------------------------------- //
 // ----- class virtuals ------------------------------------------------ //
 // --------------------------------------------------------------------- //
 
-STRING PatternArea::getWindowClassName( void ) const
+STRING PatternArea::getWindowClassName() const
 {
 	return className;
 }
 
-ProcessStatus PatternArea::handleMouseRelease( void )
+ProcessStatus PatternArea::handleMouseRelease()
 {
 	if( m_dragPattern > 0 )
 	{
@@ -1185,7 +1185,7 @@ ProcessStatus PatternArea::handleVertScroll( VertScrollCode scrollCode, int , HW
 	return psPROCESSED;
 }
 
-void DrumPlayerThread::ExecuteThread( void )
+void DrumPlayerThread::ExecuteThread()
 {
 	NumberBuffer	tmpBuffer;
 	clock_t			actTime, nextTime , clockTime, elapsedTime, startTime = clock();
@@ -1199,7 +1199,7 @@ void DrumPlayerThread::ExecuteThread( void )
 	{
 		if( !m_midiData->size() )
 		{
-			Sleep( totalTime );
+			Sleep( m_totalTime );
 		}
 		else
 		{
@@ -1232,7 +1232,7 @@ void DrumPlayerThread::ExecuteThread( void )
 					tmpBuffer.addDigit(' ');
 					appendNumberFast( &tmpBuffer, numBars % 1000, 3, '0' );
 
-					drumWindow->showClock(tmpBuffer.c_str());
+					m_drumWindow->showClock(tmpBuffer.c_str());
 				}
 
 				nextTime = startTime + midiMsg.getTimeCode();
@@ -1245,15 +1245,15 @@ void DrumPlayerThread::ExecuteThread( void )
 				|| (m_playMode == 1 && midiMsg.getTrack() != m_selectedTrack)
 				|| (m_playMode == 2 && midiMsg.getTrack() == m_selectedTrack) )
 				{
-					drumWindow->playMidiEvent( midiMsg );
+					m_drumWindow->playMidiEvent( midiMsg );
 				}
 			}
 		}
-		startTime += totalTime;
+		startTime += m_totalTime;
 	}
 }
 
-ProcessStatus MIDIdrumWindow::handleCreate( void )
+ProcessStatus MIDIdrumWindow::handleCreate()
 {
 	initMidiPlaySelect( MIDIplaySelect, playButton );
 
@@ -1262,10 +1262,10 @@ ProcessStatus MIDIdrumWindow::handleCreate( void )
 	lengthSelector->setRange( 1, 99 );
 	lengthSelector->setPosition( 1 );
 
-	thePatternArea->create( patternFrame );
+	m_thePatternArea->create( patternFrame );
 	patternFrame->doLayout();
-	thePatternArea->hideVertScrollBar();
-	thePatternArea->hideHorizScrollBar();
+	m_thePatternArea->hideVertScrollBar();
+	m_thePatternArea->hideHorizScrollBar();
 
 	volumeButton->disable();
 	panButton->disable();
@@ -1280,10 +1280,10 @@ ProcessStatus MIDIdrumWindow::handleCreate( void )
 
 	gridSelect->selectEntry( lastSelectedGridIdx );
 	lengthSelect->selectEntry( lastSelectedLengthIdx );
-	thePatternArea->setGrid(
+	m_thePatternArea->setGrid(
 		atoi( lengthValues[lastSelectedGridIdx] )
 	);
-	thePatternArea->setBeatLength(
+	m_thePatternArea->setBeatLength(
 		atoi( lengthValues[lastSelectedLengthIdx] )
 	);
 
@@ -1292,16 +1292,16 @@ ProcessStatus MIDIdrumWindow::handleCreate( void )
 
 	volumeBar->setRange( 0, 127 );
 	volumeBar->setPosition( 127 );
-	thePatternArea->setVolume( 127 );
+	m_thePatternArea->setVolume( 127 );
 	timeBar->setRange( 0, 127 );
 	timeBar->setPosition( 0 );
-	thePatternArea->setTime( 0 );
+	m_thePatternArea->setTime( 0 );
 
 	return psDO_DEFAULT;
 }
-ProcessStatus MIDIdrumWindow::handleDestroy( void )
+ProcessStatus MIDIdrumWindow::handleDestroy()
 {
-	if( midiPlayer )
+	if( m_midiPlayer )
 		stopMidiPlay();
 
 	stopOutMidi();
@@ -1309,19 +1309,19 @@ ProcessStatus MIDIdrumWindow::handleDestroy( void )
 	return psDO_DEFAULT;
 }
 
-bool MIDIdrumWindow::canClose( void )
+bool MIDIdrumWindow::canClose()
 {
 	doEnterFunction("MIDIdrumWindow::canClose");
 	saveWindowRect();
 
-	if( midiPlayer )
+	if( m_midiPlayer )
 	{
 		stopMidiPlay();
 	}
 
 	stopOutMidi();
 
-	if( thePatternArea->getChangedFlag() )
+	if( m_thePatternArea->getChangedFlag() )
 	{
 		int button = messageBox(
 			winlibGUI::DRUM_CHANGED_id,
@@ -1346,57 +1346,57 @@ ProcessStatus MIDIdrumWindow::handleButtonClick( int btn )
 		case winlibGUI::convertBPMbutton_id:
 		{
 			stopMidiPlay();
-			midiData.setTimeSignature(
+			m_midiData.setTimeSignature(
 				numeratorEdit->getText().getValueE<unsigned>(),
 				denominatorSelect->getText().getValueE<unsigned>()
 			);
-			midiData.setBPM( bpmEdit->getText().getValueE<unsigned>(), true, 64 );
+			m_midiData.setBPM( bpmEdit->getText().getValueE<unsigned>(), true, 64 );
 
-			int numBars = midiData.getNumBars();
+			int numBars = m_midiData.getNumBars();
 			if( !numBars )
 				numBars++;
 
 			lengthSelector->setPosition( short(numBars) );
-			thePatternArea->setNumBars( numBars );
+			m_thePatternArea->setNumBars( numBars );
 
-			thePatternArea->invalidateWindow();
-			thePatternArea->setChangedFlag();
+			m_thePatternArea->invalidateWindow();
+			m_thePatternArea->setChangedFlag();
 			break;
 		}
 
 		case winlibGUI::addNewPatternButton_id:
-			thePatternArea->addNewPattern( voiceSelect->getText() );
+			m_thePatternArea->addNewPattern( voiceSelect->getText() );
 			volumeButton->enable();
 			panButton->enable();
 
 			break;
 		case winlibGUI::deleteEventsButton_id:
-			thePatternArea->deleteSelectedEvents();
+			m_thePatternArea->deleteSelectedEvents();
 			checkPattern();
 
 			break;
 		case winlibGUI::deleteAllButton_id:
-			midiData.clear();
-			thePatternArea->refreshPatternList();
-			thePatternArea->invalidateWindow();
+			m_midiData.clear();
+			m_thePatternArea->refreshPatternList();
+			m_thePatternArea->invalidateWindow();
 
-			thePatternArea->setChangedFlag();
+			m_thePatternArea->setChangedFlag();
 
 			volumeButton->disable();
 			panButton->disable();
 			break;
 
 		case winlibGUI::copyEventsButton_id:
-			thePatternArea->copyMoveEvents( true );
+			m_thePatternArea->copyMoveEvents( true );
 			break;
 
 		case winlibGUI::moveEventsButton_id:
-			thePatternArea->copyMoveEvents( false );
+			m_thePatternArea->copyMoveEvents( false );
 			break;
 
 		case winlibGUI::insertBreakButton_id:
-			thePatternArea->insertBreak();
-			lengthSelector->setPosition( short(thePatternArea->getNumBars()) );
+			m_thePatternArea->insertBreak();
+			lengthSelector->setPosition( short(m_thePatternArea->getNumBars()) );
 			break;
 		case winlibGUI::saveDrumsButton_id:
 			saveMidi();
@@ -1423,13 +1423,13 @@ ProcessStatus MIDIdrumWindow::handleSelectionChange( int control )
 	{
 		case winlibGUI::gridSelect_id:
 			lastSelectedGridIdx = gridSelect->getSelection();
-			thePatternArea->setGrid(
+			m_thePatternArea->setGrid(
 				atoi( lengthValues[lastSelectedGridIdx] )
 			);
 			break;
 		case winlibGUI::lengthSelect_id:
 			lastSelectedLengthIdx = lengthSelect->getSelection();
-			thePatternArea->setBeatLength(
+			m_thePatternArea->setBeatLength(
 				atoi( lengthValues[lastSelectedLengthIdx] )
 			);
 			break;
@@ -1439,21 +1439,21 @@ ProcessStatus MIDIdrumWindow::handleSelectionChange( int control )
 			break;
 
 		case winlibGUI::playModeSelect_id:
-			if( midiPlayer )
+			if( m_midiPlayer )
 			{
-				midiPlayer->setPlayMode( playModeSelect->getSelection() );
+				m_midiPlayer->setPlayMode( playModeSelect->getSelection() );
 			}
 			break;
 
 		case winlibGUI::lengthSelector_id:
-			thePatternArea->setNumBars(lengthSelector->getPosition());
+			m_thePatternArea->setNumBars(lengthSelector->getPosition());
 			break;
 
 		case winlibGUI::volumeBar_id:
-			thePatternArea->setVolume( static_cast<unsigned char>(volumeBar->getPosition()) );
+			m_thePatternArea->setVolume( static_cast<unsigned char>(volumeBar->getPosition()) );
 			break;
 		case winlibGUI::timeBar_id:
-			thePatternArea->setTime( static_cast<unsigned char>(timeBar->getPosition()) );
+			m_thePatternArea->setTime( static_cast<unsigned char>(timeBar->getPosition()) );
 			break;
 		default:
 /***/		return MIDIdrumWindow_form::handleSelectionChange( control );
@@ -1467,10 +1467,10 @@ ProcessStatus MIDIdrumWindow::handleCommand( int cmd )
 	switch( cmd )
 	{
 		case PATTERN_AREA:
-			if( midiPlayer )
+			if( m_midiPlayer )
 			{
-				midiPlayer->setSelectedTrack(
-					thePatternArea->getSelectedPattern() + 1
+				m_midiPlayer->setSelectedTrack(
+					m_thePatternArea->getSelectedPattern() + 1
 				);
 			}
 			break;
@@ -1502,19 +1502,19 @@ ProcessStatus MIDIdrumWindow::handleMessage( UINT msg, WPARAM wParam, LPARAM lPa
 // ----- class publics ------------------------------------------------- //
 // --------------------------------------------------------------------- //
 
-void MIDIdrumWindow::create( void )
+void MIDIdrumWindow::create()
 {
-	thePatternArea = new PatternArea(
-		this, PATTERN_AREA, &midiData, &theVoices
+	m_thePatternArea = new PatternArea(
+		this, PATTERN_AREA, &m_midiData, &m_theVoices
 	);
-	SuccessCode error = MIDIdrumWindow_form::create( NULL );
+	SuccessCode error = MIDIdrumWindow_form::create( nullptr );
 	if( error == scSUCCESS )
 	{
 		restoreWindowPos();
 	}
 }
 
-void PatternArea::refreshPatternList( void )
+void PatternArea::refreshPatternList()
 {
 	const short 	numTracks = m_midiData->getNumTracks();
 	const int		maxLines = getMaxLines();
@@ -1626,7 +1626,7 @@ void PatternArea::addNewPattern( const STRING &theVoice )
 	invalidateWindow();
 }
 
-void PatternArea::deleteSelectedEvents( void )
+void PatternArea::deleteSelectedEvents()
 {
 	bool	changed = false;
 
@@ -1787,7 +1787,7 @@ void PatternArea::copyMoveEvents( bool copyFlag )
 	}
 }
 
-void PatternArea::insertBreak( void )
+void PatternArea::insertBreak()
 {
 	unsigned char	msg;
 	unsigned long	timeCode;
@@ -1866,7 +1866,7 @@ void MIDIdrumWindow::loadDrumPatterns( const char *cmdLine )
 {
 	doEnterFunction("MIDIdrumWindow::loadDrumPatterns");
 
-	if( thePatternArea->getChangedFlag() )
+	if( m_thePatternArea->getChangedFlag() )
 	{
 		if(
 			messageBox(
@@ -1883,24 +1883,24 @@ void MIDIdrumWindow::loadDrumPatterns( const char *cmdLine )
 	stopMidiPlay();
 	if( PlayerWindow::loadMidi( this, bpmEdit, winlibGUI::DrumFiles_id, cmdLine ) )
 	{
-		size_t	midiOutDev = midiData.getMidiOutDev( 0 );
+		size_t	midiOutDev = m_midiData.getMidiOutDev( 0 );
 		if( midiOutDev != -1 )
 		{
 			setDefaultPlayer( midiOutDev );
 			loadVoices();
 		}
 
-		thePatternArea->refreshPatternList();
+		m_thePatternArea->refreshPatternList();
 
-		int numBars = midiData.getNumBars();
-		numeratorEdit->setText( formatNumber( midiData.getNumerator() ) );
-		denominatorSelect->selectEntry( formatNumber( midiData.getDenominator() ) );
+		int numBars = m_midiData.getNumBars();
+		numeratorEdit->setText( formatNumber( m_midiData.getNumerator() ) );
+		denominatorSelect->selectEntry( formatNumber( m_midiData.getDenominator() ) );
 
 		lengthSelector->setPosition( short(numBars) );
-		thePatternArea->setNumBars( numBars );
-		thePatternArea->invalidateWindow();
+		m_thePatternArea->setNumBars( numBars );
+		m_thePatternArea->invalidateWindow();
 
-		thePatternArea->clearChangedFlag();
+		m_thePatternArea->clearChangedFlag();
 
 		checkPattern();
 	}
@@ -1912,7 +1912,7 @@ void MIDIdrumWindow::playMidiEvent( const MIDIevent &msg )
 	{
 		unsigned short	track = msg.getTrack();
 		size_t			pattern = track -1;
-		char			stereoPos = thePatternArea->getPatternList()[pattern].stereoPos;
+		char			stereoPos = m_thePatternArea->getPatternList()[pattern].stereoPos;
 
 		setStereoPosition( msg.getChannel(), stereoPos, true );
 	}

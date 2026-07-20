@@ -3,10 +3,10 @@
 		Module:			MidiFilterWindow.h
 		Description:	The filter settings (used by recorder window)
 		Author:			Martin Gäckler
-		Address:		Hopfengasse 15. A-4020 Linz
+		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2018 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -15,7 +15,7 @@
 		You should have received a copy of the GNU General Public License 
 		along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Germany, Munich ``AS IS''
+		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Linz, Austria ``AS IS''
 		AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
 		TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
 		PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR
@@ -106,26 +106,26 @@ class MIDIrecorderWindow;
 
 class MIDIfilterWindow : public winlibGUI::MIDIfilterWindow_form
 {
-	MIDIrecorderWindow	*theRecorderWindow;
-	size_t				midiInCount, midiOutCount, lastSelectedFilter;
+	MIDIrecorderWindow	*m_theRecorderWindow;
+	size_t				m_midiInCount, m_midiOutCount, m_lastSelectedFilter;
 
-	FilterList			*theFilterList;
+	FilterList			*m_theFilterList;
 
-	void moveFilter( void );
-	void createNewFilter( void );
-	void deleteFilter( void );
+	void moveFilter();
+	void createNewFilter();
+	void deleteFilter();
 	void createStandardFilter( const gak::STRING &newName, unsigned char channel, FilterCondition condition );
-	void createStandardFilter( void );
+	void createStandardFilter();
 	void showValues( size_t selected );
 
-	virtual winlib::ProcessStatus handleCreate( void );
+	virtual winlib::ProcessStatus handleCreate();
 	virtual winlib::ProcessStatus handleScrollControl( int control );
 	virtual winlib::ProcessStatus handleSelectionChange( int control );
 	virtual winlib::ProcessStatus handleButtonClick( int control );
 	virtual winlib::ProcessStatus handleEditChange( int control );
 	virtual winlib::ProcessStatus handleCommand( int cmd );
-	virtual winlib::SuccessCode handleClose( void );
-	virtual winlib::ProcessStatus handleCancel( void );
+	virtual winlib::SuccessCode handleClose();
+	virtual winlib::ProcessStatus handleCancel();
 
 	public:
 	MIDIfilterWindow( winlib::BasicWindow *owner ) : MIDIfilterWindow_form( owner )
@@ -133,8 +133,8 @@ class MIDIfilterWindow : public winlibGUI::MIDIfilterWindow_form
 	}
 	void create( MIDIrecorderWindow	*theRecorderWindow, FilterList *theFilterList )
 	{
-		this->theRecorderWindow = theRecorderWindow;
-		this->theFilterList = theFilterList;
+		m_theRecorderWindow = theRecorderWindow;
+		m_theFilterList = theFilterList;
 		MIDIfilterWindow_form::create( reinterpret_cast<BasicWindow*>(theRecorderWindow) );
 		restoreWindowPos();
 	}

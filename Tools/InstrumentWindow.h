@@ -4,10 +4,10 @@
 		Description:	The instruments, chord and scale window
 						(opened by recorder or editor)
 		Author:			Martin Gäckler
-		Address:		Hopfengasse 15. A-4020 Linz
+		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2018 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -16,7 +16,7 @@
 		You should have received a copy of the GNU General Public License 
 		along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Germany, Munich ``AS IS''
+		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Linz, Austria ``AS IS''
 		AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
 		TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
 		PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR
@@ -89,8 +89,8 @@ class InstrumentWindow : public winlib::OverlappedWindow
 {
 	static unsigned char stringMidiNotes[];
 
-	bool				fixNote;
-	MIDIeditorWindow	*parent;
+	bool				m_fixNote;
+	MIDIeditorWindow	*m_parent;
 
 	PianoPainter		thePainter;
 
@@ -98,9 +98,9 @@ class InstrumentWindow : public winlib::OverlappedWindow
 	winlib::RadioButton	durScale, dur5Scale, mollScale, moll5Scale;
 	winlib::RadioButton	allNotes;
 
-	unsigned char currentNote;
-	int currentString;
-	int stringDistance, boundDistance, fingerSize, dotSize, nutDistance;
+	unsigned char	m_currentNote;
+	int				m_currentString;
+	int				m_stringDistance, m_boundDistance, m_fingerSize, m_dotSize, m_nutDistance;
 
 	int drawNote(
 		winlib::Device &context,
@@ -109,7 +109,7 @@ class InstrumentWindow : public winlib::OverlappedWindow
 	);
 	void drawNote( winlib::Device &context, unsigned char note, bool markActive = true );
 
-	virtual winlib::ProcessStatus handleCreate( void );
+	virtual winlib::ProcessStatus handleCreate();
 	virtual winlib::ProcessStatus handleRepaint( winlib::Device &hDC );
 	virtual winlib::ProcessStatus handleResize( const winlib::Size &newSize);
 	virtual winlib::ProcessStatus handleMouseMove( WPARAM modifier, const winlib::Point &position );
@@ -119,15 +119,15 @@ class InstrumentWindow : public winlib::OverlappedWindow
 	public:
 	InstrumentWindow( winlib::BasicWindow *owner ) : OverlappedWindow( owner )
 	{
-		fixNote = false;
-		currentNote = 255;
-		currentString = boundDistance = stringDistance = fingerSize = dotSize = nutDistance = 0;
+		m_fixNote = false;
+		m_currentNote = 255;
+		m_currentString = m_boundDistance = m_stringDistance = m_fingerSize = m_dotSize = m_nutDistance = 0;
 	}
-	winlib::SuccessCode create( MIDIeditorWindow *parent=NULL )
+	winlib::SuccessCode create( MIDIeditorWindow *parent=nullptr )
 	{
 		gak::STRING title = winlib::appObject->loadString( winlibGUI::INSTRUMENT_CAPTION_id );
 		setText( title );
-		this->parent = parent;
+		m_parent = parent;
 		return OverlappedWindow::create( (BasicWindow*)parent );
 	}
 };

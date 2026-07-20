@@ -3,10 +3,10 @@
 		Module:			MIDIsythesizerWindow.h
 		Description:	The synthesizer configuration
 		Author:			Martin Gäckler
-		Address:		Hopfengasse 15. A-4020 Linz
+		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2018 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -15,7 +15,7 @@
 		You should have received a copy of the GNU General Public License 
 		along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Germany, Munich ``AS IS''
+		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Linz, Austria ``AS IS''
 		AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
 		TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
 		PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR
@@ -80,39 +80,39 @@
 // --------------------------------------------------------------------- //
  class MIDIsynthesizerWindow : public winlibGUI::MIDIsynthesizerWindow_form
  {
-	MidiSynthesizer<>	&theSynthesizer;
+	MidiSynthesizer<>	&m_theSynthesizer;
 
-	bool				reading;
-	int					currentSynth;
+	bool				m_reading;
+	int					m_currentSynth;
 
-	gak::STRING			cpuSpeedLabel;
-	gak::STRING			lastOptionFile;
+	gak::STRING			m_cpuSpeedLabel;
+	gak::STRING			m_lastOptionFile;
 
-	void writeSettings( void );
+	void writeSettings();
 	void writeSettings( std::ostream &dest );
-	void readSettings( void );
+	void readSettings();
 	void readSettings( std::istream &src );
 	void getSettings( int newSynth );
 
- 	virtual winlib::ProcessStatus handleCreate( void );
- 	virtual winlib::ProcessStatus handleDestroy( void );
+ 	virtual winlib::ProcessStatus handleCreate();
+ 	virtual winlib::ProcessStatus handleDestroy();
 	virtual winlib::ProcessStatus handleEditChange( int editControl );
 	virtual winlib::ProcessStatus handleButtonClick( int btn );
 	virtual winlib::ProcessStatus handleScrollControl( int control );
 	virtual winlib::ProcessStatus handleCommand( int cmd );
-	virtual void handleTimer( void );
+	virtual void handleTimer();
 
 	void showCPUspeed()
 	{
 		clock_t cpuTime = testCPUspeed();
-		cpuSpeedLabel = gak::STRING("CPU-speed: ") + gak::formatNumber( cpuTime * 1000 / CLOCKS_PER_SEC ) + " ms ";
+		m_cpuSpeedLabel = gak::STRING("CPU-speed: ") + gak::formatNumber( cpuTime * 1000 / CLOCKS_PER_SEC ) + " ms ";
 		double latency = getLatency();
 		if( latency >= 0 )
 		{
-			cpuSpeedLabel += gak::formatFloat( latency ) + " ms Latency";
+			m_cpuSpeedLabel += gak::formatFloat( latency ) + " ms Latency";
 		}
 
-		cpuSpeed->setText( cpuSpeedLabel );
+		cpuSpeed->setText( m_cpuSpeedLabel );
 		setTimer( 10000 );
 	}
 
@@ -197,19 +197,19 @@
 	}
 	public:
 	MIDIsynthesizerWindow( BasicWindow *owner, MidiSynthesizer<> &theSynthesizer ) 
-	: MIDIsynthesizerWindow_form( owner ), theSynthesizer(theSynthesizer)
+	: MIDIsynthesizerWindow_form( owner ), m_theSynthesizer(theSynthesizer)
 	{
 	}
-	void create( void )
+	void create()
 	{
-		reading = false;
-		winlib::SuccessCode success = MIDIsynthesizerWindow_form::create( NULL );
+		m_reading = false;
+		winlib::SuccessCode success = MIDIsynthesizerWindow_form::create( nullptr );
 		if( success == winlib::scSUCCESS )
 		{
 			restoreWindowPos();
 		}
 	}
-	winlib::SuccessCode close( void )
+	winlib::SuccessCode close()
 	{
 		saveWindowRect();
 		return MIDIsynthesizerWindow_form::close();

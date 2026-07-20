@@ -6,7 +6,7 @@
 		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2026 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -79,7 +79,7 @@ struct LoopEntry
 	int				counter;
 	unsigned long	timeCode;
 };
-typedef gak::Array<LoopEntry>	LoopEntrys;
+typedef gak::Array<LoopEntry>	LoopEntries;
 // --------------------------------------------------------------------- //
 // ----- class definitions --------------------------------------------- //
 // --------------------------------------------------------------------- //
@@ -93,7 +93,7 @@ class MidiLoopPlayerThread : public gak::Thread
 	MIDIloopEditor		*m_loopEditor;
 	MIDIdata			*m_midiData;
 
-	virtual void ExecuteThread( void );
+	virtual void ExecuteThread();
 
 	public:
 	MidiLoopPlayerThread(
@@ -111,7 +111,7 @@ typedef gak::SharedObjectPointer<MidiLoopPlayerThread>	MidiLoopPlayerThreadPtr;
 
 class MIDIloopEditor : public winlibGUI::MIDIloopEditor_form, public PlayerWindow
 {
-	LoopEntrys					m_theLoopList;
+	LoopEntries					m_theLoopList;
 	bool	   					m_changedFlag;
 	int							m_firstLoopEntry;
 
@@ -119,12 +119,12 @@ class MIDIloopEditor : public winlibGUI::MIDIloopEditor_form, public PlayerWindo
 
 	private:
 
-	unsigned long compileLoop2Midi( void );
+	unsigned long compileLoop2Midi();
 	void saveLoopXmlFile( const gak::STRING &fileName );
-	void saveLoopFile( void );
+	void saveLoopFile();
 
-	void playMidi( void );
-	void stopPlayMidi( void );
+	void playMidi();
+	void stopPlayMidi();
 
 	gak::STRING	makeListBoxEntry( const gak::STRING &fileName );
 
@@ -137,10 +137,10 @@ class MIDIloopEditor : public winlibGUI::MIDIloopEditor_form, public PlayerWindo
 
 	void showClock( unsigned long timeCode, const char *time );
 
-	void create( void );
-	virtual winlib::ProcessStatus handleCreate( void );
-	virtual winlib::ProcessStatus handleDestroy( void );
-	virtual bool canClose( void );
+	void create();
+	virtual winlib::ProcessStatus handleCreate();
+	virtual winlib::ProcessStatus handleDestroy();
+	virtual bool canClose();
 	virtual winlib::ProcessStatus handleButtonClick( int btn );
 	virtual winlib::ProcessStatus handleCommand( int cmd );
 	virtual void handleFile( const char *filename, size_t idx, size_t numFiles );

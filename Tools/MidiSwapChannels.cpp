@@ -4,10 +4,10 @@
 		Description:	Swap the channels of multiple MIDI commands
 						(used by editor)
 		Author:			Martin Gäckler
-		Address:		Hopfengasse 15. A-4020 Linz
+		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2018 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -16,7 +16,7 @@
 		You should have received a copy of the GNU General Public License 
 		along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Germany, Munich ``AS IS''
+		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Linz, Austria ``AS IS''
 		AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
 		TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
 		PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR
@@ -111,7 +111,7 @@ using namespace gak;
 // ----- class virtuals ------------------------------------------------ //
 // --------------------------------------------------------------------- //
 
-ProcessStatus SwapChannelDialog::handleCreate( void )
+ProcessStatus SwapChannelDialog::handleCreate()
 {
 	for( unsigned char i=1; i<=16; i++ )
 	{
@@ -121,7 +121,7 @@ ProcessStatus SwapChannelDialog::handleCreate( void )
 	}
 	srcChannelSelect->selectEntry( 0 );
 	destChannelSelect->selectEntry( 0 );
-	srcChannel = destChannel = 0;
+	m_srcChannel = m_destChannel = 0;
 
 	return psDO_DEFAULT;
 }
@@ -131,10 +131,10 @@ ProcessStatus SwapChannelDialog::handleCommand( int cmd )
 	switch( cmd )
 	{
 		case winlibGUI::srcChannelSelect_id:
-			srcChannel = static_cast<unsigned char>(srcChannelSelect->getSelection());
+			m_srcChannel = static_cast<unsigned char>(srcChannelSelect->getSelection());
 			break;
 		case winlibGUI::destChannelSelect_id:
-			destChannel = static_cast<unsigned char>(destChannelSelect->getSelection());
+			m_destChannel = static_cast<unsigned char>(destChannelSelect->getSelection());
 			break;
 
 		default:

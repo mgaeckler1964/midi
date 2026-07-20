@@ -6,7 +6,7 @@
 		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2026 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -112,18 +112,18 @@ class MIDIeditorWindow;
 
 class MidiEditPlayerThread : public gak::Thread
 {
-	MIDIdata	 			*midiData;
-	size_t		 			midiDev;
-	const MIDIeditorWindow	*owner;
+	MIDIdata	 			*m_midiData;
+	size_t		 			m_midiDev;
+	const MIDIeditorWindow	*m_owner;
 
-	virtual void ExecuteThread( void );
+	virtual void ExecuteThread();
 
 	public:
 	MidiEditPlayerThread( MIDIdata *midiData, size_t midiDev, const MIDIeditorWindow *owner )
 	{
-		this->midiData = midiData;
-		this->midiDev = midiDev;
-		this->owner = owner;
+		m_midiData = midiData;
+		m_midiDev = midiDev;
+		m_owner = owner;
 	}
 };
 
@@ -132,48 +132,48 @@ typedef gak::SharedObjectPointer<MidiEditPlayerThread>	MidiEditPlayerThreadPtr;
 class MIDIeditorWindow : public winlibGUI::MIDIeditorWindow_form
 {
 	private:
-	MIDIdata						*midiData;
-	gak::STRING						voiceFile;
-	gak::Array<MidiEditorEvent>		editorEvents;
-	gak::Array<TrackInfo>			trackInfo;
+	MIDIdata						*m_midiData;
+	gak::STRING						m_voiceFile;
+	gak::Array<MidiEditorEvent>		m_editorEvents;
+	gak::Array<TrackInfo>			m_trackInfo;
 
-	VoiceArray						theVoices;
+	VoiceArray						m_theVoices;
 
-	gak::STRING						playLabel, stopLabel;
+	gak::STRING						m_playLabel, m_stopLabel;
 
-	size_t							midiDev;
-	MIDIdata						playerData;
-	MidiEditPlayerThreadPtr			midiPlayer;
+	size_t							m_midiDev;
+	MIDIdata						m_playerData;
+	MidiEditPlayerThreadPtr			m_midiPlayer;
 
 	static int eventCompare( const MidiEditorEvent &e1, const MidiEditorEvent &e2 );
 
-	void loadMidi( void );
-	void copyValues2Editor( void );
+	void loadMidi();
+	void copyValues2Editor();
 	void deleteEntry(  bool selectNext );
 	size_t newEntry( const MidiEditorEvent &newEvent );
-	void newEntry( void );
+	void newEntry();
 	void handleMessageType( int messageRadio );
-	void changeVolume( void );
-	void swapChannels( void );
-	void repeatEntries( void );
-	void transposeEntries( void );
+	void changeVolume();
+	void swapChannels();
+	void repeatEntries();
+	void transposeEntries();
 	void copyMoveEntries( bool copy );
 	void convertEditorEvents( MIDIdata *midiData, bool selected );
 
-	virtual winlib::ProcessStatus handleCreate( void );
-	virtual winlib::ProcessStatus handleOk( void );
+	virtual winlib::ProcessStatus handleCreate();
+	virtual winlib::ProcessStatus handleOk();
 	virtual winlib::ProcessStatus handleButtonClick( int btn );
 	virtual winlib::ProcessStatus handleCommand( int cmd );
 	virtual winlib::ProcessStatus handleSelectionChange( int control );
 
 	public:
-	MIDIeditorWindow() : MIDIeditorWindow_form( NULL ) {}
+	MIDIeditorWindow() : MIDIeditorWindow_form( nullptr ) {}
 	~MIDIeditorWindow();
 	winlib::SuccessCode create( winlib::BasicWindow *parent, MIDIdata *midiData, const gak::STRING &voiceFile, size_t midiDev )
 	{
-		this->midiData = midiData;
-		this->voiceFile = voiceFile;
-		this->midiDev = midiDev;
+		m_midiData = midiData;
+		m_voiceFile = voiceFile;
+		m_midiDev = midiDev;
 		return MIDIeditorWindow_form::create( parent );
 	}
 	void setNote( unsigned char note )
@@ -186,13 +186,13 @@ class MIDIeditorWindow : public winlibGUI::MIDIeditorWindow_form
 		handleMessageType( winlibGUI::noteRadio_id );
 		noteSelect->selectEntry( note );
 	}
-	void showPlayLabel( void )
+	void showPlayLabel()
 	{
-		playButton->setText( playLabel );
+		playButton->setText( m_playLabel );
 	}
-	void showStopLabel( void )
+	void showStopLabel()
 	{
-		playButton->setText( stopLabel );
+		playButton->setText( m_stopLabel );
 	}
 };
 

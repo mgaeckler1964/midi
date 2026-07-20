@@ -38,7 +38,7 @@ FILETYPE VFT_APP
    VALUE "ProductVersion", "3.2.0\000\000"
    VALUE "FileVersion", "3.2.0\000\000"
    VALUE "InternalName", "MIDI Tools\000"
-   VALUE "LegalCopyright", "Copyright © 2007-2018 by Martin Gäckler Germany\000\000"
+   VALUE "LegalCopyright", "Copyright © 2007-2026 by Martin Gäckler Austria\000\000"
    VALUE "OriginalFilename", "midi.exe\000"
   }
 

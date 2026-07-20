@@ -3,10 +3,10 @@
 		Module:			MIDIsythesizerWindow.cpp
 		Description:	The synthesizer configuration
 		Author:			Martin Gäckler
-		Address:		Hopfengasse 15. A-4020 Linz
+		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2018 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -15,7 +15,7 @@
 		You should have received a copy of the GNU General Public License 
 		along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Germany, Munich ``AS IS''
+		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Linz, Austria ``AS IS''
 		AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
 		TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
 		PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR
@@ -126,31 +126,31 @@ const short		FlexPitchTrackBarRange = MaxPitch * short(FlexPitchPrecision);
 void MIDIsynthesizerWindow::writeSettings( ostream &dest )
 {
 	dest << "MG synthesizer Settings" << endl;
-	dest << theSynthesizer.getVolume() << endl;
-	dest << theSynthesizer.getPresenceValue() << endl;
+	dest << m_theSynthesizer.getVolume() << endl;
+	dest << m_theSynthesizer.getPresenceValue() << endl;
 
 	for( unsigned synth=0; synth<DEF_NUM_SYNTHS; synth++ )
 	{
 		dest << "Synthesis Module " << synth << endl;
-		dest << theSynthesizer.isMuted( synth ) << endl;
+		dest << m_theSynthesizer.isMuted( synth ) << endl;
 
-		dest << theSynthesizer.getVolume( synth ) << endl;
-		dest << theSynthesizer.getPan( synth ) << endl;
-		dest << theSynthesizer.getPitch( synth ).pitch << endl;
-		dest << theSynthesizer.getPhase( synth ) << endl;
+		dest << m_theSynthesizer.getVolume( synth ) << endl;
+		dest << m_theSynthesizer.getPan( synth ) << endl;
+		dest << m_theSynthesizer.getPitch( synth ).pitch << endl;
+		dest << m_theSynthesizer.getPhase( synth ) << endl;
 
 		for( unsigned osc=0; osc<2; osc++ )
 		{
 			dest << "Sub Oscilator Module " << synth << '.' << osc << endl;
 
-			const SubOscParameter &parameter = theSynthesizer.getOSC( synth, osc );
+			const SubOscParameter &parameter = m_theSynthesizer.getOSC( synth, osc );
 			dest << parameter.oscPhase << endl;
 			dest << parameter.oscVolumeFactor << endl;
 			dest << parameter.oscPitch.pitch << endl;
 		}
 
 		dest << "AM modulator " << synth << endl;
-		const AMlfoParameter	&amLfoParameter = theSynthesizer.getAM( synth );
+		const AMlfoParameter	&amLfoParameter = m_theSynthesizer.getAM( synth );
 		dest << amLfoParameter.type << endl;
 
 		dest << amLfoParameter.frequency << endl;
@@ -158,12 +158,12 @@ void MIDIsynthesizerWindow::writeSettings( ostream &dest )
 		dest << amLfoParameter.range.maximum << endl;
 
 		dest << "FM modulator " << synth << endl;
-		FMlfoParameter fmLfoParameter = theSynthesizer.getFM( synth );
+		FMlfoParameter fmLfoParameter = m_theSynthesizer.getFM( synth );
 		dest << fmLfoParameter.type << endl;
 		dest << fmLfoParameter.isFactor << ' ' << fmLfoParameter.frequency << endl;
 		dest << fmLfoParameter.range.pitch << endl;
 
-		const Envelope::Parameter	&envelope = theSynthesizer.getEnvelope( synth );
+		const Envelope::Parameter	&envelope = m_theSynthesizer.getEnvelope( synth );
 
 		dest << "Envelope " << synth << endl;
 		dest << envelope.enabled << endl;
@@ -184,17 +184,17 @@ void MIDIsynthesizerWindow::writeSettings( ostream &dest )
 	dest << "MG synthesizer Settings (END)" << endl;
 }
 
-void MIDIsynthesizerWindow::writeSettings( void )
+void MIDIsynthesizerWindow::writeSettings()
 {
 	SaveFileAsDialog		dlg;
 
-	dlg.setFilename( lastOptionFile );
+	dlg.setFilename( m_lastOptionFile );
 	if( dlg.getDirectory().isEmpty() )
 		dlg.setPersonalMusic();
 	if( dlg.create( this, winlibGUI::SAVE_SETTINGS_id, winlibGUI::SynthFiles_ids, winlibGUI::SynthFiles_count ) )
 	{
-		lastOptionFile = dlg.getFilename();
-		std::ofstream	destFile( lastOptionFile );
+		m_lastOptionFile = dlg.getFilename();
+		std::ofstream	destFile( m_lastOptionFile );
 		if( destFile.rdbuf()->is_open() )
 		{
 			writeSettings( destFile );
@@ -208,11 +208,11 @@ void MIDIsynthesizerWindow::readSettings( istream &src )
 
 	double	volume;
 	src >> volume;
-	theSynthesizer.setVolume( volume );
+	m_theSynthesizer.setVolume( volume );
 
 	double	presenceValue;
 	src >> presenceValue;
-	theSynthesizer.setPresenceValue( presenceValue );
+	m_theSynthesizer.setPresenceValue( presenceValue );
 
 	for( unsigned synth=0; synth<DEF_NUM_SYNTHS; synth++ )
 	{
@@ -221,22 +221,22 @@ void MIDIsynthesizerWindow::readSettings( istream &src )
 
 		bool isMuted;
 		src >> isMuted;
-		theSynthesizer.mute( synth, isMuted );
+		m_theSynthesizer.mute( synth, isMuted );
 
 		src >> volume;
-		theSynthesizer.setVolume( synth, volume );
+		m_theSynthesizer.setVolume( synth, volume );
 
 		double pan;
 		src >> pan;
-		theSynthesizer.setPan( synth, pan );
+		m_theSynthesizer.setPan( synth, pan );
 
 		short pitch;
 		src >> pitch;
-		theSynthesizer.setPitch( synth, Pitch(pitch) );
+		m_theSynthesizer.setPitch( synth, Pitch(pitch) );
 
 		double phase;
 		src >> phase;
-		theSynthesizer.setPhase( synth, phase );
+		m_theSynthesizer.setPhase( synth, phase );
 
 
 		for( unsigned osc=0; osc<2; osc++ )
@@ -253,7 +253,7 @@ void MIDIsynthesizerWindow::readSettings( istream &src )
 				phase, volume, FlexPitch( pitch )
 			};
 
-			theSynthesizer.setupOSC( synth, osc, oscParameter );
+			m_theSynthesizer.setupOSC( synth, osc, oscParameter );
 		}
 
 		int				oscType;
@@ -268,7 +268,7 @@ void MIDIsynthesizerWindow::readSettings( istream &src )
 		src >> amLfoParameter.range.maximum;
 
 		amLfoParameter.type = OscilatorType(oscType);
-		theSynthesizer.setupAM( synth, amLfoParameter );
+		m_theSynthesizer.setupAM( synth, amLfoParameter );
 
 		src.ignore( 1024, '\n' );
 		src.ignore( 1024, '\n' );
@@ -277,7 +277,7 @@ void MIDIsynthesizerWindow::readSettings( istream &src )
 		src >> fmLfoParameter.range.pitch;
 
 		fmLfoParameter.type = OscilatorType(oscType);
-		theSynthesizer.setupFM( synth, fmLfoParameter );
+		m_theSynthesizer.setupFM( synth, fmLfoParameter );
 
 		bool envEnabled;
 		unsigned short delayMS, attackMS, decayMS;
@@ -299,74 +299,74 @@ void MIDIsynthesizerWindow::readSettings( istream &src )
 			envEnabled, delayMS, initialVolume, attackMS, decayMS, decayVolume, sustainRateMS, releaseRateMS
 		};
 			
-		theSynthesizer.setupEnvelope( synth, envelope );
+		m_theSynthesizer.setupEnvelope( synth, envelope );
 	}
 }
 
-void MIDIsynthesizerWindow::readSettings( void )
+void MIDIsynthesizerWindow::readSettings()
 {
 	OpenFileDialog	dlg;
 
-	dlg.setFilename( lastOptionFile );
+	dlg.setFilename( m_lastOptionFile );
 	if( dlg.getDirectory().isEmpty() )
 		dlg.setPersonalMusic();
 	if( dlg.create( this, winlibGUI::OPEN_SETTINGS_id, winlibGUI::SynthFiles_id, winlibGUI::SynthFiles_count ) )
 	{
-		lastOptionFile = dlg.getFilename();
+		m_lastOptionFile = dlg.getFilename();
 
-		ifstream	sourceFile( lastOptionFile );
+		ifstream	sourceFile( m_lastOptionFile );
 		if( sourceFile.rdbuf()->is_open() )
 		{
 			readSettings( sourceFile );
-			getSettings( currentSynth );
+			getSettings( m_currentSynth );
 		}
 	}
 }
 
 void MIDIsynthesizerWindow::getSettings( int newSynth )
 {
-	reading = true;
+	m_reading = true;
 
-	currentSynth = newSynth;
+	m_currentSynth = newSynth;
 
-	checkMuteA->setActive( !theSynthesizer.isMuted( 0 ) );
-	checkMuteB->setActive( !theSynthesizer.isMuted( 1 ) );
-	checkMuteC->setActive( !theSynthesizer.isMuted( 2 ) );
-	checkMuteD->setActive( !theSynthesizer.isMuted( 3 ) );
+	checkMuteA->setActive( !m_theSynthesizer.isMuted( 0 ) );
+	checkMuteB->setActive( !m_theSynthesizer.isMuted( 1 ) );
+	checkMuteC->setActive( !m_theSynthesizer.isMuted( 2 ) );
+	checkMuteD->setActive( !m_theSynthesizer.isMuted( 3 ) );
 
-	double newVolume = theSynthesizer.getVolume();
+	double newVolume = m_theSynthesizer.getVolume();
 	masterVolume->setPosition( short(newVolume * 1000.0) );
 
-	double newPresenceValue = theSynthesizer.getPresenceValue();
+	double newPresenceValue = m_theSynthesizer.getPresenceValue();
 	presenceValue->setPosition( short(newPresenceValue * -1000.0) );
 
-	newVolume = theSynthesizer.getVolume( currentSynth );
+	newVolume = m_theSynthesizer.getVolume( m_currentSynth );
 	mainVolume->setPosition( short(newVolume * 1000.0) );
 
-	double newPan = theSynthesizer.getPan( currentSynth );
+	double newPan = m_theSynthesizer.getPan( m_currentSynth );
 	mainPan->setPosition( short(newPan * 1000.0) );
 
-	short	pitch = theSynthesizer.getPitch( currentSynth ).pitch;
+	short	pitch = m_theSynthesizer.getPitch( m_currentSynth ).pitch;
 	mainPitch->setPosition( pitch );
 	mainPitchValue->setText( formatNumber( pitch ) );
 
-	double newPhase = theSynthesizer.getPhase( currentSynth );
+	double newPhase = m_theSynthesizer.getPhase( m_currentSynth );
 	short phasePosition = short(newPhase * 1000.0 + 0.5);
 	mainPhase->setPosition( phasePosition );
 
-	const SubOscParameter &parameter0 = theSynthesizer.getOSC( currentSynth, 0 );
+	const SubOscParameter &parameter0 = m_theSynthesizer.getOSC( m_currentSynth, 0 );
 	phasePosition = short(parameter0.oscPhase * 1000.0 + 0.5);
 	sub1phase->setPosition( phasePosition );
 	sub1volume->setPosition( short(parameter0.oscVolumeFactor * 1000.0) );
 	sub1pitch->setPosition( short(parameter0.oscPitch.pitch * FlexPitchPrecision) );
 
-	const SubOscParameter &parameter1 = theSynthesizer.getOSC( currentSynth, 1 );
+	const SubOscParameter &parameter1 = m_theSynthesizer.getOSC( m_currentSynth, 1 );
 	phasePosition = short(parameter1.oscPhase * 1000.0 + 0.5);
 	sub2phase->setPosition( phasePosition );
 	sub2volume->setPosition( short(parameter1.oscVolumeFactor * 1000.0) );
 	sub2pitch->setPosition( short(parameter1.oscPitch.pitch * FlexPitchPrecision) );
 
-	const AMlfoParameter &amLfoParameter = theSynthesizer.getAM( currentSynth );
+	const AMlfoParameter &amLfoParameter = m_theSynthesizer.getAM( m_currentSynth );
 	switch( amLfoParameter.type )
 	{
 		case oscSINUS:
@@ -387,7 +387,7 @@ void MIDIsynthesizerWindow::getSettings( int newSynth )
 	}
 	amFrequency->setText( formatFloat( amLfoParameter.frequency ) );
 	amRange->setPosition( short((1.0-amLfoParameter.range.minimum) * 1000.0 + 0.5) );
-	FMlfoParameter fmLfoParameter = theSynthesizer.getFM( currentSynth );
+	FMlfoParameter fmLfoParameter = m_theSynthesizer.getFM( m_currentSynth );
 	switch( fmLfoParameter.type )
 	{
 		case oscSINUS:
@@ -412,7 +412,7 @@ void MIDIsynthesizerWindow::getSettings( int newSynth )
 		fmFrequency->setText( formatFloat( fmLfoParameter.frequency ) );
 	fmRange->setPosition( short(fmLfoParameter.range.pitch * FlexPitchPrecision + 0.5) );
 
-	const Envelope::Parameter	&envelope = theSynthesizer.getEnvelope( currentSynth );
+	const Envelope::Parameter	&envelope = m_theSynthesizer.getEnvelope( m_currentSynth );
 
 	if( envelope.enabled )
 	{
@@ -433,7 +433,7 @@ void MIDIsynthesizerWindow::getSettings( int newSynth )
 	envSustainRate->setText( formatNumber(long(envelope.sustainRateMS)) );
 	envReleaseRate->setText( formatNumber(long(envelope.releaseRateMS)) );
 
-	reading = false;
+	m_reading = false;
 }
 
 // --------------------------------------------------------------------- //
@@ -444,9 +444,9 @@ void MIDIsynthesizerWindow::getSettings( int newSynth )
 // ----- class virtuals ------------------------------------------------ //
 // --------------------------------------------------------------------- //
 
-ProcessStatus MIDIsynthesizerWindow::handleCreate( void )
+ProcessStatus MIDIsynthesizerWindow::handleCreate()
 {
-	reading = true;
+	m_reading = true;
 
 	masterVolume->setRange( 0, 1000 );
 
@@ -517,18 +517,18 @@ ProcessStatus MIDIsynthesizerWindow::handleCreate( void )
 
 	cpuSpeed->setText( cpuSpeedLabel );
 
-	currentSynth = 0;
+	m_currentSynth = 0;
 	getSettings( 0 );
 
 	setTimer( 10000 );
 
-	reading = false;
+	m_reading = false;
 	return psDO_DEFAULT;
 }
 
 ProcessStatus MIDIsynthesizerWindow::handleEditChange( int editControl )
 {
-	if( !reading )
+	if( !m_reading )
 		return handleCommand( editControl );
 	else
 		return psDO_DEFAULT;
@@ -552,16 +552,16 @@ ProcessStatus MIDIsynthesizerWindow::handleButtonClick( int btn )
 			break;
 
 		case winlibGUI::checkMuteA_id:
-			theSynthesizer.mute( 0, !checkMuteA->isActive() );
+			m_theSynthesizer.mute( 0, !checkMuteA->isActive() );
 			break;
 		case winlibGUI::checkMuteB_id:
-			theSynthesizer.mute( 1, !checkMuteB->isActive() );
+			m_theSynthesizer.mute( 1, !checkMuteB->isActive() );
 			break;
 		case winlibGUI::checkMuteC_id:
-			theSynthesizer.mute( 2, !checkMuteC->isActive() );
+			m_theSynthesizer.mute( 2, !checkMuteC->isActive() );
 			break;
 		case winlibGUI::checkMuteD_id:
-			theSynthesizer.mute( 3, !checkMuteD->isActive() );
+			m_theSynthesizer.mute( 3, !checkMuteD->isActive() );
 			break;
 
 		case winlibGUI::saveSynthButton_id:
@@ -577,53 +577,53 @@ ProcessStatus MIDIsynthesizerWindow::handleButtonClick( int btn )
 		case winlibGUI::check1_id:
 			if( check1->isActive() )
 			{
-				if( !isAudioRunning() || !theSynthesizer.start( MIDI_NOTE_A1, 127 ) )
+				if( !isAudioRunning() || !m_theSynthesizer.start( MIDI_NOTE_A1, 127 ) )
 				{
 					check1->clrActive();
 				}
 			}
 			else
 			{
-				theSynthesizer.release( MIDI_NOTE_A1 );
+				m_theSynthesizer.release( MIDI_NOTE_A1 );
 			}
 			break;
 		case winlibGUI::check2_id:
 			if( check2->isActive() )
 			{
-				if( !isAudioRunning() || !theSynthesizer.start( MIDI_NOTE_C2, 127 ) )
+				if( !isAudioRunning() || !m_theSynthesizer.start( MIDI_NOTE_C2, 127 ) )
 				{
 					check2->clrActive();
 				}
 			}
 			else
 			{
-				theSynthesizer.release( MIDI_NOTE_C2 );
+				m_theSynthesizer.release( MIDI_NOTE_C2 );
 			}
 			break;
 		case winlibGUI::check3_id:
 			if( check3->isActive() )
 			{
-				if( !isAudioRunning() || !theSynthesizer.start( MIDI_NOTE_E2, 127 ) )
+				if( !isAudioRunning() || !m_theSynthesizer.start( MIDI_NOTE_E2, 127 ) )
 				{
 					check3->clrActive();
 				}
 			}
 			else
 			{
-				theSynthesizer.release( MIDI_NOTE_E2 );
+				m_theSynthesizer.release( MIDI_NOTE_E2 );
 			}
 			break;
 		case winlibGUI::check4_id:
 			if( check4->isActive() )
 			{
-				if( !isAudioRunning() || !theSynthesizer.start( MIDI_NOTE_A2, 127 ) )
+				if( !isAudioRunning() || !m_theSynthesizer.start( MIDI_NOTE_A2, 127 ) )
 				{
 					check4->clrActive();
 				}
 			}
 			else
 			{
-				theSynthesizer.release( MIDI_NOTE_A2 );
+				m_theSynthesizer.release( MIDI_NOTE_A2 );
 			}
 			break;
 
@@ -643,35 +643,35 @@ ProcessStatus MIDIsynthesizerWindow::handleScrollControl( int control )
 		{
 			double newVolume = double(masterVolume->getPosition())/1000.0;
 			showToolHelp( formatFloat( newVolume * 100, 0, 1 ) + '%' );
-			theSynthesizer.setVolume( newVolume );
+			m_theSynthesizer.setVolume( newVolume );
 			break;
 		}
 		case winlibGUI::presenceValue_id:
 		{
 			double newPresenceValue = double(-presenceValue->getPosition())/1000.0;
 			showToolHelp( formatFloat( newPresenceValue ) );
-			theSynthesizer.setPresenceValue( newPresenceValue );
+			m_theSynthesizer.setPresenceValue( newPresenceValue );
 			break;
 		}
 		case winlibGUI::mainVolume_id:
 		{
 			double newVolume = double(mainVolume->getPosition())/1000.0;
 			showToolHelp( formatFloat( newVolume * 100, 0, 1 ) + '%' );
-			theSynthesizer.setVolume( currentSynth, newVolume );
+			m_theSynthesizer.setVolume( m_currentSynth, newVolume );
 			break;
 		}
 		case winlibGUI::mainPan_id:
 		{
 			double newPan = double(mainPan->getPosition())/1000.0;
 			showToolHelp( STRING( newPan <= -0.01 ?'L' : (newPan < 0.01 ? 'C' : 'R') ) + formatFloat( fabs(newPan) * 100, 0, 0 ) );
-			theSynthesizer.setPan( currentSynth, newPan );
+			m_theSynthesizer.setPan( m_currentSynth, newPan );
 			break;
 		}
 		case winlibGUI::mainPitch_id:
 		{
 			short pitch = short(mainPitch->getPosition());
 
-			theSynthesizer.setPitch( currentSynth, Pitch(pitch) );
+			m_theSynthesizer.setPitch( m_currentSynth, Pitch(pitch) );
 			mainPitchValue->setText( formatNumber( pitch ) );
 			break;
 		}
@@ -679,7 +679,7 @@ ProcessStatus MIDIsynthesizerWindow::handleScrollControl( int control )
 		{
 			short phasePosition = short(mainPhase->getPosition());
 			double newPhase = double(phasePosition)/1000.0;
-			theSynthesizer.setPhase( currentSynth, newPhase );
+			m_theSynthesizer.setPhase( m_currentSynth, newPhase );
 			break;
 		}
 
@@ -693,7 +693,7 @@ ProcessStatus MIDIsynthesizerWindow::handleScrollControl( int control )
 			oscParameter.oscPhase = double(phasePosition)/1000.0;
 			oscParameter.oscVolumeFactor = double(sub1volume->getPosition())/1000.0;
 			oscParameter.oscPitch = FlexPitch(double(sub1pitch->getPosition())/FlexPitchPrecision);
-			theSynthesizer.setupOSC( currentSynth, 0, oscParameter );
+			m_theSynthesizer.setupOSC( m_currentSynth, 0, oscParameter );
 			if( control == winlibGUI::sub1volume_id )
 			{
 				showToolHelp( formatFloat( oscParameter.oscVolumeFactor * 100, 0, 1 ) + '%' );
@@ -722,7 +722,7 @@ ProcessStatus MIDIsynthesizerWindow::handleScrollControl( int control )
 			{
 				showToolHelp( formatFloat( oscParameter.oscPitch.pitch ) );
 			}
-			theSynthesizer.setupOSC( currentSynth, 1, oscParameter );
+			m_theSynthesizer.setupOSC( m_currentSynth, 1, oscParameter );
 			break;
 		}
 
@@ -756,7 +756,7 @@ ProcessStatus MIDIsynthesizerWindow::handleCommand( int cmd )
 			{
 				showToolHelp( formatFloat( (1- amLfoParameter.range.minimum) * 100, 0, 1 ) );
 			}
-			theSynthesizer.setupAM( currentSynth, amLfoParameter );
+			m_theSynthesizer.setupAM( m_currentSynth, amLfoParameter );
 			break;
 		}
 
@@ -785,7 +785,7 @@ ProcessStatus MIDIsynthesizerWindow::handleCommand( int cmd )
 				showToolHelp( formatFloat( fmLfoParameter.range.pitch ) );
 			}
 
-			theSynthesizer.setupFM( currentSynth, fmLfoParameter );
+			m_theSynthesizer.setupFM( m_currentSynth, fmLfoParameter );
 			break;
 		}
 
@@ -817,7 +817,7 @@ ProcessStatus MIDIsynthesizerWindow::handleCommand( int cmd )
 			{
 				showToolHelp( formatFloat( envelope.decayVolume * 100, 0, 1 ) + '%' );
 			}
-			theSynthesizer.setupEnvelope( currentSynth, envelope );
+			m_theSynthesizer.setupEnvelope( m_currentSynth, envelope );
 			break;
 		}
 
@@ -829,25 +829,25 @@ ProcessStatus MIDIsynthesizerWindow::handleCommand( int cmd )
 	return psPROCESSED;
 }
 
-void MIDIsynthesizerWindow::handleTimer( void )
+void MIDIsynthesizerWindow::handleTimer()
 {
 	setTimer( 1000 );
 
-	double limiter = theSynthesizer.getLimiter();
+	double limiter = m_theSynthesizer.getLimiter();
 	STRING	newCpuLabel = formatFloat( 100-limiter*100, 0, 0 ) + "% ";
 	newCpuLabel += formatBinary( 
-		theSynthesizer.getActivePorts(), 2, 
-		unsigned(theSynthesizer.getMaxPhones()) 
+		m_theSynthesizer.getActivePorts(), 2, 
+		unsigned(m_theSynthesizer.getMaxPhones()) 
 	);
 
-	if( cpuSpeedLabel != newCpuLabel )
+	if( m_cpuSpeedLabel != newCpuLabel )
 	{
-		cpuSpeedLabel = newCpuLabel;
+		m_cpuSpeedLabel = newCpuLabel;
 		cpuSpeed->setText( newCpuLabel );
 	}
 }
 
-ProcessStatus MIDIsynthesizerWindow::handleDestroy( void )
+ProcessStatus MIDIsynthesizerWindow::handleDestroy()
 {
 	closeSynthesizer();
 	return psDO_DEFAULT;

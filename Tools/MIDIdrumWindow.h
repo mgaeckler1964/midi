@@ -6,7 +6,7 @@
 		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2026 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -107,13 +107,13 @@ class MIDIdrumWindow;
 
 class DrumPlayerThread : public gak::Thread
 {
-	MIDIdrumWindow		*drumWindow;
+	MIDIdrumWindow		*m_drumWindow;
 	MIDIdata			*m_midiData;
-	unsigned long		totalTime;
+	unsigned long		m_totalTime;
 	int					m_playMode;
 	int					m_selectedTrack;
 
-	virtual void ExecuteThread( void );
+	virtual void ExecuteThread();
 
 	public:
 	DrumPlayerThread(
@@ -124,9 +124,9 @@ class DrumPlayerThread : public gak::Thread
 	{
 		m_playMode = 0;
 		m_selectedTrack = 0;
-		this->drumWindow = drumWindow;
+		m_drumWindow = drumWindow;
 		m_midiData = midiData;
-		this->totalTime = totalTime;
+		m_totalTime = totalTime;
 	}
 	void setPlayMode( int playMode )
 	{
@@ -167,7 +167,7 @@ class PatternArea : public winlib::ChildWindow
 	}
 	int findNote( unsigned long start, unsigned long end, short track );
 
-	virtual winlib::ProcessStatus handleMouseRelease( void );
+	virtual winlib::ProcessStatus handleMouseRelease();
 	virtual winlib::ProcessStatus handleMouseMove( WPARAM modifier, const winlib::Point &position );
 	virtual winlib::ProcessStatus handleLeftButton( winlib::LeftButton leftButton, WPARAM modifier, const winlib::Point &position );
 	virtual winlib::ProcessStatus handleRightButton( winlib::RightButton rightButton, WPARAM modifier, const winlib::Point &position );
@@ -178,8 +178,8 @@ class PatternArea : public winlib::ChildWindow
 	private:
 	static const char className[];
 	public:
-	static void registerClass( void );
-	virtual gak::STRING getWindowClassName( void ) const;
+	static void registerClass();
+	virtual gak::STRING getWindowClassName() const;
 
 	PatternArea(
 		winlib::BasicWindow *owner, int controlId,
@@ -215,11 +215,11 @@ class PatternArea : public winlib::ChildWindow
 		m_beatLength = beatLength;
 	}
 	void setNumBars( int numBars );
-	int getNumBars( void ) const
+	int getNumBars() const
 	{
 		return m_numBars;
 	}
-	unsigned long getMaxTimeCode( void ) const
+	unsigned long getMaxTimeCode() const
 	{
 		return m_numBars * m_midiData->getTimePerBar();
 	}
@@ -231,42 +231,42 @@ class PatternArea : public winlib::ChildWindow
 	{
 		m_time = time;
 	}
-	void refreshPatternList( void );
+	void refreshPatternList();
 	void addNewPattern( const gak::STRING &voice );
-	void deleteSelectedEvents( void );
+	void deleteSelectedEvents();
 	void copyMoveEvents( bool copyFlag );
-	void insertBreak( void );
+	void insertBreak();
 
 
-	bool getChangedFlag( void ) const
+	bool getChangedFlag() const
 	{
 		return m_changedFlag;
 	}
-	void setChangedFlag( void )
+	void setChangedFlag()
 	{
 		m_changedFlag = true;
 	}
-	void clearChangedFlag( void )
+	void clearChangedFlag()
 	{
 		m_changedFlag = false;
 	}
-	int getMaxLines( void )
+	int getMaxLines()
 	{
 		winlib::Size	size = getClientSize();
 		int				maxLines = (size.height-textMargin) / textHeight;
 
 		return maxLines -1;
 	}
-	short getSelectedPattern( void ) const
+	short getSelectedPattern() const
 	{
 		return m_selectedPattern;
 	}
 
-	PatternInfos &getPatternList( void )
+	PatternInfos &getPatternList()
 	{
 		return m_patternList;
 	}
-	size_t getNumPattern( void ) const
+	size_t getNumPattern() const
 	{
 		return m_patternList.size();
 	}
@@ -275,27 +275,27 @@ class PatternArea : public winlib::ChildWindow
 class MIDIdrumWindow : public winlibGUI::MIDIdrumWindow_form, public PlayerWindow
 {
 	private:
-	DrumPlayerThreadPtr		midiPlayer;
+	DrumPlayerThreadPtr		m_midiPlayer;
 	gak::STRING				m_lastDrumsFile;
-	DrumVoices				theVoices;
-	PatternArea				*thePatternArea;
+	DrumVoices				m_theVoices;
+	PatternArea				*m_thePatternArea;
 
 	static int lastSelectedLengthIdx;
 	static int lastSelectedGridIdx;
 
 	private:
-	void stopMidiPlay( void );
-	void startStopMidiPlay( void );
+	void stopMidiPlay();
+	void startStopMidiPlay();
 
-	void saveMidi( void );
-	void changeVolume( void );
-	void changeStereoPosition( void );
+	void saveMidi();
+	void changeVolume();
+	void changeStereoPosition();
 
-	void loadVoices( void );
+	void loadVoices();
 
-	void checkPattern( void )
+	void checkPattern()
 	{
-		if( thePatternArea->getNumPattern() )
+		if( m_thePatternArea->getNumPattern() )
 		{
 			volumeButton->enable();
 			panButton->enable();
@@ -316,15 +316,15 @@ class MIDIdrumWindow : public winlibGUI::MIDIdrumWindow_form, public PlayerWindo
 		clockText->setText( time );
 	}
 
-	void create( void );
-	virtual winlib::ProcessStatus handleCreate( void );
-	virtual winlib::ProcessStatus handleDestroy( void );
-	virtual bool canClose( void );
+	void create();
+	virtual winlib::ProcessStatus handleCreate();
+	virtual winlib::ProcessStatus handleDestroy();
+	virtual bool canClose();
 	virtual winlib::ProcessStatus handleButtonClick( int btn );
 	virtual winlib::ProcessStatus handleSelectionChange( int control );
 	virtual winlib::ProcessStatus handleCommand( int cmd );
 	virtual winlib::ProcessStatus handleMessage( UINT msg, WPARAM wParam, LPARAM lParam );
-	void loadDrumPatterns( const char *cmdLine=NULL );
+	void loadDrumPatterns( const char *cmdLine=nullptr );
 	void playMidiEvent( const MIDIevent &msg );
 };
 

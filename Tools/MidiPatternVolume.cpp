@@ -4,10 +4,10 @@
 		Description:	Change the volume of one drum pattern 
 						(used by drum window)
 		Author:			Martin Gäckler
-		Address:		Hopfengasse 15. A-4020 Linz
+		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2018 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -16,7 +16,7 @@
 		You should have received a copy of the GNU General Public License 
 		along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Germany, Munich ``AS IS''
+		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Linz, Austria ``AS IS''
 		AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
 		TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
 		PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR
@@ -109,15 +109,15 @@ using namespace gak;
 
 void PatternVolumeDialog::handlePatternSelection( unsigned char pattern )
 {
-	selectedPattern = pattern;
-	volumeBar->setPosition( patternVolumes[pattern] );
-	handleNewVolume( patternVolumes[pattern] );
+	m_selectedPattern = pattern;
+	volumeBar->setPosition( m_patternVolumes[pattern] );
+	handleNewVolume( m_patternVolumes[pattern] );
 }
 
 void PatternVolumeDialog::handleNewVolume( unsigned char volume )
 {
 	volumeLabel->setText( formatNumber( volume ) );
-	patternVolumes[selectedPattern] = volume;
+	m_patternVolumes[m_selectedPattern] = volume;
 }
 
 // --------------------------------------------------------------------- //
@@ -128,7 +128,7 @@ void PatternVolumeDialog::handleNewVolume( unsigned char volume )
 // ----- class virtuals ------------------------------------------------ //
 // --------------------------------------------------------------------- //
 
-ProcessStatus PatternVolumeDialog::handleCreate( void )
+ProcessStatus PatternVolumeDialog::handleCreate()
 {
 	size_t	i;
 
@@ -136,9 +136,9 @@ ProcessStatus PatternVolumeDialog::handleCreate( void )
 
 
 	patternSelect->addEntry( "Alle" );
-	for( i=0; i<numPatterns-1; i++ )
+	for( i=0; i<m_numPatterns-1; i++ )
 	{
-		patternSelect->addEntry( (*patternList)[i].drumVoice.voice );
+		patternSelect->addEntry( (*m_patternList)[i].drumVoice.voice );
 	}
 	patternSelect->selectEntry( 0 );
 	handlePatternSelection( 0 );
@@ -175,15 +175,15 @@ SuccessCode PatternVolumeDialog::create(
 )
 {
 
-	this->patternVolumes = (unsigned char*)malloc( numPatterns * sizeof(unsigned char) );
+	m_patternVolumes = (unsigned char*)malloc( numPatterns * sizeof(unsigned char) );
 
-	if( this->patternVolumes )
+	if( m_patternVolumes )
 	{
-		this->patternList = patternList;
-		this->numPatterns = numPatterns;
+		m_patternList = patternList;
+		m_numPatterns = numPatterns;
 
 		for( size_t i=0; i<numPatterns; i++ )
-			this->patternVolumes[i] = patternVolumes[i];
+			m_patternVolumes[i] = patternVolumes[i];
 	}
 
 

@@ -4,10 +4,10 @@
 		Description:	Displays the current status of the synthesizer
 						(used by audio)
 		Author:			Martin Gäckler
-		Address:		Hopfengasse 15. A-4020 Linz
+		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2018 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -16,7 +16,7 @@
 		You should have received a copy of the GNU General Public License 
 		along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Germany, Munich ``AS IS''
+		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Linz, Austria ``AS IS''
 		AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
 		TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
 		PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR
@@ -101,7 +101,7 @@ class StatusWindow : public winlib::ToolWindow
 
 	public:
 	StatusWindow(const MidiSynthesizer	&theSynthesizer) 
-	: ToolWindow( NULL ), m_synthesizer(theSynthesizer) 
+	: ToolWindow( nullptr ), m_synthesizer(theSynthesizer) 
 	{
 	}
 
@@ -113,7 +113,7 @@ class StatusThread : public Thread
 {
 	StatusWindow<SampleT>		*targetWindow;
 
-	virtual void ExecuteThread( void );
+	virtual void ExecuteThread();
 	public:
 	StatusThread( StatusWindow<SampleT> *theTarget )
 	{
@@ -166,7 +166,7 @@ class StatusThread : public Thread
 // --------------------------------------------------------------------- //
    
 template <typename SampleT>
-void StatusThread<SampleT>::ExecuteThread( void )
+void StatusThread<SampleT>::ExecuteThread()
 {
 	const clock_t	rate10ms = CLOCKS_PER_SEC * 10 / 1000;
 	DrawDevice		hDC( targetWindow );

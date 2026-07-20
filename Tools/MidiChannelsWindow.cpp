@@ -3,10 +3,10 @@
 		Module:			MidiChannelsWindow.cpp
 		Description:	The channel settings (used by recorder window)
 		Author:			Martin Gäckler
-		Address:		Hopfengasse 15. A-4020 Linz
+		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2018 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -15,7 +15,7 @@
 		You should have received a copy of the GNU General Public License 
 		along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Germany, Munich ``AS IS''
+		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Linz, Austria ``AS IS''
 		AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
 		TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
 		PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR
@@ -104,11 +104,11 @@ using namespace gak;
 // ----- class privates ------------------------------------------------ //
 // --------------------------------------------------------------------- //
 
-void MIDIchannelsWindow::handleVoiceSelection( void )
+void MIDIchannelsWindow::handleVoiceSelection()
 {
 	MIDIevent			theEvent;
 
-	const VoiceEntry	&theVoice = theVoices.getSelectedVoice();
+	const VoiceEntry	&theVoice = m_theVoices.getSelectedVoice();
 
 	unsigned char minChannel, maxChannel, theChannel;
 	unsigned char selChannel = static_cast<unsigned char>(channelSelect->getSelection());
@@ -123,24 +123,24 @@ void MIDIchannelsWindow::handleVoiceSelection( void )
 
 	for( theChannel=minChannel; theChannel <= maxChannel; theChannel++ )
 	{
-		if( !theRecorderWindow->isMetronomRunning() )
+		if( !m_theRecorderWindow->isMetronomRunning() )
 		{
 			theEvent.setBankMSB( theChannel, theVoice.voiceCodes.bankMSB );
-			theRecorderWindow->playMidiEvent( theEvent );
+			m_theRecorderWindow->playMidiEvent( theEvent );
 			theEvent.setBankLSB( theChannel, theVoice.voiceCodes.bankLSB );
-			theRecorderWindow->playMidiEvent( theEvent );
+			m_theRecorderWindow->playMidiEvent( theEvent );
 			theEvent.setProgramChange( theChannel, theVoice.voiceCodes.program );
-			theRecorderWindow->playMidiEvent( theEvent );
+			m_theRecorderWindow->playMidiEvent( theEvent );
 		}
 
-		channelSettings[theChannel].group = theVoice.group;
-		channelSettings[theChannel].voice = theVoice.voice;
-		channelSettings[theChannel].voiceCodes.program = theVoice.voiceCodes.program;
-		channelSettings[theChannel].voiceCodes.bankMSB = theVoice.voiceCodes.bankMSB;
-		channelSettings[theChannel].voiceCodes.bankLSB = theVoice.voiceCodes.bankLSB;
+		m_channelSettings[theChannel].group = theVoice.group;
+		m_channelSettings[theChannel].voice = theVoice.voice;
+		m_channelSettings[theChannel].voiceCodes.program = theVoice.voiceCodes.program;
+		m_channelSettings[theChannel].voiceCodes.bankMSB = theVoice.voiceCodes.bankMSB;
+		m_channelSettings[theChannel].voiceCodes.bankLSB = theVoice.voiceCodes.bankLSB;
 	}
 
-	theRecorderWindow->setSettingsChanged();
+	m_theRecorderWindow->setSettingsChanged();
 }
 
 void MIDIchannelsWindow::handleNewStereoPos( char stereoPos )
@@ -159,15 +159,15 @@ void MIDIchannelsWindow::handleNewStereoPos( char stereoPos )
 
 	for( theChannel=minChannel; theChannel <= maxChannel; theChannel++ )
 	{
-		channelSettings[theChannel].stereoPos = stereoPos;
+		m_channelSettings[theChannel].stereoPos = stereoPos;
 
 		theEvent.setBalancePosition( theChannel, stereoPos );
-		theRecorderWindow->playMidiEvent( theEvent );
+		m_theRecorderWindow->playMidiEvent( theEvent );
 		theEvent.setPanPosition( theChannel, stereoPos );
-		theRecorderWindow->playMidiEvent( theEvent );
+		m_theRecorderWindow->playMidiEvent( theEvent );
 	}
 
-	theRecorderWindow->setSettingsChanged();
+	m_theRecorderWindow->setSettingsChanged();
 }
 
 void MIDIchannelsWindow::handleNewEffect( unsigned char effect, unsigned char effectValue )
@@ -186,13 +186,13 @@ void MIDIchannelsWindow::handleNewEffect( unsigned char effect, unsigned char ef
 
 	for( theChannel=minChannel; theChannel <= maxChannel; theChannel++ )
 	{
-		channelSettings[theChannel].effects[effect] = effectValue;
+		m_channelSettings[theChannel].effects[effect] = effectValue;
 
 		theEvent.setEffectValue( theChannel, effect, effectValue );
-		theRecorderWindow->playMidiEvent( theEvent );
+		m_theRecorderWindow->playMidiEvent( theEvent );
 	}
 
-	theRecorderWindow->setSettingsChanged();
+	m_theRecorderWindow->setSettingsChanged();
 }
 
 void MIDIchannelsWindow::handleNewSound( unsigned char sound, unsigned char soundValue )
@@ -211,13 +211,13 @@ void MIDIchannelsWindow::handleNewSound( unsigned char sound, unsigned char soun
 
 	for( theChannel=minChannel; theChannel <= maxChannel; theChannel++ )
 	{
-		channelSettings[theChannel].sounds[sound] = soundValue;
+		m_channelSettings[theChannel].sounds[sound] = soundValue;
 
 		theEvent.setSoundValue( theChannel, sound, soundValue );
-		theRecorderWindow->playMidiEvent( theEvent );
+		m_theRecorderWindow->playMidiEvent( theEvent );
 	}
 
-	theRecorderWindow->setSettingsChanged();
+	m_theRecorderWindow->setSettingsChanged();
 }
 
 void MIDIchannelsWindow::handleNewExpression( unsigned char expressionValue )
@@ -236,13 +236,13 @@ void MIDIchannelsWindow::handleNewExpression( unsigned char expressionValue )
 
 	for( theChannel=minChannel; theChannel <= maxChannel; theChannel++ )
 	{
-		channelSettings[theChannel].expression = expressionValue;
+		m_channelSettings[theChannel].expression = expressionValue;
 
 		theEvent.setExpression( theChannel, expressionValue );
-		theRecorderWindow->playMidiEvent( theEvent );
+		m_theRecorderWindow->playMidiEvent( theEvent );
 	}
 
-	theRecorderWindow->setSettingsChanged();
+	m_theRecorderWindow->setSettingsChanged();
 }
 
 void MIDIchannelsWindow::handleNewVolume( unsigned char volume )
@@ -261,12 +261,12 @@ void MIDIchannelsWindow::handleNewVolume( unsigned char volume )
 
 	for( theChannel=minChannel; theChannel <= maxChannel; theChannel++ )
 	{
-		channelSettings[theChannel].volume = volume;
+		m_channelSettings[theChannel].volume = volume;
 		theEvent.setVolume( theChannel, volume );
-		theRecorderWindow->playMidiEvent( theEvent );
+		m_theRecorderWindow->playMidiEvent( theEvent );
 	}
 
-	theRecorderWindow->setSettingsChanged();
+	m_theRecorderWindow->setSettingsChanged();
 }
 
 void MIDIchannelsWindow::handleActive( bool active )
@@ -284,13 +284,13 @@ void MIDIchannelsWindow::handleActive( bool active )
 
 	for( theChannel=minChannel; theChannel <= maxChannel; theChannel++ )
 	{
-		channelSettings[theChannel].active = active;
+		m_channelSettings[theChannel].active = active;
 	}
 
-	theRecorderWindow->setSettingsChanged();
+	m_theRecorderWindow->setSettingsChanged();
 }
 
-void MIDIchannelsWindow::handleDefault( void )
+void MIDIchannelsWindow::handleDefault()
 {
 	unsigned char	minChannel, maxChannel, channel;
 	unsigned char	selChannel = static_cast<unsigned char>(channelSelect->getSelection());
@@ -305,7 +305,7 @@ void MIDIchannelsWindow::handleDefault( void )
 
 	for( channel=minChannel; channel <= maxChannel; channel++ )
 	{
-		ChannelSettings &theChannel = channelSettings[channel];
+		ChannelSettings &theChannel = m_channelSettings[channel];
 	
 		theChannel.active = true;
 
@@ -323,12 +323,12 @@ void MIDIchannelsWindow::handleDefault( void )
 		theChannel.sounds[4] = 64;
 		theChannel.expression = 127;
 
-		theRecorderWindow->sendChannelSettings( midiDev, channel );
+		m_theRecorderWindow->sendChannelSettings( m_midiDev, channel );
 	}
 
 	handleChannelSelection( selChannel );
 
-	theRecorderWindow->setSettingsChanged();
+	m_theRecorderWindow->setSettingsChanged();
 }
 
 
@@ -337,12 +337,12 @@ void MIDIchannelsWindow::handleChannelSelection( unsigned char channel )
 	if( channel > 15 )
 		channel = 0;
 
-	ChannelSettings &theChannel = channelSettings[channel];
+	ChannelSettings &theChannel = m_channelSettings[channel];
 
 	if( theChannel.group.isEmpty() || theChannel.voice.isEmpty() )
 		handleVoiceSelection();
 	else
-		theVoices.selectVoice( theChannel.group, theChannel.voice );
+		m_theVoices.selectVoice( theChannel.group, theChannel.voice );
 
 	stereoBar->setPosition( theChannel.stereoPos );
 	volumeBar->setPosition( theChannel.volume );
@@ -370,7 +370,7 @@ void MIDIchannelsWindow::handleChannelSelection( unsigned char channel )
 // ----- class virtuals ------------------------------------------------ //
 // --------------------------------------------------------------------- //
 
-ProcessStatus MIDIchannelsWindow::handleCreate( void )
+ProcessStatus MIDIchannelsWindow::handleCreate()
 {
 	ChannelSelect::fill( channelSelect );
 
@@ -394,8 +394,8 @@ ProcessStatus MIDIchannelsWindow::handleCreate( void )
 	channelSelect->addEntry( appObject->loadString( winlibGUI::ANY_CHANNEL_LABEL_id ) );
 	channelSelect->selectEntry( 0 );
 
-	theVoices.loadVoices( voiceFile, groupSelect, voiceSelect );
-	deviceLabel->setText( instrument );
+	m_theVoices.loadVoices( m_voiceFile, groupSelect, voiceSelect );
+	deviceLabel->setText( m_instrument );
 
 	handleChannelSelection( 0 );
 
@@ -414,7 +414,7 @@ ProcessStatus MIDIchannelsWindow::handleCommand( int cmd )
 			);
 			break;
 		case winlibGUI::groupSelect_id:
-			theVoices.handleGroupSelection();
+			m_theVoices.handleGroupSelection();
 		case winlibGUI::voiceSelect_id:
 			handleVoiceSelection();
 			break;
@@ -486,13 +486,13 @@ ProcessStatus MIDIchannelsWindow::handleCommand( int cmd )
 	return psPROCESSED;
 }
 
-SuccessCode MIDIchannelsWindow::handleClose( void )
+SuccessCode MIDIchannelsWindow::handleClose()
 {
 	hide();
 	return scERROR;
 }
 
-ProcessStatus MIDIchannelsWindow::handleCancel( void )
+ProcessStatus MIDIchannelsWindow::handleCancel()
 {
 	hide();
 	return psPROCESSED;

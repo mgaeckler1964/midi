@@ -4,10 +4,10 @@
 		Description:	Change the stereo position of one drum pattern 
 						(used by drum window)
 		Author:			Martin Gäckler
-		Address:		Hopfengasse 15. A-4020 Linz
+		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2018 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -16,7 +16,7 @@
 		You should have received a copy of the GNU General Public License 
 		along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Germany, Munich ``AS IS''
+		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Linz, Austria ``AS IS''
 		AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
 		TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
 		PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR
@@ -108,15 +108,15 @@ using namespace gak;
 
 void PatternStereoDialog::handlePatternSelection( unsigned char pattern )
 {
-	selectedPattern = pattern;
-	stereoBar->setPosition( patternList[pattern].stereoPos );
-	handleNewStereoPosition( patternList[pattern].stereoPos );
+	m_selectedPattern = pattern;
+	stereoBar->setPosition( m_patternList[pattern].stereoPos );
+	handleNewStereoPosition( m_patternList[pattern].stereoPos );
 }
 
 void PatternStereoDialog::handleNewStereoPosition( signed char stereoPosition )
 {
 	stereoLabel->setText( formatNumber( stereoPosition ) );
-	patternList[selectedPattern].stereoPos = stereoPosition;
+	m_patternList[m_selectedPattern].stereoPos = stereoPosition;
 }
 
 // --------------------------------------------------------------------- //
@@ -127,13 +127,13 @@ void PatternStereoDialog::handleNewStereoPosition( signed char stereoPosition )
 // ----- class virtuals ------------------------------------------------ //
 // --------------------------------------------------------------------- //
 
-ProcessStatus PatternStereoDialog::handleCreate( void )
+ProcessStatus PatternStereoDialog::handleCreate()
 {
 	stereoBar->setRange( MIDI_LEFT_POSITION, MIDI_RIGHT_POSITION );
 
 	for( 
-		PatternInfos::const_iterator it = patternList.cbegin(),
-			endIT = patternList.cend();
+		PatternInfos::const_iterator it = m_patternList.cbegin(),
+			endIT = m_patternList.cend();
 		it != endIT;
 		++it
 	)
@@ -173,7 +173,7 @@ SuccessCode PatternStereoDialog::create(
 	const PatternInfos	&patternList
 )
 {
-	this->patternList = patternList;
+	m_patternList = patternList;
 
 	return PatternStereo_form::create( parent );
 }

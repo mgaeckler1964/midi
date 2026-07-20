@@ -3,10 +3,10 @@
 		Module:			audio.cpp
 		Description:	The synthesizer helper module with audio stream
 		Author:			Martin Gäckler
-		Address:		Hopfengasse 15. A-4020 Linz
+		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2018 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -15,7 +15,7 @@
 		You should have received a copy of the GNU General Public License 
 		along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Germany, Munich ``AS IS''
+		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Linz, Austria ``AS IS''
 		AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
 		TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
 		PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR
@@ -121,7 +121,7 @@ class AVRTtask
 		}
 		else
 		{
-			m_taskHandle = NULL;
+			m_taskHandle = nullptr;
 		}
 	}
 	~AVRTtask()
@@ -145,7 +145,7 @@ class AVRTtask
 			}
 		}
 	}
-	HANDLE get( void ) const
+	HANDLE get() const
 	{
 		return m_taskHandle;
 	}
@@ -177,8 +177,8 @@ class AudioThread : public Thread
 		AudioException( AudioErrors newErrCode, HRESULT	newWinError ) : errCode( newErrCode ), windowsError( newWinError ) {}
 	};
 
-	void PlayAudioStream( void );
-	virtual void ExecuteThread( void );
+	void PlayAudioStream();
+	virtual void ExecuteThread();
 
 	public:
 	AudioThread( unsigned short bitsPerSample, unsigned long sampleRate );
@@ -186,7 +186,7 @@ class AudioThread : public Thread
 	{
 		m_latency = newLatency;
 	}
-	double getLatency( void ) const
+	double getLatency() const
 	{
 		return m_latency;
 	}
@@ -213,7 +213,7 @@ class LevelMeterThread : public Thread
 	ToolWindow						*m_targetWindow;
 	RingBuffer< StereoSample<> >	&m_dataSource;
 
-	virtual void ExecuteThread( void );
+	virtual void ExecuteThread();
 	public:
 	LevelMeterThread( RingBuffer< StereoSample<> > &dataSource, ToolWindow *targetWindow ) : m_dataSource( dataSource )
 	{
@@ -387,14 +387,14 @@ void AudioThread::PlayAudioStream(  void )
 	BYTE											*pData;
 	DWORD											flags = 0;
 
-	hr = CoInitialize( NULL );
+	hr = CoInitialize( nullptr );
     if( FAILED( hr ) )
 	{
 		throw AudioException( InitFailed, hr );
 	}
 
     hr = CoCreateInstance(
-		CLSID_MMDeviceEnumerator, NULL,
+		CLSID_MMDeviceEnumerator, nullptr,
 		CLSCTX_ALL, IID_IMMDeviceEnumerator,
 		(void**)&pEnumerator
 	);
@@ -411,7 +411,7 @@ void AudioThread::PlayAudioStream(  void )
 
     hr = pDevice->Activate(
 		IID_IAudioClient, CLSCTX_ALL,
-		NULL, (void**)&pAudioClient
+		nullptr, (void**)&pAudioClient
 	);
     if( FAILED( hr ) )
 	{
@@ -421,7 +421,7 @@ void AudioThread::PlayAudioStream(  void )
 	CheckMixFormat( pAudioClient );
 
 	// Initialize the stream to play at the minimum latency.
-	hr = pAudioClient->GetDevicePeriod( NULL, &hnsRequestedDuration );
+	hr = pAudioClient->GetDevicePeriod( nullptr, &hnsRequestedDuration );
     if( FAILED( hr ) )
 	{
 		throw AudioException( NoDevicePeriod, hr );
@@ -433,7 +433,7 @@ void AudioThread::PlayAudioStream(  void )
 		hnsRequestedDuration,
 		hnsRequestedDuration,
 		&m_pwfx,
-		NULL
+		nullptr
 	);
 	if( hr == AUDCLNT_E_BUFFER_SIZE_NOT_ALIGNED )
 	{
@@ -450,7 +450,7 @@ void AudioThread::PlayAudioStream(  void )
 
 		hr = pDevice->Activate(
 			IID_IAudioClient, CLSCTX_ALL,
-			NULL, (void**)&pAudioClient
+			nullptr, (void**)&pAudioClient
 		);
 	    if( FAILED( hr ) )
 		{
@@ -463,7 +463,7 @@ void AudioThread::PlayAudioStream(  void )
 			hnsRequestedDuration,
 			hnsRequestedDuration,
 			&m_pwfx,
-			NULL
+			nullptr
 		);
 	}
     if( FAILED( hr ) )
@@ -475,7 +475,7 @@ void AudioThread::PlayAudioStream(  void )
 
 	// Create an event handle and register it for
 	// buffer-event notifications.
-	if (hEvent.get() == NULL)
+	if (hEvent.get() == nullptr)
 	{
 		throw AudioException( EventFailed, E_FAIL );
 	}
@@ -526,7 +526,7 @@ void AudioThread::PlayAudioStream(  void )
 	// Ask MMCSS to temporarily boost the thread priority
 	// to reduce glitches while the low-latency stream plays.
 	AVRTtask	hTask;
-	if( hTask.get() == NULL )
+	if( hTask.get() == nullptr )
 	{
 		throw AudioException( NoTask, E_FAIL );
 	}
@@ -586,7 +586,7 @@ void AudioThread::PlayAudioStream(  void )
 // ----- class virtuals ------------------------------------------------ //
 // --------------------------------------------------------------------- //
    
-void AudioThread::ExecuteThread( void )
+void AudioThread::ExecuteThread()
 {
 	try
 	{
@@ -598,7 +598,7 @@ void AudioThread::ExecuteThread( void )
 	}
 }
 
-void LevelMeterThread::ExecuteThread( void )
+void LevelMeterThread::ExecuteThread()
 {
 	static size_t	counter = 0;
 	const clock_t	rate10ms = CLOCKS_PER_SEC * 10 / 1000;
@@ -732,12 +732,12 @@ void LevelMeterThread::ExecuteThread( void )
 // ----- entry points -------------------------------------------------- //
 // --------------------------------------------------------------------- //
 
-bool isAudioRunning( void )
+bool isAudioRunning()
 {
 	return theAudioThread && theAudioThread->isRunning;
 }
 
-clock_t	testCPUspeed( void )
+clock_t	testCPUspeed()
 {
 	size_t	oldOpenCount = openCount;
 
@@ -758,7 +758,7 @@ clock_t	testCPUspeed( void )
 	return cpuTime;
 }
 
-bool openSynthesizer( void )
+bool openSynthesizer()
 {
 	bool	success;
 	AudioThread::s_synthesizer.setup( 0x7FFFFF, bitsPerSample, sampleRate );
@@ -775,7 +775,7 @@ bool openSynthesizer( void )
 		else
 		{
 			success = false;
-			theAudioThread = NULL;
+			theAudioThread = nullptr;
 		}
 	}
 	else
@@ -787,9 +787,9 @@ bool openSynthesizer( void )
 	{
 		if( !meterWindow )
 		{
-			meterWindow = new ToolWindow( NULL );
+			meterWindow = new ToolWindow( nullptr );
 			meterWindow->addExStyle( WS_EX_TOPMOST );
-			meterWindow->create( NULL, 256, 100, "Main Level" );
+			meterWindow->create( nullptr, 256, 100, "Main Level" );
 			meterWindow->restoreWindowPos();
 		}
 		else
@@ -801,7 +801,7 @@ bool openSynthesizer( void )
 		{
 			statusWindow = new StatusWindow<>(AudioThread::s_synthesizer);
 			statusWindow->addExStyle( WS_EX_TOPMOST );
-			statusWindow->create( NULL, StatusWindow<>::COL_WIDTH*16+40, 500, "Status" );
+			statusWindow->create( nullptr, StatusWindow<>::COL_WIDTH*16+40, 500, "Status" );
 			statusWindow->restoreWindowPos();
 		}
 		else
@@ -828,7 +828,7 @@ bool openSynthesizer( void )
 	return success;
 }
 
-double getLatency( void )
+double getLatency()
 {
 	if( theAudioThread )
 	{
@@ -840,7 +840,7 @@ double getLatency( void )
 	}
 }
 
-MidiSynthesizer<> &getSyntesizer( void )
+MidiSynthesizer<> &getSyntesizer()
 {
 	return AudioThread::s_synthesizer;
 }
@@ -903,20 +903,20 @@ void closeSynthesizer()
 		{
 			theMeterThread->StopThread();
 			theMeterThread->join();
-			theMeterThread = NULL;
+			theMeterThread = nullptr;
 		}
 		if( theStatusThread )
 		{
 			theStatusThread->StopThread();
 			theStatusThread->join();
-			theStatusThread = NULL;
+			theStatusThread = nullptr;
 		}
 		if( theAudioThread )
 		{
 			AudioThread::s_synthesizer.stop();
 			theAudioThread->StopThread();
 			theAudioThread->join();
-			theAudioThread = NULL;
+			theAudioThread = nullptr;
 		}
 		Sleep( 10 );
 		Thread::CheckThreadCount();

@@ -6,7 +6,7 @@
 		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2014-2026 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -204,7 +204,7 @@ class Synthesizer : public BaseProducer
 		setSampleRate( sampleRate );
 		setVolume( 1 );
 	}
-	const Oscilator &getMainOSC( void ) const
+	const Oscilator &getMainOSC() const
 	{
 		return m_mainOSC;
 	}
@@ -235,7 +235,7 @@ class Synthesizer : public BaseProducer
 	{
 		m_mainOSC.setPhase( phase );
 	}
-	double getPhase( void ) const
+	double getPhase() const
 	{
 		return m_mainOSC.getPhase();
 	}
@@ -310,11 +310,11 @@ class Synthesizer : public BaseProducer
 		m_fmLFO.setRange( Interval( -range, +range ) );
 		m_fmLFO.setOscilatorType( params.type );
 	}
-	const FMlfoParameter &getFM( void ) const
+	const FMlfoParameter &getFM() const
 	{
 		return m_fmLfoParameter;
 	}
-	double getFMfrequency( void ) const
+	double getFMfrequency() const
 	{
 		return fmLFO.getFrequency();
 	}
@@ -333,7 +333,7 @@ class Synthesizer : public BaseProducer
 		// reset original volume after change
 		setVolume( getVolume() );
 	}
-	const Envelope::Parameter &getEnvelope( void ) const
+	const Envelope::Parameter &getEnvelope() const
  	{
 		return m_envelope.get();
 	}
@@ -666,7 +666,7 @@ class StereoSynthesizer : public BaseProducer
 	{
 		return m_synths[synth].getFM();
 	}
-	double getFMfrequency( void ) const
+	double getFMfrequency() const
 	{
 		return m_synths[0].getFMfrequency();
 	}
@@ -707,14 +707,14 @@ class StereoSynthesizer : public BaseProducer
 		Produce
 
 	*/
-	void start( void )
+	void start()
 	{
 		for( unsigned i=0; i<NUM_SYNTHS; i++ )
 		{
 			m_synths[i].start();
 		}
 	}
-	bool isActive( void ) const
+	bool isActive() const
 	{
 		for( unsigned i=0; i<NUM_SYNTHS; i++ )
 		{
@@ -725,7 +725,7 @@ class StereoSynthesizer : public BaseProducer
 		}
 		return false;
 	}
-	bool isKeyPressed( void ) const
+	bool isKeyPressed() const
 	{
 		for( unsigned i=0; i<NUM_SYNTHS; i++ )
 		{
@@ -736,14 +736,14 @@ class StereoSynthesizer : public BaseProducer
 		}
 		return false;
 	}
-	void release( void )
+	void release()
 	{
 		for( unsigned i=0; i<NUM_SYNTHS; i++ )
 		{
 			m_synths[i].release();
 		}
 	}
-	void stop( void )
+	void stop()
 	{
 		for( unsigned i=0; i<NUM_SYNTHS; i++ )
 		{
@@ -1020,7 +1020,7 @@ class MidiSynthesizer : public BaseProducer
 			thePhones[i].setPresenceValue( newPresenceValue );
 		}
 	}
-	double getPresenceValue( void ) const
+	double getPresenceValue() const
 	{
 		return thePhones[0].getPresenceValue();
 	}
@@ -1084,7 +1084,7 @@ class MidiSynthesizer : public BaseProducer
 	{
 		return thePhones[0].getFM( synth );
 	}
-	double getFMfrequency( void ) const
+	double getFMfrequency() const
 	{
 		return thePhones[0].getFMfrequency();
 	}
@@ -1279,7 +1279,7 @@ class MidiSynthesizer : public BaseProducer
 	/*
 		current status
 	*/
-	unsigned getActivePorts( void ) const
+	unsigned getActivePorts() const
 	{
 		unsigned result = 0;
 		for( unsigned i=0; i<m_maxPhones; i++ )
@@ -1292,7 +1292,7 @@ class MidiSynthesizer : public BaseProducer
 
 		return result;
 	}
-	unsigned getActivePhones( void ) const
+	unsigned getActivePhones() const
 	{
 		unsigned int result = 0;
 		for( unsigned i=0; i<m_maxPhones; i++ )
@@ -1320,12 +1320,12 @@ class MidiSynthesizer : public BaseProducer
 			m_maxPhones = maxPhones;
 		}
 	}
-	unsigned getMaxPhones( void ) const
+	unsigned getMaxPhones() const
 	{
 		return m_maxPhones;
 	}
 
-	std::clock_t testCPUspeed( void )
+	std::clock_t testCPUspeed()
 	{
 		stop();
 

@@ -4,10 +4,10 @@
 		Description:	The instruments, chord and scale window
 						(opened by recorder or editor)
 		Author:			Martin Gäckler
-		Address:		Hopfengasse 15. A-4020 Linz
+		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2018 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -16,7 +16,7 @@
 		You should have received a copy of the GNU General Public License 
 		along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Germany, Munich ``AS IS''
+		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Linz, Austria ``AS IS''
 		AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
 		TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
 		PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR
@@ -128,7 +128,7 @@ int InstrumentWindow::drawNote(
 	bool active, int string,
 	int *minBound, int *maxBound )
 {
-	int dotPos = stringDistance * string;
+	int dotPos = m_stringDistance * string;
 	int bound = note - stringMidiNotes[string];
 
 	if( bound >= 0 && bound <= 22 )
@@ -165,7 +165,7 @@ int InstrumentWindow::drawNote(
 			else
 				context.getBrush().create( 0, 255, 0 );
 
-			context.ellipse( nutDistance + boundDistance * bound, dotPos, fingerSize );
+			context.ellipse( m_nutDistance + m_boundDistance * bound, dotPos, m_fingerSize );
 			bound = 0;
 		}
 	}
@@ -179,8 +179,8 @@ void InstrumentWindow::drawNote( Device &context, unsigned char note, bool markA
 	{
 		drawNote(
 			context, note,
-			markActive && string == currentString, string,
-			NULL, NULL
+			markActive && string == m_currentString, string,
+			nullptr, nullptr
 		);
 	}
 }
@@ -193,7 +193,7 @@ void InstrumentWindow::drawNote( Device &context, unsigned char note, bool markA
 // ----- class virtuals ------------------------------------------------ //
 // --------------------------------------------------------------------- //
 
-ProcessStatus InstrumentWindow::handleCreate( void )
+ProcessStatus InstrumentWindow::handleCreate()
 {
 	int left = 80;
 
@@ -301,20 +301,20 @@ ProcessStatus InstrumentWindow::handleCreate( void )
 
 ProcessStatus InstrumentWindow::handleMouseMove( WPARAM, const Point &position )
 {
-	if( !fixNote && stringDistance && boundDistance )
+	if( !m_fixNote && m_stringDistance && m_boundDistance )
 	{
-		int newString = (position.y + stringDistance/2) / stringDistance;
-		int newBound = position.x > 20 ? ((position.x-20) / boundDistance +1) : 0;
+		int newString = (position.y + m_stringDistance/2) / m_stringDistance;
+		int newBound = position.x > 20 ? ((position.x-20) / m_boundDistance +1) : 0;
 		unsigned char newNote =
 			( newString >0 && newString <= 6 )
 			? (unsigned char)(stringMidiNotes[newString] + newBound)
 			: thePainter.getNote( position.x, position.y );
 
-		if( newString != currentString
-		||  newNote != currentNote )
+		if( newString != m_currentString
+		||  newNote != m_currentNote )
 		{
-			currentString = newString;
-			currentNote = newNote;
+			m_currentString = newString;
+			m_currentNote = newNote;
 			invalidateWindow( false );
 		}
 	}
@@ -324,9 +324,9 @@ ProcessStatus InstrumentWindow::handleMouseMove( WPARAM, const Point &position )
 
 ProcessStatus InstrumentWindow::handleLeftButton( LeftButton leftButton, WPARAM , const Point & )
 {
-	if( parent && leftButton == lbUP && currentNote <= 127 )
+	if( m_parent && leftButton == lbUP && m_currentNote <= 127 )
 	{
-		parent->setNote( currentNote );
+		m_parent->setNote( m_currentNote );
 		close();
 		return psPROCESSED;
 	}
@@ -335,10 +335,10 @@ ProcessStatus InstrumentWindow::handleLeftButton( LeftButton leftButton, WPARAM 
 
 ProcessStatus InstrumentWindow::handleRightButton( RightButton rightButton, WPARAM , const Point &position )
 {
-	if( rightButton == rbUP && currentNote <= 127 )
+	if( rightButton == rbUP && m_currentNote <= 127 )
 	{
-		fixNote = !fixNote;
-		if( !fixNote )
+		m_fixNote = !m_fixNote;
+		if( !m_fixNote )
 			handleMouseMove( 0, position );
 		return psPROCESSED;
 	}
@@ -363,111 +363,111 @@ ProcessStatus InstrumentWindow::handleRepaint( Device &hDC )
 
 	context.rectangle( 0, 0, size.width, size.height );
 
-	stringDistance = size.height/12;
-	fingerSize = stringDistance / 5;
-	dotSize = fingerSize / 2;
-	nutDistance = fingerSize;
+	m_stringDistance = size.height/12;
+	m_fingerSize = m_stringDistance / 5;
+	m_dotSize = m_fingerSize / 2;
+	m_nutDistance = m_fingerSize;
 
-	boundDistance = (size.width-nutDistance) / 22;
+	m_boundDistance = (size.width-m_nutDistance) / 22;
 
 	/*
 		draw the guitar tabs
 	*/
 	// the nut
-	context.getPen().create( Pen::psSolid, nutDistance/2, RGB( 100, 50, 50 ) );
-	context.verticalLine( nutDistance, stringDistance, stringDistance*6 );
+	context.getPen().create( Pen::psSolid, m_nutDistance/2, RGB( 100, 50, 50 ) );
+	context.verticalLine( m_nutDistance, m_stringDistance, m_stringDistance*6 );
 
 	// the bounds
 	context.getPen().create( Pen::psSolid, 1, RGB( 20, 20, 20 ) );
 	for( int i=1; i<22; i++ )
 	{
-		context.verticalLine( nutDistance+i*boundDistance, stringDistance, stringDistance*6 );
+		context.verticalLine( m_nutDistance+i*m_boundDistance, m_stringDistance, m_stringDistance*6 );
 	}
 
 	// the markers
 	context.getPen().create( Pen::psSolid, 1, RGB( 200, 75, 75 ) );
 	context.getBrush().create( 200, 75, 75 );
 
-	int dotPos = stringDistance * 3 + stringDistance/2;
-	context.ellipse( nutDistance + boundDistance * 2 + boundDistance/2, dotPos, dotSize );
-	context.ellipse( nutDistance + boundDistance * 4 + boundDistance/2, dotPos, dotSize );
-	context.ellipse( nutDistance + boundDistance * 6 + boundDistance/2, dotPos, dotSize );
-	context.ellipse( nutDistance + boundDistance * 8 + boundDistance/2, dotPos, dotSize );
-	context.ellipse( nutDistance + boundDistance * 11 + boundDistance/2, dotPos-dotSize*2, dotSize );
-	context.ellipse( nutDistance + boundDistance * 11 + boundDistance/2, dotPos+dotSize*2, dotSize );
-	context.ellipse( nutDistance + boundDistance * 14 + boundDistance/2, dotPos, dotSize );
-	context.ellipse( nutDistance + boundDistance * 16 + boundDistance/2, dotPos, dotSize );
-	context.ellipse( nutDistance + boundDistance * 18 + boundDistance/2, dotPos, dotSize );
+	int dotPos = m_stringDistance * 3 + m_stringDistance/2;
+	context.ellipse( m_nutDistance + m_boundDistance * 2 + m_boundDistance/2, dotPos, m_dotSize );
+	context.ellipse( m_nutDistance + m_boundDistance * 4 + m_boundDistance/2, dotPos, m_dotSize );
+	context.ellipse( m_nutDistance + m_boundDistance * 6 + m_boundDistance/2, dotPos, m_dotSize );
+	context.ellipse( m_nutDistance + m_boundDistance * 8 + m_boundDistance/2, dotPos, m_dotSize );
+	context.ellipse( m_nutDistance + m_boundDistance * 11 + m_boundDistance/2, dotPos-m_dotSize*2, m_dotSize );
+	context.ellipse( m_nutDistance + m_boundDistance * 11 + m_boundDistance/2, dotPos+m_dotSize*2, m_dotSize );
+	context.ellipse( m_nutDistance + m_boundDistance * 14 + m_boundDistance/2, dotPos, m_dotSize );
+	context.ellipse( m_nutDistance + m_boundDistance * 16 + m_boundDistance/2, dotPos, m_dotSize );
+	context.ellipse( m_nutDistance + m_boundDistance * 18 + m_boundDistance/2, dotPos, m_dotSize );
 
 	// the strings
 	for( int i=1; i<=6; i++ )
 	{
-		if( i==currentString )
+		if( i==m_currentString )
 			context.getPen().create( Pen::psSolid, i, RGB( 0, 200, 0 ) );
 		else if( i <= 3 )
 			context.getPen().create( Pen::psSolid, i, RGB( 127, 127, 127 ) );
 		else
 			context.getPen().create( Pen::psSolid, i, RGB( 200, 200, 0  ) );
-		context.horizontalLine( 0, size.width, stringDistance*i );
+		context.horizontalLine( 0, size.width, m_stringDistance*i );
 	}
 
 	// the piano
 	thePainter.drawPiano( context, size, size.height/2 - 20 );
 
 	// the current note
-	if( currentNote <= 127 )
+	if( m_currentNote <= 127 )
 	{
 		bool dummy;
 		bool printScale = false;
 		int		minBound = 0, maxBound = 0;
 
-		const unsigned char *chordNotes = NULL;
+		const unsigned char *chordNotes = nullptr;
 		if( dur.isActive() )
-			chordNotes = getDurNotes( currentNote );
+			chordNotes = getDurNotes( m_currentNote );
 		else if( durScale.isActive() )
 		{
 			printScale = true;
-			chordNotes = getDurScaleNotes( currentNote );
+			chordNotes = getDurScaleNotes( m_currentNote );
 		}
 		else if( dur5Scale.isActive() )
 		{
 			printScale = true;
-			chordNotes = getDur5ScaleNotes( currentNote );
+			chordNotes = getDur5ScaleNotes( m_currentNote );
 		}
 		else if( maj7.isActive() )
-			chordNotes = getMaj7Notes( currentNote );
+			chordNotes = getMaj7Notes( m_currentNote );
 		else if( mollMaj7.isActive() )
-			chordNotes = getMollMaj7Notes( currentNote );
+			chordNotes = getMollMaj7Notes( m_currentNote );
 		else if( moll.isActive() )
-			chordNotes = getMollNotes( currentNote );
+			chordNotes = getMollNotes( m_currentNote );
 		else if( dom7.isActive() )
-			chordNotes = getDom7Notes( currentNote );
+			chordNotes = getDom7Notes( m_currentNote );
 		else if( moll7.isActive() )
-			chordNotes = getMoll7Notes( currentNote );
+			chordNotes = getMoll7Notes( m_currentNote );
 
 		else if( mollScale.isActive() )
 		{
 			printScale = true;
-			chordNotes = getMollScaleNotes( currentNote );
+			chordNotes = getMollScaleNotes( m_currentNote );
 		}
 		else if( moll5Scale.isActive() )
 		{
 			printScale = true;
-			chordNotes = getMoll5ScaleNotes( currentNote );
+			chordNotes = getMoll5ScaleNotes( m_currentNote );
 		}
 		else if( dim.isActive() )
-			chordNotes = getDimNotes( currentNote );
+			chordNotes = getDimNotes( m_currentNote );
 		else if( plus.isActive() )
-			chordNotes = getPlusNotes( currentNote );
+			chordNotes = getPlusNotes( m_currentNote );
 
-		thePainter.drawNoteOnKey( context, currentNote, true, true, &dummy );
-		if( allNotes.isActive() || printScale || currentString < 1 || currentString > 6 )
-			drawNote( context, currentNote );
+		thePainter.drawNoteOnKey( context, m_currentNote, true, true, &dummy );
+		if( allNotes.isActive() || printScale || m_currentString < 1 || m_currentString > 6 )
+			drawNote( context, m_currentNote );
 		else
-			drawNote( context, currentNote, true, currentString, &minBound, &maxBound );
+			drawNote( context, m_currentNote, true, m_currentString, &minBound, &maxBound );
 
 		context.getPen().selectPen( Pen::spBlack );
-		STRING noteName = 	MIDIevent::getNoteText( currentNote );
+		STRING noteName = 	MIDIevent::getNoteText( m_currentNote );
 		context.textOut( 2, 2, noteName );
 
 		if( chordNotes )
@@ -487,7 +487,7 @@ ProcessStatus InstrumentWindow::handleRepaint( Device &hDC )
 				{
 					for(int i=0; chordNotes[i] <= 127; i++ )
 					{
-						if( chordNotes[i]+offset != currentNote )
+						if( chordNotes[i]+offset != m_currentNote )
 						{
 							drawNote(
 								context,
@@ -500,11 +500,11 @@ ProcessStatus InstrumentWindow::handleRepaint( Device &hDC )
 					offset = char(offset + 12);
 				}
 			}
-			else if( currentString >= 1 && currentString <= 6 )
+			else if( m_currentString >= 1 && m_currentString <= 6 )
 			{
 				int	noteStatus;
 				unsigned char offset=0;
-				int string = currentString-1, i=1;
+				int string = m_currentString-1, i=1;
 				while( string > 0 )
 				{
 					if( chordNotes[i] > 127 )

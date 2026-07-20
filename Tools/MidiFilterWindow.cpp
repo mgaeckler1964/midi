@@ -3,10 +3,10 @@
 		Module:			MidiFilterWindow.cpp
 		Description:	The filter settings (used by recorder window)
 		Author:			Martin Gäckler
-		Address:		Hopfengasse 15. A-4020 Linz
+		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2018 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -15,7 +15,7 @@
 		You should have received a copy of the GNU General Public License 
 		along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Germany, Munich ``AS IS''
+		THIS SOFTWARE IS PROVIDED BY Martin Gäckler, Linz, Austria ``AS IS''
 		AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
 		TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
 		PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR
@@ -111,25 +111,25 @@ using namespace gak;
 // ----- class privates ------------------------------------------------ //
 // --------------------------------------------------------------------- //
 
-void MIDIfilterWindow::moveFilter( void )
+void MIDIfilterWindow::moveFilter()
 {
 	int	selectedId = filterListBox->getSelection();
 
-	if( selectedId > 0 && selectedId < (int)theFilterList->size() )
+	if( selectedId > 0 && selectedId < (int)m_theFilterList->size() )
 	{
-		FilterSettings	tmp = (*theFilterList)[selectedId-1];
-		(*theFilterList)[selectedId-1] = (*theFilterList)[selectedId];
-		(*theFilterList)[selectedId] = tmp;
+		FilterSettings	tmp = (*m_theFilterList)[selectedId-1];
+		(*m_theFilterList)[selectedId-1] = (*m_theFilterList)[selectedId];
+		(*m_theFilterList)[selectedId] = tmp;
 
 		refreshFilter(selectedId-1);
 
-		theRecorderWindow->setSettingsChanged();
+		m_theRecorderWindow->setSettingsChanged();
 	}
 }
 
 void MIDIfilterWindow::showValues( size_t selectedId )
 {
-	const FilterSettings &theSettings = (*theFilterList)[selectedId];
+	const FilterSettings &theSettings = (*m_theFilterList)[selectedId];
 	filterNameEdit->setText( theSettings.name );
 	MIDIrecSelect->selectEntry( theSettings.midiInName );
 	filterChannelSelect->selectEntry( theSettings.filterChannel );
@@ -152,16 +152,16 @@ void MIDIfilterWindow::showValues( size_t selectedId )
 	}
 }
 
-void MIDIfilterWindow::deleteFilter( void )
+void MIDIfilterWindow::deleteFilter()
 {
 	int	selectedId = filterListBox->getSelection();
-	if( selectedId >= 0 && selectedId < int(theFilterList->size()) )
+	if( selectedId >= 0 && selectedId < int(m_theFilterList->size()) )
 	{
-		theFilterList->removeElementAt( selectedId );
+		m_theFilterList->removeElementAt( selectedId );
 		filterListBox->deleteEntry( selectedId );
-		if( selectedId >= int(theFilterList->size()) )
+		if( selectedId >= int(m_theFilterList->size()) )
 		{
-			selectedId = int(theFilterList->size())-1;
+			selectedId = int(m_theFilterList->size())-1;
 		}
 		filterListBox->selectEntry( selectedId );
 		if( selectedId >= 0 )
@@ -169,13 +169,13 @@ void MIDIfilterWindow::deleteFilter( void )
 			showValues( selectedId );
 		}
 
-		theRecorderWindow->setSettingsChanged();
+		m_theRecorderWindow->setSettingsChanged();
 	}
 }
 
-void MIDIfilterWindow::createNewFilter( void )
+void MIDIfilterWindow::createNewFilter()
 {
-	size_t	i = theFilterList->size();
+	size_t	i = m_theFilterList->size();
 	STRING	newName = newButton->getText();
 
 	if( i )
@@ -183,7 +183,7 @@ void MIDIfilterWindow::createNewFilter( void )
 		newName += formatNumber( i );
 	}
 
-	FilterSettings	&theSettings = theFilterList->createElement();
+	FilterSettings	&theSettings = m_theFilterList->createElement();
 	filterListBox->addEntry( newName );
 	filterListBox->selectEntry( int(i) );
 
@@ -193,7 +193,7 @@ void MIDIfilterWindow::createNewFilter( void )
 	theSettings.filterChannel = static_cast<unsigned char>(filterChannelSelect->getSelection());
 	theSettings.midiInName = MIDIrecSelect->getSelectedText();
 	theSettings.midiInDev = MIDIrecSelect->getSelection();
-	if( theSettings.midiInDev >= int(midiInCount-1) )
+	if( theSettings.midiInDev >= int(m_midiInCount-1) )
 	{
 		theSettings.midiInDev = ALL_DEVICE;
 	}
@@ -221,7 +221,7 @@ void MIDIfilterWindow::createNewFilter( void )
 
 	theSettings.stopFlag = stopFlag->isActive();
 
-	theRecorderWindow->setSettingsChanged();
+	m_theRecorderWindow->setSettingsChanged();
 }
 
 void MIDIfilterWindow::createStandardFilter( const STRING &newName, unsigned char channel, FilterCondition condition )
@@ -236,8 +236,8 @@ void MIDIfilterWindow::createStandardFilter( const STRING &newName, unsigned cha
 	}
 
 	for(
-		FilterList::const_iterator it = theFilterList->cbegin(),
-			endIT = theFilterList->cend();
+		FilterList::const_iterator it = m_theFilterList->cbegin(),
+			endIT = m_theFilterList->cend();
 		it != endIT;
 		++it
 	)
@@ -251,7 +251,7 @@ void MIDIfilterWindow::createStandardFilter( const STRING &newName, unsigned cha
 
 	if( !filterFound )
 	{
-		FilterSettings	&theSettings = theFilterList->createElement();
+		FilterSettings	&theSettings = m_theFilterList->createElement();
 		filterListBox->addEntry( newName );
 
 		theSettings.name = newName;
@@ -271,11 +271,11 @@ void MIDIfilterWindow::createStandardFilter( const STRING &newName, unsigned cha
 		theSettings.midiOutName = CONTROLLER_LABEL;
 		theSettings.midiOutDev = CONTROLLER_DEVICE;
 
-		theRecorderWindow->setSettingsChanged();
+		m_theRecorderWindow->setSettingsChanged();
 	}
 }
 
-void MIDIfilterWindow::createStandardFilter( void )
+void MIDIfilterWindow::createStandardFilter()
 {
 	static STRING	channelLabel;
 
@@ -309,9 +309,9 @@ void MIDIfilterWindow::createStandardFilter( void )
 // ----- class virtuals ------------------------------------------------ //
 // --------------------------------------------------------------------- //
 
-ProcessStatus MIDIfilterWindow::handleCreate( void )
+ProcessStatus MIDIfilterWindow::handleCreate()
 {
-	lastSelectedFilter = size_t(-1);
+	m_lastSelectedFilter = size_t(-1);
 	ChannelSelect::fill( filterChannelSelect );
 	filterNote->setRange( 0, 127 );
 
@@ -324,7 +324,7 @@ ProcessStatus MIDIfilterWindow::handleCreate( void )
 	conditionSelect->selectEntry( 3 );
 	actionChannelSelect->selectEntry( 16 );
 
-	midiInCount = recorderHandles.size();
+	m_midiInCount = recorderHandles.size();
 	for( 
 		MIDIrecorder::const_iterator it = recorderHandles.cbegin(),
 			endIT = recorderHandles.cend();
@@ -335,9 +335,9 @@ ProcessStatus MIDIfilterWindow::handleCreate( void )
 		MIDIrecSelect->addEntry( it->getInstrument() );
 	}
 	MIDIrecSelect->addEntry( appObject->loadString( winlibGUI::ALL_MIDI_RECORD_LABEL_id ) );
-	MIDIrecSelect->selectEntry( int(midiInCount) );
+	MIDIrecSelect->selectEntry( int(m_midiInCount) );
 
-	midiOutCount = playerHandles.size();
+	m_midiOutCount = playerHandles.size();
 	for( 
 		MIDIplayer::const_iterator it = playerHandles.cbegin(),
 			endIT = playerHandles.cend();
@@ -349,7 +349,7 @@ ProcessStatus MIDIfilterWindow::handleCreate( void )
 	}
 	MIDIplaySelect->addEntry( CONTROLLER_LABEL );
 	MIDIplaySelect->addEntry( appObject->loadString( winlibGUI::DEFAULT_MIDI_PLAY_LABEL_id ) );
-	MIDIplaySelect->selectEntry( int(midiOutCount) );
+	MIDIplaySelect->selectEntry( int(m_midiOutCount) );
 
 	refreshFilter( 0 );
 
@@ -361,12 +361,12 @@ ProcessStatus MIDIfilterWindow::handleScrollControl( int control )
 	if( control == winlibGUI::filterNote_id )
 	{
 		int	selectedId = filterListBox->getSelection();
-		if( selectedId >= 0 && selectedId < (int)theFilterList->size() )
+		if( selectedId >= 0 && selectedId < (int)m_theFilterList->size() )
 		{
-			FilterSettings	&theSettings = (*theFilterList)[selectedId];
+			FilterSettings	&theSettings = (*m_theFilterList)[selectedId];
 			theSettings.note = static_cast<unsigned char>(filterNote->getPosition());
 
-			theRecorderWindow->setSettingsChanged();
+			m_theRecorderWindow->setSettingsChanged();
 		}
 		return psPROCESSED;
 	}
@@ -377,9 +377,9 @@ ProcessStatus MIDIfilterWindow::handleScrollControl( int control )
 ProcessStatus MIDIfilterWindow::handleSelectionChange( int control )
 {
 	int	selectedId = filterListBox->getSelection();
-	if( selectedId >= 0 && selectedId < int(theFilterList->size()) )
+	if( selectedId >= 0 && selectedId < int(m_theFilterList->size()) )
 	{
-		FilterSettings	&theSettings = (*theFilterList)[selectedId];
+		FilterSettings	&theSettings = (*m_theFilterList)[selectedId];
 		switch( control )
 		{
 			case winlibGUI::filterListBox_id:
@@ -390,31 +390,31 @@ ProcessStatus MIDIfilterWindow::handleSelectionChange( int control )
 			case winlibGUI::filterChannelSelect_id:
 			{
 				theSettings.filterChannel = static_cast<unsigned char>(filterChannelSelect->getSelection());
-				theRecorderWindow->setSettingsChanged();
+				m_theRecorderWindow->setSettingsChanged();
 				break;
 			}
 			case winlibGUI::conditionSelect_id:
 			{
 				theSettings.condition = FilterCondition(conditionSelect->getSelection());
-				theRecorderWindow->setSettingsChanged();
+				m_theRecorderWindow->setSettingsChanged();
 				break;
 			}
 			case winlibGUI::actionChannelSelect_id:
 			{
 				theSettings.actionChannel = static_cast<unsigned char>(actionChannelSelect->getSelection());
-				theRecorderWindow->setSettingsChanged();
+				m_theRecorderWindow->setSettingsChanged();
 				break;
 			}
 			case winlibGUI::MIDIrecSelect_id:
 			{
 				theSettings.midiInName = MIDIrecSelect->getSelectedText();
 				theSettings.midiInDev = MIDIrecSelect->getSelection();
-				if( theSettings.midiInDev >= int(midiInCount-1) )
+				if( theSettings.midiInDev >= int(m_midiInCount-1) )
 				{
 					theSettings.midiInDev = ALL_DEVICE;
 				}
 
-				theRecorderWindow->setSettingsChanged();
+				m_theRecorderWindow->setSettingsChanged();
 				break;
 			}
 			case winlibGUI::MIDIplaySelect_id:
@@ -427,7 +427,7 @@ ProcessStatus MIDIfilterWindow::handleSelectionChange( int control )
 				else
 					theSettings.midiOutDev = MIDIplaySelect->getSelection();
 
-				theRecorderWindow->setSettingsChanged();
+				m_theRecorderWindow->setSettingsChanged();
 				break;
 			}
 			default:
@@ -443,12 +443,12 @@ ProcessStatus MIDIfilterWindow::handleButtonClick( int control )
 	if( control == winlibGUI::stopFlag_id )
 	{
 		int	selectedId = filterListBox->getSelection();
-		if( selectedId >= 0 && selectedId < int(theFilterList->size()) )
+		if( selectedId >= 0 && selectedId < int(m_theFilterList->size()) )
 		{
-			FilterSettings	&theSettings = (*theFilterList)[selectedId];
+			FilterSettings	&theSettings = (*m_theFilterList)[selectedId];
 			theSettings.stopFlag = stopFlag->isActive();
 
-			theRecorderWindow->setSettingsChanged();
+			m_theRecorderWindow->setSettingsChanged();
 		}
 		return psPROCESSED;
 	}
@@ -463,9 +463,9 @@ ProcessStatus MIDIfilterWindow::handleButtonClick( int control )
 ProcessStatus MIDIfilterWindow::handleEditChange( int control )
 {
 	int	selectedId = filterListBox->getSelection();
-	if( selectedId >= 0 && selectedId < (int)theFilterList->size() )
+	if( selectedId >= 0 && selectedId < (int)m_theFilterList->size() )
 	{
-		FilterSettings	&theSettings = (*theFilterList)[selectedId];
+		FilterSettings	&theSettings = (*m_theFilterList)[selectedId];
 		switch( control )
 		{
 			case winlibGUI::filterNameEdit_id:
@@ -476,7 +476,7 @@ ProcessStatus MIDIfilterWindow::handleEditChange( int control )
 					theSettings.name = newName;
 					filterListBox->replaceEntry( selectedId, newName );
 					filterListBox->selectEntry( selectedId );
-					theRecorderWindow->setSettingsChanged();
+					m_theRecorderWindow->setSettingsChanged();
 				}
 				break;
 			}
@@ -486,7 +486,7 @@ ProcessStatus MIDIfilterWindow::handleEditChange( int control )
 				if( theSettings.noteOffset != noteOffset )
 				{
 					theSettings.noteOffset = noteOffset;
-					theRecorderWindow->setSettingsChanged();
+					m_theRecorderWindow->setSettingsChanged();
 				}
 				break;
 			}
@@ -497,7 +497,7 @@ ProcessStatus MIDIfilterWindow::handleEditChange( int control )
 				{
 					theSettings.newVolume = newVolume;
 					theSettings.autoLevel = 0.0;
-					theRecorderWindow->setSettingsChanged();
+					m_theRecorderWindow->setSettingsChanged();
 				}
 				break;
 			}
@@ -535,13 +535,13 @@ ProcessStatus MIDIfilterWindow::handleCommand( int cmd )
 	return psPROCESSED;
 }
 
-SuccessCode MIDIfilterWindow::handleClose( void )
+SuccessCode MIDIfilterWindow::handleClose()
 {
 	hide();
 	return scERROR;
 }
 
-ProcessStatus MIDIfilterWindow::handleCancel( void )
+ProcessStatus MIDIfilterWindow::handleCancel()
 {
 	hide();
 	return psPROCESSED;
@@ -554,11 +554,11 @@ ProcessStatus MIDIfilterWindow::handleCancel( void )
 void MIDIfilterWindow::refreshFilter( size_t newSelected )
 {
 	filterListBox->clearEntries();
-	if( theFilterList->size() )
+	if( m_theFilterList->size() )
 	{
 		for( 
-			FilterList::const_iterator it = theFilterList->cbegin(),
-				endIT = theFilterList->cend();
+			FilterList::const_iterator it = m_theFilterList->cbegin(),
+				endIT = m_theFilterList->cend();
 			it != endIT;
 			++it
 		)

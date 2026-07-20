@@ -6,7 +6,7 @@
 		Address:		Hofmannsthalweg 14, A-4030 Linz
 		Web:			https://www.gaeckler.at/
 
-		Copyright:		(c) 2005-2026 Martin Gäckler
+		Copyright:		(c) 2007-2026 Martin Gäckler
 
 		This program is free software: you can redistribute it and/or modify  
 		it under the terms of the GNU General Public License as published by  
@@ -94,9 +94,9 @@ class MetronomThread : public gak::Thread
 {
 	MIDIrecorderWindow	*m_recWindow;
 	unsigned			m_bpm, m_numerator, m_denominator;
-	unsigned char		channel;
+	unsigned char		m_channel;
 
-	virtual void ExecuteThread( void );
+	virtual void ExecuteThread();
 
 	public:
 	MetronomThread( MIDIrecorderWindow *recWindow, unsigned bpm, unsigned numerator, unsigned denominator )
@@ -108,141 +108,141 @@ class MetronomThread : public gak::Thread
 		m_bpm = bpm;
 		m_numerator = numerator;
 		m_denominator = denominator;
-		channel = 9;
+		m_channel = 9;
 	}
-	unsigned char getChannel( void ) const
+	unsigned char getChannel() const
 	{
-		return channel;
+		return m_channel;
 	}
 };
 typedef gak::SharedObjectPointer<MetronomThread>	MetronomThreadPtr;
 
 class MidiPlayerThread : public gak::Thread
 {
-	MIDIrecorderWindow *recWindow;
-	MIDIdata			*midiData;
-	size_t				midiDev;
-	bool				autoRhythm;
+	MIDIrecorderWindow *m_recWindow;
+	MIDIdata			*m_midiData;
+	size_t				m_midiDev;
+	bool				m_autoRhythm;
 
-	virtual void ExecuteThread( void );
+	virtual void ExecuteThread();
 
 	public:
 	MidiPlayerThread( MIDIrecorderWindow *recWindow, MIDIdata *midiData, size_t midiDev, bool autoRhythm )
 	{
-		this->recWindow = recWindow;
-		this->midiData = midiData;
-		this->midiDev = midiDev;
-		this->autoRhythm = autoRhythm;
+		m_recWindow = recWindow;
+		m_midiData = midiData;
+		m_midiDev = midiDev;
+		m_autoRhythm = autoRhythm;
 	}
 };
 typedef gak::SharedObjectPointer<MidiPlayerThread>	MidiPlayerThreadPtr;
 
 class MIDIrecorderWindow : public winlibGUI::MIDIrecorderWindow_form, public PlayerWindow
 {
-	bool						midiChangedFlag, settingsChangedFlag;
+	bool						m_midiChangedFlag, m_settingsChangedFlag;
 	enum
 	{
 		MIDI_WAITING, MIDI_PLAYING, MIDI_RECORDING
-	} 	midiStatus;
+	} 	m_midiStatus;
 
-	bool						filterEnabled;
-	bool						doNoteHold;
+	bool						m_filterEnabled;
+	bool						m_doNoteHold;
 
-	PianoArea					*thePianoArea;
+	PianoArea					*m_thePianoArea;
 
-	MidiPlayerThreadPtr			midiPlayer;
-	MetronomThreadPtr			metronomThread;
+	MidiPlayerThreadPtr			m_midiPlayer;
+	MetronomThreadPtr			m_metronomThread;
 
-	MetronomWindow				*metronomWindow;
-	gak::STRING					firstMetronom, otherMetronom;
-	int							metronomWindowXpos, metronomWindowYpos;
+	MetronomWindow				*m_metronomWindow;
+	gak::STRING					m_firstMetronom, m_otherMetronom;
+	int							m_metronomWindowXpos, m_metronomWindowYpos;
 
-	FilterList					theFilterList;
+	FilterList					m_theFilterList;
 
-	gak::STRING					lastOptionFile;
-	MIDIfilterWindow 			*theMidiFilterWindow;
-	MIDIchannelsWindow			*theMidiChannelsWindow;
+	gak::STRING					m_lastOptionFile;
+	MIDIfilterWindow 			*m_theMidiFilterWindow;
+	MIDIchannelsWindow			*m_theMidiChannelsWindow;
 
-	gak::STRING					recordLabel,
-								allRecordLabel, defaultPlayerLabel;
+	gak::STRING					m_recordLabel,
+								m_allRecordLabel, m_defaultPlayerLabel;
 
 	private:
-	size_t openInMidi( void );
+	size_t openInMidi();
 
-	void saveMidi( void );
-	void checkMidiThrough( void );
+	void saveMidi();
+	void checkMidiThrough();
 
-	void saveSettings( void );
+	void saveSettings();
 
-	void playMidi( void );
+	void playMidi();
 	void stopPlayMidi( bool dontKill=false );
 
-	void stopRecMidi( void );
-	void recMidi( void );
+	void stopRecMidi();
+	void recMidi();
 
-	void stopMetronom( void );
-	void startMetronom( void );
+	void stopMetronom();
+	void startMetronom();
 
 	void playUnfilteredMidiEvent( size_t midiDev, MIDIevent &msg );
 
 	public:
 	MIDIrecorderWindow( BasicWindow *owner );
 
-	void create( void );
-	virtual winlib::ProcessStatus handleCreate( void );
+	void create();
+	virtual winlib::ProcessStatus handleCreate();
 	virtual bool handleChildClose( BasicWindow *child, bool deleted );
-	virtual bool canClose( void );
-	virtual winlib::ProcessStatus handleDestroy( void );
+	virtual bool canClose();
+	virtual winlib::ProcessStatus handleDestroy();
 	virtual winlib::ProcessStatus handleButtonClick( int btn );
 	virtual winlib::ProcessStatus handleSelectionChange( int control );
 	virtual winlib::ProcessStatus handleCommand( int cmd );
 	virtual winlib::ProcessStatus handleMessage( UINT message, WPARAM wParam, LPARAM lParam );
 
 
-	virtual winlib::SuccessCode close( void );
+	virtual winlib::SuccessCode close();
 
-	void playFinished( void )
+	void playFinished()
 	{
 		stopPlayMidi( true );
 	}
 	void playFilteredMidiEvent( int midiInDev, size_t midiOutDev, MIDIevent &msg );
 	void sendChannelSettings( size_t midiDev, unsigned char channel );
-	void setSettingsChanged( void )
+	void setSettingsChanged()
 	{
-		settingsChangedFlag = true;
+		m_settingsChangedFlag = true;
 	}
 
-	const DrumVoice &getFirstMetronomVoice( void )
+	const DrumVoice &getFirstMetronomVoice()
 	{
-		const DrumVoice	&firstMetronom = metronomWindow->getFirstMetronomVoice();
+		const DrumVoice	&firstMetronom = m_metronomWindow->getFirstMetronomVoice();
 
-		if( this->firstMetronom != firstMetronom.voice )
+		if( m_firstMetronom != firstMetronom.voice )
 		{
-			this->firstMetronom = firstMetronom.voice;
-			settingsChangedFlag = true;
+			m_firstMetronom = firstMetronom.voice;
+			m_settingsChangedFlag = true;
 		}
 
 		return firstMetronom;
 	}
-	const DrumVoice &getOtherMetronomVoice( void )
+	const DrumVoice &getOtherMetronomVoice()
 	{
-		const DrumVoice	&otherMetronom = metronomWindow->getOtherMetronomVoice();
+		const DrumVoice	&otherMetronom = m_metronomWindow->getOtherMetronomVoice();
 
-		if( this->otherMetronom != otherMetronom.voice )
+		if( m_otherMetronom != otherMetronom.voice )
 		{
-			this->otherMetronom = otherMetronom.voice;
-			settingsChangedFlag = true;
+			m_otherMetronom = otherMetronom.voice;
+			m_settingsChangedFlag = true;
 		}
 
 		return otherMetronom;
 	}
 
-	bool isMetronomRunning( void ) const
+	bool isMetronomRunning() const
 	{
-		return metronomThread ? true : false;
+		return m_metronomThread ? true : false;
 	}
-	void loadMidiSettings( const char *cmdLine=NULL );
-	void loadMidiFile( const char *cmdLine=NULL );
+	void loadMidiSettings( const char *cmdLine=nullptr );
+	void loadMidiFile( const char *cmdLine=nullptr );
 
 	size_t findMidiInHandle( HMIDIIN midiHandle )
 	{
