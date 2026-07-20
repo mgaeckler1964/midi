@@ -95,11 +95,11 @@ unsigned long MIDIloopEditor::compileLoop2Midi( void )
 	midiData.clear();
 	midiData.setBPM( atoi( bpmEdit->getText() ), false, 0 );
 
-	firstLoopEntry = midiListBox->getSelection();
-	for( std::size_t i=0; i<theLoopList.size(); i++ )
+	m_firstLoopEntry = midiListBox->getSelection();
+	for( std::size_t i=0; i<m_theLoopList.size(); i++ )
 	{
-		LoopEntry	&theLoopEntry = theLoopList[i];
-		if( i == (size_t)firstLoopEntry )
+		LoopEntry	&theLoopEntry = m_theLoopList[i];
+		if( i == (size_t)m_firstLoopEntry )
 		{
 			loopPoint = (unsigned long)(timeOffset);
 		}
@@ -150,8 +150,8 @@ void MIDIloopEditor::saveLoopXmlFile( const STRING &fileName )
 	xmlMidiLoop->setIntegerAttribute( "START", startEntry );
 
 	for( 
-		LoopEntrys::const_iterator it = theLoopList.cbegin(),
-			endIT = theLoopList.cend();
+		LoopEntrys::const_iterator it = m_theLoopList.cbegin(),
+			endIT = m_theLoopList.cend();
 		it != endIT;
 		++it
 	)
@@ -173,7 +173,7 @@ void MIDIloopEditor::saveLoopXmlFile( const STRING &fileName )
 	{
 		fStream << xmlCode;
 	}
-	changedFlag = false;
+	m_changedFlag = false;
 }
 
 void MIDIloopEditor::saveLoopFile( void )
@@ -182,7 +182,7 @@ void MIDIloopEditor::saveLoopFile( void )
 
 	SaveFileAsDialog		dlg;
 
-	if( midiPlayer  )
+	if( m_midiPlayer  )
 		stopPlayMidi();
 
 	dlg.setFilename( lastMidiFile );
@@ -207,7 +207,7 @@ void MIDIloopEditor::saveLoopFile( void )
 			midiData.saveMidiFile( lastMidiFile, true );
 		}
 
-		changedFlag = false;
+		m_changedFlag = false;
 	}
 }
 
@@ -220,7 +220,7 @@ void MIDIloopEditor::playMidi( void )
 		if our current status is playing
 		whe change the status to stop
 	*/
-	if( midiPlayer  )
+	if( m_midiPlayer  )
 		stopPlayMidi();
 	/*
 		else if we got a midiDevice
@@ -231,8 +231,8 @@ void MIDIloopEditor::playMidi( void )
 		if( midiData.size() && openOutMidi() )
 		{
 			// now we can start playing
-			midiPlayer = new MidiLoopPlayerThread( this, &midiData, loopPoint );
-			midiPlayer->StartThread();
+			m_midiPlayer = new MidiLoopPlayerThread( this, &midiData, loopPoint );
+			m_midiPlayer->StartThread();
 			showStopLabel();
 		}
 	}
@@ -242,19 +242,19 @@ void MIDIloopEditor::stopPlayMidi( void )
 {
 	doEnterFunction("MIDIloopEditor::stopPlayMidi");
 
-	if( midiPlayer )
+	if( m_midiPlayer )
 	{
-		midiPlayer->StopThread();
-		while( midiPlayer->isRunning )
+		m_midiPlayer->StopThread();
+		while( m_midiPlayer->isRunning )
 		{
 			idleLoop();
 		}
-		midiPlayer = NULL;
+		m_midiPlayer = nullptr;
 	}
 
 	stopOutMidi();
 
-	midiListBox->selectEntry( firstLoopEntry );
+	midiListBox->selectEntry( m_firstLoopEntry );
 
 	showPlayLabel();
 }
@@ -284,14 +284,14 @@ void MidiLoopPlayerThread::ExecuteThread( void )
 	unsigned char		message;
 	clock_t				actTime, nextTime , clockTime, elapsedTime, startTime;
 	int					lastSeconds, seconds, minutes, hours;
-	int					lastBar, currentBar, timePerBar = midiData->getTimePerBar();
+	int					lastBar, currentBar, timePerBar = m_midiData->getTimePerBar();
 
-	unsigned long	totalTime = (unsigned long)(midiData->getNumBars() * midiData->getTimePerBarDbl() + 0.5);
+	unsigned long	totalTime = (unsigned long)(m_midiData->getNumBars() * m_midiData->getTimePerBarDbl() + 0.5);
 
 	// send voice changes to the device
 	for( 
-		MIDIdata::const_iterator it = midiData->cbegin(),
-			endIT = midiData->cend();
+		MIDIdata::const_iterator it = m_midiData->cbegin(),
+			endIT = m_midiData->cend();
 		!terminated && it != endIT;
 		++it
 	)
@@ -301,20 +301,20 @@ void MidiLoopPlayerThread::ExecuteThread( void )
 
 		if( message != MIDI_NOTE_ON && message != MIDI_NOTE_OFF )
 		{
-			loopEditor->playMidiEvent( midiMsg, true );
+			m_loopEditor->playMidiEvent( midiMsg, true );
 		}
 	}
 
-	if( loopPoint )
+	if( m_loopPoint )
 	{
 			std::size_t i = 0;
 			for( 
-			MIDIdata::const_iterator it = midiData->cbegin(),
-				endIT = midiData->cend();
+			MIDIdata::const_iterator it = m_midiData->cbegin(),
+				endIT = m_midiData->cend();
 			!terminated && it != endIT;
 			++it, ++i
 		)
-			if( it->getTimeCode() >= loopPoint )
+			if( it->getTimeCode() >= m_loopPoint )
 			{
 				firstLoopEntry = i;
 				break;
@@ -323,17 +323,17 @@ void MidiLoopPlayerThread::ExecuteThread( void )
 
 	for( int i=0; i<4 && !terminated; i++ )
 	{
-		FlashWindow(loopEditor->handle(), true);
+		FlashWindow(m_loopEditor->handle(), true);
 		Sleep( timePerBar );
 	}
-	FlashWindow(loopEditor->handle(), false);
+	FlashWindow(m_loopEditor->handle(), false);
 
 	lastBar = -1;
 	lastSeconds = -1;
 	clockTime = startTime  = clock();
 	while( !terminated )
 	{
-		if( !midiData->size() )
+		if( !m_midiData->size() )
 		{
 			Sleep( totalTime );
 		}
@@ -341,11 +341,11 @@ void MidiLoopPlayerThread::ExecuteThread( void )
 		{
 			for( 
 				std::size_t i=(firstRun ? 0 : firstLoopEntry);
-				!terminated && i<midiData->size(); 
+				!terminated && i<m_midiData->size(); 
 				++i
 			)
 			{
-				const MIDIevent &midiMsg = (*midiData)[i];
+				const MIDIevent &midiMsg = (*m_midiData)[i];
 
 				actTime = clock();
 
@@ -368,18 +368,18 @@ void MidiLoopPlayerThread::ExecuteThread( void )
 					appendNumberFast( &tmpBuffer, minutes, 2, '0' );
 					tmpBuffer.addDigit(':');
 					appendNumberFast( &tmpBuffer, seconds, 2, '0' );
-					loopEditor->showClock(midiMsg.getTimeCode(),tmpBuffer.c_str());
+					m_loopEditor->showClock(midiMsg.getTimeCode(),tmpBuffer.c_str());
 				}
 
 				nextTime = startTime + midiMsg.getTimeCode();
 				if( nextTime > actTime )
 					Sleep((nextTime-actTime)*1000/CLK_TCK);
 
-				loopEditor->playMidiEvent( midiMsg, true );
+				m_loopEditor->playMidiEvent( midiMsg, true );
 			}
 			firstRun = false;
 		}
-		startTime += totalTime - loopPoint;
+		startTime += totalTime - m_loopPoint;
 	}
 }
 
@@ -395,7 +395,7 @@ ProcessStatus MIDIloopEditor::handleCreate( void )
 
 ProcessStatus MIDIloopEditor::handleDestroy( void )
 {
-	if( midiPlayer )
+	if( m_midiPlayer )
 		stopPlayMidi();
 
 	stopOutMidi();
@@ -408,14 +408,14 @@ bool MIDIloopEditor::canClose( void )
 	doEnterFunction("MIDIloopEditor::canClose");
 
 	saveWindowRect();
-	if( midiPlayer )
+	if( m_midiPlayer )
 	{
 		stopPlayMidi();
 	}
 
 	stopOutMidi();
 
-	if( changedFlag )
+	if( m_changedFlag )
 	{
 		int button = messageBox(
 			winlibGUI::LOOP_CHANGED_id,
@@ -467,29 +467,29 @@ ProcessStatus MIDIloopEditor::handleButtonClick( int btn )
 
 		case winlibGUI::longerButton_id:
 			selectedEntry = midiListBox->getSelection();
-			if( selectedEntry >= 0  && theLoopList[selectedEntry].counter < 99 )
+			if( selectedEntry >= 0  && m_theLoopList[selectedEntry].counter < 99 )
 			{
-				theLoopList[selectedEntry].counter++;
-				newEntry = theLoopList[selectedEntry].listBoxValue;
+				m_theLoopList[selectedEntry].counter++;
+				newEntry = m_theLoopList[selectedEntry].listBoxValue;
 				newEntry += '\t';
-				newEntry += formatNumber(theLoopList[selectedEntry].counter, 2);
+				newEntry += formatNumber(m_theLoopList[selectedEntry].counter, 2);
 				midiListBox->replaceEntry( selectedEntry, newEntry );
 				midiListBox->selectEntry( selectedEntry );
-				changedFlag = true;
+				m_changedFlag = true;
 			}
 			break;
 
 		case winlibGUI::shorterButton_id:
 			selectedEntry = midiListBox->getSelection();
-			if( selectedEntry >= 0 && theLoopList[selectedEntry].counter )
+			if( selectedEntry >= 0 && m_theLoopList[selectedEntry].counter )
 			{
-				theLoopList[selectedEntry].counter--;
-				newEntry = theLoopList[selectedEntry].listBoxValue;
+				m_theLoopList[selectedEntry].counter--;
+				newEntry = m_theLoopList[selectedEntry].listBoxValue;
 				newEntry += '\t';
-				newEntry += formatNumber(theLoopList[selectedEntry].counter, 2);
+				newEntry += formatNumber(m_theLoopList[selectedEntry].counter, 2);
 				midiListBox->replaceEntry( selectedEntry, newEntry );
 				midiListBox->selectEntry( selectedEntry );
-				changedFlag = true;
+				m_changedFlag = true;
 			}
 			break;
 
@@ -497,21 +497,21 @@ ProcessStatus MIDIloopEditor::handleButtonClick( int btn )
 			selectedEntry = midiListBox->getSelection();
 			if( selectedEntry > 0 )
 			{
-				LoopEntry	tmpVal = theLoopList[selectedEntry-1];
-				theLoopList[selectedEntry-1] = theLoopList[selectedEntry];
-				theLoopList[selectedEntry] = tmpVal;
+				LoopEntry	tmpVal = m_theLoopList[selectedEntry-1];
+				m_theLoopList[selectedEntry-1] = m_theLoopList[selectedEntry];
+				m_theLoopList[selectedEntry] = tmpVal;
 
-				newEntry = theLoopList[selectedEntry].listBoxValue;
+				newEntry = m_theLoopList[selectedEntry].listBoxValue;
 				newEntry += '\t';
-				newEntry += formatNumber(theLoopList[selectedEntry].counter, 2);
+				newEntry += formatNumber(m_theLoopList[selectedEntry].counter, 2);
 				midiListBox->replaceEntry( selectedEntry, newEntry );
 				selectedEntry--;
-				newEntry = theLoopList[selectedEntry].listBoxValue;
+				newEntry = m_theLoopList[selectedEntry].listBoxValue;
 				newEntry += '\t';
-				newEntry += formatNumber(theLoopList[selectedEntry].counter, 2);
+				newEntry += formatNumber(m_theLoopList[selectedEntry].counter, 2);
 				midiListBox->replaceEntry( selectedEntry, newEntry );
 				midiListBox->selectEntry( selectedEntry );
-				changedFlag = true;
+				m_changedFlag = true;
 			}
 			break;
 
@@ -519,21 +519,21 @@ ProcessStatus MIDIloopEditor::handleButtonClick( int btn )
 			selectedEntry = midiListBox->getSelection();
 			if( selectedEntry >= 0 && selectedEntry < int(midiListBox->getNumEntries()) -1 )
 			{
-				LoopEntry	tmpVal = theLoopList[selectedEntry+1];
-				theLoopList[selectedEntry+1] = theLoopList[selectedEntry];
-				theLoopList[selectedEntry] = tmpVal;
+				LoopEntry	tmpVal = m_theLoopList[selectedEntry+1];
+				m_theLoopList[selectedEntry+1] = m_theLoopList[selectedEntry];
+				m_theLoopList[selectedEntry] = tmpVal;
 
-				newEntry = theLoopList[selectedEntry].listBoxValue;
+				newEntry = m_theLoopList[selectedEntry].listBoxValue;
 				newEntry += '\t';
-				newEntry += formatNumber(theLoopList[selectedEntry].counter, 2);
+				newEntry += formatNumber(m_theLoopList[selectedEntry].counter, 2);
 				midiListBox->replaceEntry( selectedEntry, newEntry );
 				selectedEntry++;
-				newEntry = theLoopList[selectedEntry].listBoxValue;
+				newEntry = m_theLoopList[selectedEntry].listBoxValue;
 				newEntry += '\t';
-				newEntry += formatNumber(theLoopList[selectedEntry].counter, 2);
+				newEntry += formatNumber(m_theLoopList[selectedEntry].counter, 2);
 				midiListBox->replaceEntry( selectedEntry, newEntry );
 				midiListBox->selectEntry( selectedEntry );
-				changedFlag = true;
+				m_changedFlag = true;
 			}
 			break;
 		default:
@@ -549,23 +549,20 @@ void MIDIloopEditor::handleFile( const char *filename, size_t, size_t )
 	if( dotPos
 	&& (!strcmpi( dotPos, ".mid" ) || !strcmpi( dotPos, ".drum" ) ) )
 	{
-		LoopEntry	newData;
+		LoopEntry	&newData = m_theLoopList.createElement();
 
 		STRING	newEntry = filename;
 		newData.fileName = newEntry;
 		newData.counter = 1;
 
-		newData.listBoxValue = makeListBoxEntry( newEntry );
-
-		theLoopList.addElement( newData );
-
+		newEntry = makeListBoxEntry( newEntry );
+		newData.listBoxValue = newEntry;
 
 		newEntry += "\t01";
+		midiListBox->addEntry(newEntry);
+		midiListBox->selectEntry(int(m_theLoopList.size())-1);
 
-		midiListBox->addEntry( newData.listBoxValue );
-		midiListBox->selectEntry(int(theLoopList.size())-1);
-
-		changedFlag = true;
+		m_changedFlag = true;
 	}
 }
 
@@ -575,9 +572,10 @@ void MIDIloopEditor::handleFile( const char *filename, size_t, size_t )
 
 void MIDIloopEditor::create( void )
 {
-	SuccessCode error = MIDIloopEditor_form::create( NULL );
+	SuccessCode error = MIDIloopEditor_form::create( nullptr );
 	if( error == scSUCCESS )
 	{
+		acceptFiles();
 		restoreWindowRect();
 	}
 }
@@ -585,11 +583,11 @@ void MIDIloopEditor::create( void )
 void MIDIloopEditor::showClock( unsigned long timeCode, const char *time )
 {
 	bool		found = false;
-	const int	numElements = int(theLoopList.size());
+	const int	numElements = int(m_theLoopList.size());
 	clockText->setText( time );
 	for( int i=1; i<numElements; i++ )
 	{
-		if( theLoopList[i].timeCode > timeCode )
+		if( m_theLoopList[i].timeCode > timeCode )
 		{
 			midiListBox->selectEntry( i-1 );
 			found = true;
@@ -604,10 +602,10 @@ void MIDIloopEditor::showClock( unsigned long timeCode, const char *time )
 
 void MIDIloopEditor::loadLoopFile( const char *cmdLine )
 {
-	if( midiPlayer  )
+	if( m_midiPlayer  )
 		stopPlayMidi();
 
-	if( changedFlag )
+	if( m_changedFlag )
 	{
 		if(
 			messageBox(
@@ -646,7 +644,7 @@ void MIDIloopEditor::loadLoopFile( const char *cmdLine )
 				if( value[0U] )
 					bpmEdit->setText( value );
 
-				theLoopList.clear();
+				m_theLoopList.clear();
 				midiListBox->clearEntries();
 
 				for( size_t i=0; i<xmlMidiLoop->getNumObjects(); i++ )
@@ -664,7 +662,7 @@ void MIDIloopEditor::loadLoopFile( const char *cmdLine )
 						value = xmlLoopEntry->getAttribute( "COUNTER" );
 						theLoopEntry.counter = value.getValueE<unsigned>();
 
-						theLoopList.addElement( theLoopEntry );
+						m_theLoopList.addElement( theLoopEntry );
 
 						value = theLoopEntry.listBoxValue;
 						value += '\t';

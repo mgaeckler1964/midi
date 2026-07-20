@@ -221,7 +221,7 @@ class MIDIevent
 		m_msg = 0;
 		m_timeCode = 0;
 		m_selected = false;
-		m_sysExData = NULL;
+		m_sysExData = nullptr;
 	}
 	MIDIevent( gak::uint32 timeCode, gak::uint32 msg )
 	{
@@ -230,7 +230,7 @@ class MIDIevent
 		m_timeCode = timeCode;
 		m_msg = msg;
 		m_selected = false;
-		m_sysExData = NULL;
+		m_sysExData = nullptr;
 	}
 	MIDIevent( unsigned short track, gak::uint32 timeCode, gak::uint32 msg )
 	{
@@ -239,11 +239,11 @@ class MIDIevent
 		m_timeCode = timeCode;
 		m_msg = msg;
 		m_selected = false;
-		m_sysExData = NULL;
+		m_sysExData = nullptr;
 	}
 	MIDIevent( const MIDIevent &source )
 	{
-		m_sysExData = NULL;
+		m_sysExData = nullptr;
 		copyMidiEvent( source );
 	}
 	const MIDIevent &operator = ( const MIDIevent &source )
@@ -295,7 +295,7 @@ class MIDIevent
 		else
 		{
 			*len = 0;
-			return NULL;
+			return nullptr;
 		}
 	}
 
@@ -477,7 +477,7 @@ class MIDIevent
 		if( message >= MIDI_NOTE_OFF && message < MIDI_SYSTEM )
 			return midiChannelMessages[message-MIDI_NOTE_OFF];
 		else
-			return NULL;
+			return nullptr;
 	}
 	static const char *getSystemMessageText( unsigned char message )
 	{
@@ -543,18 +543,18 @@ class MIDIevent
 
 class MIDIdata : public gak::SortedArray<MIDIevent>
 {
-	gak::Array<TrackInfo>	trackInfo;
-	int						BeatsPerMinute;
-	unsigned				timeSigNumerator, timeSigDenominator;
+	gak::Array<TrackInfo>	m_trackInfo;
+	int						m_BeatsPerMinute;
+	unsigned				m_timeSigNumerator, m_timeSigDenominator;
 
 	void fixTimeCodes( int fraction );
 	void convertTimeCodes( int oldBase, int newBase );
 
 	void setDefaults( void )
 	{
-		BeatsPerMinute = 120;
-		timeSigNumerator = 4;
-		timeSigDenominator = 4;
+		m_BeatsPerMinute = 120;
+		m_timeSigNumerator = 4;
+		m_timeSigDenominator = 4;
 	}
 	public:
 	static int timeCompare(
@@ -569,29 +569,29 @@ class MIDIdata : public gak::SortedArray<MIDIevent>
 	void setBPM( int newBPM, bool convert, int fraction )
 	{
 		if( convert )
-			convertTimeCodes( BeatsPerMinute, newBPM );
+			convertTimeCodes( m_BeatsPerMinute, newBPM );
 
-		BeatsPerMinute = newBPM;
+		m_BeatsPerMinute = newBPM;
 
 		if( fraction > 0 )
 			fixTimeCodes( fraction );
 	}
 	int getBPM( void ) const
 	{
-		return BeatsPerMinute;
+		return m_BeatsPerMinute;
 	}
 	void setTimeSignature( unsigned timeSigNumerator, unsigned timeSigDenominator )
 	{
-		this->timeSigNumerator = timeSigNumerator;
-		this->timeSigDenominator = timeSigDenominator;
+		m_timeSigNumerator = timeSigNumerator;
+		m_timeSigDenominator = timeSigDenominator;
 	}
 	unsigned getNumerator( void ) const
 	{
-		return timeSigNumerator;
+		return m_timeSigNumerator;
 	}
 	unsigned getDenominator( void ) const
 	{
-		return timeSigDenominator;
+		return m_timeSigDenominator;
 	}
 
 	int getTimePerFulNote( void ) const
@@ -605,11 +605,11 @@ class MIDIdata : public gak::SortedArray<MIDIevent>
 
 	int getTimePerBar( void ) const
 	{
-		return 60000 * 4 * timeSigNumerator / timeSigDenominator / getBPM();
+		return 60000 * 4 * m_timeSigNumerator / m_timeSigDenominator / getBPM();
 	}
 	double getTimePerBarDbl( void ) const
 	{
-		return 60000.0 * 4.0 * double(timeSigNumerator) / double(timeSigDenominator) / double(getBPM());
+		return 60000.0 * 4.0 * double(m_timeSigNumerator) / double(m_timeSigDenominator) / double(getBPM());
 	}
 /*
 	int getNumBars( void ) const
@@ -652,48 +652,48 @@ class MIDIdata : public gak::SortedArray<MIDIevent>
 	unsigned short getNumTracks( void ) const;
 	gak::STRING getTrackName( unsigned short track )
 	{
-		return trackInfo[track].trackName;
+		return m_trackInfo[track].trackName;
 	}
 	void setTrackName( unsigned short track, const gak::STRING &trackName )
 	{
-		trackInfo.getOrCreateElementAt(track).trackName = trackName;
+		m_trackInfo.getOrCreateElementAt(track).trackName = trackName;
 	}
 	size_t getNumTrackData( unsigned short track ) const;
 	void removeUnusedTracks( void );
 
 	const gak::Array<TrackInfo> &getTrackInfo( void ) const
 	{
-		return trackInfo;
+		return m_trackInfo;
 	}
 	void setTrackInfo( const gak::Array<TrackInfo> &trackInfo )
 	{
-		this->trackInfo = trackInfo;
+		m_trackInfo = trackInfo;
 	}
 
 	gak::STRING getInstrument( unsigned short track )
 	{
-		return trackInfo[track].instrument;
+		return m_trackInfo[track].instrument;
 	}
 	void setInstrument( unsigned short track, const gak::STRING &instrument )
 	{
-		trackInfo[track].instrument = instrument;
+		m_trackInfo[track].instrument = instrument;
 	}
 	gak::STRING getDeviceName( unsigned short track )
 	{
-		return trackInfo[track].deviceName;
+		return m_trackInfo[track].deviceName;
 	}
 	void setDeviceName( unsigned short track, const gak::STRING &deviceName )
 	{
-		trackInfo[track].deviceName = deviceName;
+		m_trackInfo[track].deviceName = deviceName;
 	}
 
 	size_t getMidiOutDev( unsigned short track )
 	{
-		return track < trackInfo.size() ? trackInfo[track].midiOutDev : trackInfo.no_index;
+		return track < m_trackInfo.size() ? m_trackInfo[track].midiOutDev : m_trackInfo.no_index;
 	}
 	void setMidiOutDev( unsigned short track, size_t midiOutDev )
 	{
-		trackInfo.getOrCreateElementAt(track).midiOutDev = midiOutDev;
+		m_trackInfo.getOrCreateElementAt(track).midiOutDev = midiOutDev;
 	}
 
 	unsigned long getLength( void ) const
@@ -727,7 +727,7 @@ class MIDIdata : public gak::SortedArray<MIDIevent>
 	void clear( void )
 	{
 		SortedArray<MIDIevent>::clear();
-		trackInfo.clear();
+		m_trackInfo.clear();
 		setDefaults();
 	}
 

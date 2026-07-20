@@ -531,7 +531,7 @@ STRING MIDIdata::getTimeCodeStr( unsigned long unsignedTimeCode ) const
 {
 	long	timeCode = unsignedTimeCode;
 	double	timePerTakt = getTimePerBarDbl();
-	double	timePerBeat = timePerTakt/(double)timeSigNumerator;
+	double	timePerBeat = timePerTakt/(double)m_timeSigNumerator;
 
 	double	taktDbl = timeCode/timePerTakt + 0.01;
 	int takt = int(taktDbl);
@@ -559,7 +559,7 @@ unsigned long MIDIdata::parseTimeCode( const char *timeCodeStr ) const
 	int				takt, beat, length;
 
 	double		timePerTakt = getTimePerBarDbl();
-	double		timePerBeat = timePerTakt/(double)timeSigNumerator;
+	double		timePerBeat = timePerTakt/(double)m_timeSigNumerator;
 
 	takt = beat = length = 0;
 	const char *cp = timeCodeStr;
@@ -641,7 +641,7 @@ void MIDIdata::removeTrack( unsigned short track )
 		}
 	}
 
-	trackInfo.removeElementAt( track );
+	m_trackInfo.removeElementAt( track );
 }
 
 void MIDIdata::replaceTrack( unsigned short track, const MIDIdata *newData )
@@ -676,7 +676,7 @@ void MIDIdata::replaceTrack( unsigned short track, const MIDIdata *newData )
 
 unsigned short MIDIdata::getNumTracks( void ) const
 {
-	unsigned short	maxTrack = (unsigned short)trackInfo.size(), 
+	unsigned short	maxTrack = (unsigned short)m_trackInfo.size(), 
 					curTrack;
 
 	if( maxTrack )
@@ -846,7 +846,7 @@ int MIDIdata::loadMidiFile( const char *fileName )
 		&&  (midiHeader.Format == 0 || midiHeader.Format == 1)
 		&&  midiHeader.Length == 6 )
 		{
-			gak::Buffer<unsigned char>	events(nullptr);
+			gak::Buffer<unsigned char>	events;
 			clear();
 			for( curTrack = 0; curTrack<midiHeader.NumTracks; curTrack++ )
 			{
@@ -888,8 +888,8 @@ int MIDIdata::loadMidiFile( const char *fileName )
 									}
 									else if( type == MIDI_FILE_TIME_SIG && length == 4 )
 									{
-										timeSigNumerator = events[i++];
-										timeSigDenominator = 1 << events[i++];
+										m_timeSigNumerator = events[i++];
+										m_timeSigDenominator = 1 << events[i++];
 										length = 0;
 										i += 2;
 									}
@@ -1032,7 +1032,7 @@ int MIDIdata::saveMidiFile( const char *fileName, bool mergeTracks )
 
 		MTHD_CHUNK					midiHeader;
 		MTRK_CHUNK					midiTrack;
-		gak::Buffer<unsigned char>	events(nullptr);
+		gak::Buffer<unsigned char>	events;
 		unsigned char				*cp, *rollbackPointer = nullptr;
 		size_t						curEvent, numEvents, bufferSize;
 		unsigned long				timeCode;
@@ -1151,15 +1151,15 @@ int MIDIdata::saveMidiFile( const char *fileName, bool mergeTracks )
 					*cp++ = (char)(tempo>>8);
 					*cp++ = (char)(tempo>>0);
 				}
-				if( timeSigNumerator != 4 || timeSigDenominator != 4 )
+				if( m_timeSigNumerator != 4 || m_timeSigDenominator != 4 )
 				{
 					*cp++ = 0;
 					*cp++ = MIDI_FILE_META;
 					*cp++ = MIDI_FILE_TIME_SIG;
 					*cp++ = '\x04';
-					*cp++ = (char)(timeSigNumerator);
-					*cp++ = (char)(positiveBitCount(timeSigDenominator)-1);
-					*cp++ = (char)(24 * 4 / timeSigDenominator);
+					*cp++ = (char)(m_timeSigNumerator);
+					*cp++ = (char)(positiveBitCount(m_timeSigDenominator)-1);
+					*cp++ = (char)(24 * 4 / m_timeSigDenominator);
 					*cp++ = 8;
 				}
 

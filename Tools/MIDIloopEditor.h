@@ -89,9 +89,9 @@ class MIDIloopEditor;
 
 class MidiLoopPlayerThread : public gak::Thread
 {
-	unsigned long		loopPoint;
-	MIDIloopEditor		*loopEditor;
-	MIDIdata			*midiData;
+	unsigned long		m_loopPoint;
+	MIDIloopEditor		*m_loopEditor;
+	MIDIdata			*m_midiData;
 
 	virtual void ExecuteThread( void );
 
@@ -102,20 +102,20 @@ class MidiLoopPlayerThread : public gak::Thread
 		unsigned long	loopPoint
 	)
 	{
-		this->loopEditor	= loopEditor;
-		this->midiData		= midiData;
-		this->loopPoint		= loopPoint;
+		m_loopEditor	= loopEditor;
+		m_midiData		= midiData;
+		m_loopPoint		= loopPoint;
 	}
 };
 typedef gak::SharedObjectPointer<MidiLoopPlayerThread>	MidiLoopPlayerThreadPtr;
 
 class MIDIloopEditor : public winlibGUI::MIDIloopEditor_form, public PlayerWindow
 {
-	LoopEntrys					theLoopList;
-	bool	   					changedFlag;
-	int							firstLoopEntry;
+	LoopEntrys					m_theLoopList;
+	bool	   					m_changedFlag;
+	int							m_firstLoopEntry;
 
-	MidiLoopPlayerThreadPtr		midiPlayer;
+	MidiLoopPlayerThreadPtr		m_midiPlayer;
 
 	private:
 
@@ -131,8 +131,8 @@ class MIDIloopEditor : public winlibGUI::MIDIloopEditor_form, public PlayerWindo
 	public:
 	MIDIloopEditor( BasicWindow *owner ) : MIDIloopEditor_form( owner )
 	{
-		midiPlayer = NULL;
-		changedFlag = false;
+		m_midiPlayer = nullptr;
+		m_changedFlag = false;
 	}
 
 	void showClock( unsigned long timeCode, const char *time );
@@ -145,7 +145,7 @@ class MIDIloopEditor : public winlibGUI::MIDIloopEditor_form, public PlayerWindo
 	virtual winlib::ProcessStatus handleCommand( int cmd );
 	virtual void handleFile( const char *filename, size_t idx, size_t numFiles );
 
-	void loadLoopFile( const char *cmdLine=NULL );
+	void loadLoopFile( const char *cmdLine=nullptr );
 };
 
 // --------------------------------------------------------------------- //
