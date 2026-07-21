@@ -11,7 +11,10 @@
 #include <winlib/scrollFrame.h>
 #include <winlib/ControlW.h>
 #include <winlib/xmlEditorChild.h>
+#include <winlib/chartWin.h>
 #include <winlib/gridView.h>
+
+#include <winlib/winApp.h>
 
 namespace winlibGUI {
 
@@ -240,6 +243,12 @@ namespace winlibGUI {
 	const int volumeButton_id=229;
 	const int volumeLabel_id=162;
 
+	class GuiApplication : public winlib::Application {
+		public:
+		virtual gak::xml::Document *getGuiDoc();
+		GuiApplication(int iconID=-1) : winlib::Application(iconID) {}
+	};
+
 	class ToolBarWindow_form : public winlib::PopupWindow {
 		public:
 		ToolBarWindow_form(winlib::BasicWindow *owner) : PopupWindow(owner) {}
@@ -258,11 +267,11 @@ namespace winlibGUI {
 		virtual void getControls();
 	};	// end of ToolBarWindow
 
-	class MIDIloopEditor_form : public winlib::PopupWindow {
+	class MIDIloopEditor_form : public winlib::OverlappedWindow {
 		public:
-		MIDIloopEditor_form(winlib::BasicWindow *owner) : PopupWindow(owner) {}
+		MIDIloopEditor_form(winlib::BasicWindow *owner) : OverlappedWindow(owner) {}
 		winlib::SuccessCode create(winlib::BasicWindow*parent) {
-			return PopupWindow::create(parent,"MIDIloopEditor");
+			return OverlappedWindow::create(parent,"MIDIloopEditor");
 		}
 
 		winlib::PushButton *playButton;
@@ -483,11 +492,11 @@ namespace winlibGUI {
 		virtual void getControls();
 	};	// end of MIDIeditorWindow
 
-	class MIDIrecorderWindow_form : public winlib::PopupWindow {
+	class MIDIrecorderWindow_form : public winlib::OverlappedWindow {
 		public:
-		MIDIrecorderWindow_form(winlib::BasicWindow *owner) : PopupWindow(owner) {}
+		MIDIrecorderWindow_form(winlib::BasicWindow *owner) : OverlappedWindow(owner) {}
 		winlib::SuccessCode create(winlib::BasicWindow*parent) {
-			return PopupWindow::create(parent,"MIDIrecorderWindow");
+			return OverlappedWindow::create(parent,"MIDIrecorderWindow");
 		}
 
 		winlib::FrameChild *pianoFrame;
@@ -517,11 +526,11 @@ namespace winlibGUI {
 		virtual void getControls();
 	};	// end of MIDIrecorderWindow
 
-	class MIDIdrumWindow_form : public winlib::PopupWindow {
+	class MIDIdrumWindow_form : public winlib::OverlappedWindow {
 		public:
-		MIDIdrumWindow_form(winlib::BasicWindow *owner) : PopupWindow(owner) {}
+		MIDIdrumWindow_form(winlib::BasicWindow *owner) : OverlappedWindow(owner) {}
 		winlib::SuccessCode create(winlib::BasicWindow*parent) {
-			return PopupWindow::create(parent,"MIDIdrumWindow");
+			return OverlappedWindow::create(parent,"MIDIdrumWindow");
 		}
 
 		winlib::ComboBox *MIDIplaySelect;
@@ -555,11 +564,11 @@ namespace winlibGUI {
 		virtual void getControls();
 	};	// end of MIDIdrumWindow
 
-	class MIDIsynthesizerWindow_form : public winlib::PopupWindow {
+	class MIDIsynthesizerWindow_form : public winlib::OverlappedWindow {
 		public:
-		MIDIsynthesizerWindow_form(winlib::BasicWindow *owner) : PopupWindow(owner) {}
+		MIDIsynthesizerWindow_form(winlib::BasicWindow *owner) : OverlappedWindow(owner) {}
 		winlib::SuccessCode create(winlib::BasicWindow*parent) {
-			return PopupWindow::create(parent,"MIDIsynthesizerWindow");
+			return OverlappedWindow::create(parent,"MIDIsynthesizerWindow");
 		}
 
 		winlib::RadioButton *radioSynthA;

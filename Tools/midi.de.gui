@@ -2,12 +2,12 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <gui>
 <forms>
-<form name="ToolBarWindow" width="761" height="126" caption="MG MIDI Tools Version 3.2" id="128" style="277807104">
+<form name="ToolBarWindow" width="761" height="126" caption="MG MIDI Tools Version 3.2" id="128" style="277807104" bgColor="COLOR_BTNFACE" bg_red="0" bg_green="0" bg_blue="0">
 <layoutManager type="TableManager" marginLeft="4" marginRight="4" marginTop="4" marginBottom="4" />
 <child type="Label" name="" caption="MG MIDI Tools Version 3.2" x="80" y="26" width="80" height="0" style="1342177291">
 <layout x="0" y="0" width="7" height="1" growWidth="1" paddingTop="4" paddingBottom="4" paddingLeft="4" paddingRight="4" />
 </child>
-<child type="Label" name="" caption="(c) 2007-2018 by Martin Gäckler" x="132" y="92" width="80" height="0" style="1342242827">
+<child type="Label" name="" caption="(c) 2007-2026 by Martin Gäckler" x="132" y="92" width="80" height="0" style="1342242827">
 <layout x="0" y="1" width="7" height="1" growWidth="1" growHeight="0" paddingTop="4" paddingBottom="4" paddingLeft="4" paddingRight="4" />
 </child>
 <child type="Label" name="" caption="Label" x="210" y="177" width="80" height="2" style="1342177298">
@@ -35,7 +35,7 @@
 <layout y="3" width="1" x="6" height="1" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
 </child>
 </form>
-<form name="MIDIloopEditor" width="747" height="714" caption="Loop Editor" id="129" style="277807104" baseClass="PopupWindow">
+<form name="MIDIloopEditor" width="747" height="714" caption="Loop Editor" id="129" style="277807104" baseClass="OverlappedWindow" bgColor="COLOR_BTNFACE" bg_red="0" bg_green="0" bg_blue="0">
 <layoutManager type="AttachmentManager" marginLeft="4" marginRight="4" marginTop="4" marginBottom="4" />
 <child type="FrameChild" name="topFrame" caption="" x="597" y="472" width="80" height="35" style="1342308352" id="152">
 <layout x="0" y="0" width="6" height="1" growWidth="1" attachment="1" />
@@ -379,7 +379,7 @@
 <child type="PushButton" name="IDCANCEL" caption="Abbruch" x="96" y="552" width="80" height="25" style="1342242816" id="2" />
 <child type="PushButton" name="playButton" caption="Abspielen" x="664" y="552" width="80" height="25" style="1342242816" id="148" />
 </form>
-<form name="MIDIrecorderWindow" style="281673728" width="640" height="427" baseClass="PopupWindow" id="139" caption="MIDI Rekorder">
+<form name="MIDIrecorderWindow" style="281673728" width="640" height="427" baseClass="OverlappedWindow" id="139" caption="MIDI Rekorder" bgColor="COLOR_BTNFACE" bg_red="0" bg_green="0" bg_blue="0">
 <child type="Label" name="" caption="Out: Dev/Chan Note Velocity" x="8" y="0" width="0" height="0" style="1342242827" />
 <child type="Label" name="" caption="In: Dev/Chan Note Velocity" x="256" y="0" width="0" height="0" style="1342242827" />
 <child type="FrameChild" name="pianoFrame" caption="" x="8" y="16" width="496" height="240" style="1342308352" id="237" bgColor="WHITE_BRUSH" bg_red="0" bg_green="0" bg_blue="0">
@@ -418,7 +418,7 @@
 <child type="PushButton" name="editButton" caption="Bearbeiten..." x="272" y="368" width="80" height="25" style="1342242816" id="253" />
 <child type="PushButton" name="instrumentButton" caption="Instrument" x="544" y="368" width="80" height="25" style="1342242816" id="228" />
 </form>
-<form name="MIDIdrumWindow" style="281673728" width="1016" height="680" baseClass="PopupWindow" id="140" caption="Schlagzeugeditor">
+<form name="MIDIdrumWindow" style="281673728" width="1016" height="680" baseClass="OverlappedWindow" id="140" caption="Schlagzeugeditor" bgColor="COLOR_BTNFACE" bg_red="0" bg_green="0" bg_blue="0">
 <child type="Label" name="" caption="MIDI-Out:" x="8" y="8" width="0" height="0" style="1342242827" />
 <child type="ComboBox" name="MIDIplaySelect" caption="" x="128" y="8" width="784" height="200" style="1344341059" id="182" />
 <child type="PushButton" name="playButton" caption="Abspielen" x="920" y="8" width="80" height="25" style="1342242816" id="148" />
@@ -475,7 +475,7 @@
 <child type="PushButton" name="saveDrumsButton" caption="Speichern..." x="184" y="616" width="80" height="25" style="1342242816" id="269" />
 <child type="Label" name="" caption="Shift+Klick: Auswählen, Rechtsklick: Kopiere Lautstärke, Strg+Rechtsklick: Ändere Lautstärke" x="272" y="616" width="0" height="0" style="1342242827" />
 </form>
-<form name="MIDIsynthesizerWindow" style="281673728" width="942" height="621" id="141" caption="Synthesizer" baseClass="PopupWindow">
+<form name="MIDIsynthesizerWindow" style="281673728" width="942" height="621" id="141" caption="Synthesizer" baseClass="OverlappedWindow" bgColor="COLOR_BTNFACE" bg_red="0" bg_green="0" bg_blue="0">
 <child type="GroupBox" name="" caption="Synth" x="8" y="8" width="920" height="72" style="1342373895" />
 <child type="RadioButton" name="radioSynthA" caption="A" x="16" y="24" width="0" height="0" style="1342242825" id="270" />
 <child type="RadioButton" name="radioSynthB" caption="B" x="48" y="24" width="0" height="0" style="1342242825" id="271" />
