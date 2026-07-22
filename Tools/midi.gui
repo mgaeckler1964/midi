@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <gui>
 <forms>
-<form name="ToolBarWindow" width="761" height="126" caption="MG MIDI Tools Version 3.2" id="128" style="277807104" bgColor="COLOR_BTNFACE" bg_red="0" bg_green="0" bg_blue="0">
+<form name="ToolBarWindow" width="761" height="99" caption="MG MIDI Tools Version 3.2" id="128" style="277807104" bgColor="COLOR_BTNFACE" bg_red="0" bg_green="0" bg_blue="0">
 <layoutManager type="TableManager" marginLeft="4" marginRight="4" marginTop="4" marginBottom="4" />
 <child type="Label" name="" caption="MG MIDI Tools Version 3.2" x="80" y="26" width="80" height="0" style="1342177291">
 <layout x="0" y="0" width="7" height="1" growWidth="1" paddingTop="4" paddingBottom="4" paddingLeft="4" paddingRight="4" />
@@ -91,7 +91,7 @@
 <layout x="0" y="1" width="5" height="7" growWidth="1" growHeight="1" attachment="4" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
 </child>
 </form>
-<form name="PatternVolume" style="314572800" width="538" height="165" caption="Pattern Volumes" baseClass="ModalPopup" id="130">
+<form name="PatternVolume" style="314572800" width="538" height="135" caption="Pattern Volumes" baseClass="ModalPopup" id="130">
 <child type="Label" name="" caption="Pattern:" x="8" y="8" width="0" height="0" style="1342242827">
 <layout x="0" y="0" width="1" height="1" growWidth="0" growHeight="0" paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" />
 </child>
@@ -110,7 +110,7 @@
 <child type="PushButton" name="IDOK" caption="OK" x="8" y="100" width="80" height="25" style="1342242816" id="1" />
 <child type="PushButton" name="IDCANCEL" caption="Cancel" x="96" y="100" width="80" height="25" style="1342242816" id="2" />
 </form>
-<form name="ChannelVolume" style="314572800" width="538" height="159" caption="Channel Volume" baseClass="ModalPopup" id="131">
+<form name="ChannelVolume" style="314572800" width="538" height="128" caption="Channel Volume" baseClass="ModalPopup" id="131">
 <child type="Label" name="" caption="Channel:" x="8" y="8" width="0" height="0" style="1342242827">
 <layout x="0" y="0" width="1" height="1" growWidth="0" growHeight="0" paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" />
 </child>
@@ -129,7 +129,7 @@
 <child type="PushButton" name="IDOK" caption="OK" x="8" y="96" width="80" height="25" style="1342242816" id="1" />
 <child type="PushButton" name="IDCANCEL" caption="Cancel" x="96" y="96" width="80" height="25" style="1342242816" id="2" />
 </form>
-<form name="PatternStereo" style="314572800" width="538" height="165" caption="Pattern Pan" baseClass="ModalPopup" id="132">
+<form name="PatternStereo" style="314572800" width="538" height="135" caption="Pattern Pan" baseClass="ModalPopup" id="132">
 <child type="Label" name="" caption="Pattern:" x="8" y="8" width="0" height="0" style="1342242827">
 <layout x="0" y="0" width="1" height="1" growWidth="0" growHeight="0" paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" />
 </child>
@@ -148,14 +148,14 @@
 <child type="PushButton" name="IDOK" caption="OK" x="8" y="100" width="80" height="25" style="1342242816" id="1" />
 <child type="PushButton" name="IDCANCEL" caption="Cancel" x="96" y="100" width="80" height="25" style="1342242816" id="2" />
 </form>
-<form name="SwapChannel" style="314572800" width="293" height="103" caption="Swap Channels" baseClass="ModalPopup" id="133">
+<form name="SwapChannel" style="314572800" width="293" height="75" caption="Swap Channels" baseClass="ModalPopup" id="133">
 <child type="Label" name="" caption="Channels:" x="8" y="8" width="0" height="0" style="1342242827" />
 <child type="ComboBox" name="srcChannelSelect" caption="" x="100" y="8" width="80" height="300" style="1342243843" id="168" />
 <child type="ComboBox" name="destChannelSelect" caption="" x="200" y="8" width="80" height="300" style="1342243843" id="169" />
 <child type="PushButton" name="IDOK" caption="OK" x="8" y="41" width="80" height="25" style="1342242816" id="1" />
 <child type="PushButton" name="IDCANCEL" caption="Cancel" x="100" y="41" width="80" height="25" style="1342242816" id="2" />
 </form>
-<form name="MetronomWindow" style="281018368" width="315" height="96" caption="Metronom" baseClass="PopupWindow" id="134">
+<form name="MetronomWindow" style="281018368" width="315" height="62" caption="Metronom" baseClass="PopupWindow" id="134">
 <layoutManager type="TableManager" marginLeft="4" marginRight="4" marginTop="4" marginBottom="4" />
 <child type="Label" name="" caption="First Click:" x="56" y="26" width="0" height="0" style="1342242827">
 <layout x="0" y="0" width="1" height="1" growWidth="0" growHeight="0" paddingLeft="4" paddingRight="4" paddingTop="4" paddingBottom="4" />
@@ -184,7 +184,7 @@
 </child>
 </child>
 </form>
-<form name="MIDIfilterWindow" style="281542656" width="854" height="307" id="136" caption="Filter Settings">
+<form name="MIDIfilterWindow" style="281542656" width="854" height="279" id="136" caption="Filter Settings">
 <child type="ListBox" name="filterListBox" caption="" x="8" y="8" width="155" height="230" style="1353777409" id="173" />
 <child type="PushButton" name="newButton" caption="New" x="176" y="8" width="80" height="25" style="1342242816" id="174" />
 <child type="PushButton" name="deleteButton" caption="Delete" x="264" y="8" width="80" height="25" style="1342242816" id="175" />
@@ -222,8 +222,8 @@
 <child type="Label" name="" caption="Volume:" x="184" y="200" width="0" height="0" style="1342242827" />
 <child type="EditControl" name="newVolumeEdit" caption="" x="256" y="200" width="80" height="23" style="1350631808" id="186" />
 </form>
-<form name="MIDIchannelsWindow" style="277807104" width="600" height="600" caption="Channel Settings" id="137" baseClass="PopupWindow">
-<child type="FrameChild" name="" caption="" x="84" y="378" width="80" height="50" style="1342308352">
+<form name="MIDIchannelsWindow" style="277807104" width="600" height="536" caption="Channel Settings" id="137" baseClass="PopupWindow">
+<child type="FrameChild" name="" caption="" x="84" y="378" width="80" height="40" style="1342308352">
 <layout attachment="3" growWidth="1" />
 <child type="PushButton" name="IDCANCEL" caption="Close" x="8" y="8" width="80" height="25" style="1342242816" id="2" />
 <child type="PushButton" name="defaultButton" caption="Standard" x="96" y="8" width="80" height="25" style="1342242816" id="187" />
@@ -332,7 +332,7 @@
 </child>
 </child>
 </form>
-<form name="MIDIeditorWindow" style="281542656" width="760" height="614" caption="Midi File Editor" baseClass="ModalPopup" id="138">
+<form name="MIDIeditorWindow" style="281542656" width="760" height="585" caption="Midi File Editor" baseClass="ModalPopup" id="138">
 <child type="ListBox" name="eventList" caption="" x="8" y="8" width="302" height="448" style="1353779585" id="204" />
 <child type="Label" name="" caption="Channel:" x="320" y="8" width="0" height="0" style="1342242827" />
 <child type="ComboBox" name="channelSelect" caption="" x="424" y="8" width="80" height="300" style="1344340995" id="165" />
@@ -378,7 +378,7 @@
 <child type="PushButton" name="IDCANCEL" caption="Cancel" x="96" y="552" width="80" height="25" style="1342242816" id="2" />
 <child type="PushButton" name="playButton" caption="Play" x="664" y="552" width="80" height="25" style="1342242816" id="148" />
 </form>
-<form name="MIDIrecorderWindow" style="281673728" width="640" height="427" baseClass="OverlappedWindow" id="139" caption="MIDI Recorder" bgColor="COLOR_BTNFACE" bg_red="0" bg_green="0" bg_blue="0">
+<form name="MIDIrecorderWindow" style="281673728" width="640" height="400" baseClass="OverlappedWindow" id="139" caption="MIDI Recorder" bgColor="COLOR_BTNFACE" bg_red="0" bg_green="0" bg_blue="0">
 <child type="Label" name="" caption="Out: Dev/Chan Note Velocity" x="8" y="0" width="0" height="0" style="1342242827" />
 <child type="Label" name="" caption="In: Dev/Chan Note Velocity" x="256" y="0" width="0" height="0" style="1342242827" />
 <child type="FrameChild" name="pianoFrame" caption="" x="8" y="16" width="496" height="240" style="1342308352" id="237" bgColor="WHITE_BRUSH" bg_red="0" bg_green="0" bg_blue="0">
@@ -417,7 +417,7 @@
 <child type="PushButton" name="editButton" caption="Edit..." x="272" y="368" width="80" height="25" style="1342242816" id="253" />
 <child type="PushButton" name="instrumentButton" caption="Instrument" x="544" y="368" width="80" height="25" style="1342242816" id="228" />
 </form>
-<form name="MIDIdrumWindow" style="281673728" width="1016" height="680" baseClass="OverlappedWindow" id="140" caption="Drum Editor" bgColor="COLOR_BTNFACE" bg_red="0" bg_green="0" bg_blue="0">
+<form name="MIDIdrumWindow" style="281673728" width="1016" height="650" baseClass="OverlappedWindow" id="140" caption="Drum Editor" bgColor="COLOR_BTNFACE" bg_red="0" bg_green="0" bg_blue="0">
 <child type="Label" name="" caption="MIDI-Out:" x="8" y="8" width="0" height="0" style="1342242827" />
 <child type="ComboBox" name="MIDIplaySelect" caption="" x="128" y="8" width="784" height="200" style="1344341059" id="182" />
 <child type="PushButton" name="playButton" caption="Play" x="920" y="8" width="80" height="25" style="1342242816" id="148" />
@@ -474,7 +474,7 @@
 <child type="PushButton" name="saveDrumsButton" caption="Save..." x="184" y="616" width="80" height="25" style="1342242816" id="269" />
 <child type="Label" name="" caption="Shift+click: De/select, Right click: Copy Volume, Ctrl+right click: Change Volume" x="272" y="616" width="0" height="0" style="1342242827" />
 </form>
-<form name="MIDIsynthesizerWindow" style="281673728" width="942" height="621" id="141" caption="Synthesizer" baseClass="OverlappedWindow" bgColor="COLOR_BTNFACE" bg_red="0" bg_green="0" bg_blue="0">
+<form name="MIDIsynthesizerWindow" style="281673728" width="942" height="590" id="141" caption="Synthesizer" baseClass="OverlappedWindow" bgColor="COLOR_BTNFACE" bg_red="0" bg_green="0" bg_blue="0">
 <child type="GroupBox" name="" caption="Synth" x="8" y="8" width="920" height="72" style="1342373895" />
 <child type="RadioButton" name="radioSynthA" caption="A" x="16" y="24" width="0" height="0" style="1342242825" id="270" />
 <child type="RadioButton" name="radioSynthB" caption="B" x="48" y="24" width="0" height="0" style="1342242825" id="271" />
