@@ -109,12 +109,12 @@ class InstrumentWindow : public winlib::OverlappedWindow
 	);
 	void drawNote( winlib::Device &context, unsigned char note, bool markActive = true );
 
-	virtual winlib::ProcessStatus handleCreate();
-	virtual winlib::ProcessStatus handleRepaint( winlib::Device &hDC );
-	virtual winlib::ProcessStatus handleResize( const winlib::Size &newSize);
-	virtual winlib::ProcessStatus handleMouseMove( WPARAM modifier, const winlib::Point &position );
-	virtual winlib::ProcessStatus handleRightButton( winlib::RightButton rightButton, WPARAM modifier, const winlib::Point &position );
-	virtual winlib::ProcessStatus handleLeftButton( winlib::LeftButton leftButton, WPARAM modifier, const winlib::Point &position );
+	winlib::ProcessStatus handleCreate() override;
+	winlib::ProcessStatus handleRepaint( winlib::Device &hDC ) override;
+	winlib::ProcessStatus handleResize( const winlib::Size &newSize) override;
+	winlib::ProcessStatus handleMouseMove( WPARAM modifier, const winlib::Point &position ) override;
+	winlib::ProcessStatus handleRightButton( winlib::RightButton rightButton, WPARAM modifier, const winlib::Point &position ) override;
+	winlib::ProcessStatus handleLeftButton( winlib::LeftButton leftButton, WPARAM modifier, const winlib::Point &position ) override;
 
 	public:
 	InstrumentWindow( winlib::BasicWindow *owner ) : OverlappedWindow( owner )

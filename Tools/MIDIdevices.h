@@ -707,11 +707,11 @@ class MIDIdeviceDialog : public winlibGUI::MIDIdeviceDialog_form
 	winlib::Font 				dlgFont;
 	gak::Array<DeviceEditor>	editor;
 
-	virtual winlib::ProcessStatus handleCreate();
-	virtual winlib::ProcessStatus handleDestroy();
-	virtual winlib::ProcessStatus handleOk();
-	virtual winlib::ProcessStatus handleButtonClick( int control );
-	virtual winlib::ProcessStatus handleMessage( UINT message, WPARAM wParam, LPARAM lParam );
+	winlib::ProcessStatus handleCreate() override;
+	winlib::ProcessStatus handleDestroy() override;
+	winlib::ProcessStatus handleOk() override;
+	winlib::ProcessStatus handleButtonClick( int control ) override;
+	winlib::ProcessStatus handleMessage( UINT message, WPARAM wParam, LPARAM lParam ) override;
 
 	public:
 	MIDIdeviceDialog() : MIDIdeviceDialog_form(nullptr), dlgFont( this ) 

@@ -94,13 +94,13 @@
 	void readSettings( std::istream &src );
 	void getSettings( int newSynth );
 
- 	virtual winlib::ProcessStatus handleCreate();
- 	virtual winlib::ProcessStatus handleDestroy();
-	virtual winlib::ProcessStatus handleEditChange( int editControl );
-	virtual winlib::ProcessStatus handleButtonClick( int btn );
-	virtual winlib::ProcessStatus handleScrollControl( int control );
-	virtual winlib::ProcessStatus handleCommand( int cmd );
-	virtual void handleTimer();
+ 	winlib::ProcessStatus handleCreate() override;
+ 	winlib::ProcessStatus handleDestroy() override;
+	winlib::ProcessStatus handleEditChange( int editControl ) override;
+	winlib::ProcessStatus handleButtonClick( int btn ) override;
+	winlib::ProcessStatus handleScrollControl( int control ) override;
+	winlib::ProcessStatus handleCommand( int cmd ) override;
+	void handleTimer() override;
 
 	void showCPUspeed()
 	{

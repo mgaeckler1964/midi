@@ -118,14 +118,14 @@ class PianoArea : public ChildWindow
 	void drawFrameBorder( Device &context );
 	void drawNoteLines( Device &context );
 
-	virtual ProcessStatus handleRepaint( Device &hDC );
+	ProcessStatus handleRepaint( Device &hDC ) override;
 
 	private:
 	static const char className[];
 	public:
 	static void registerClass();
 
-	virtual STRING getWindowClassName() const;
+	STRING getWindowClassName() const override;
 	PianoArea( BasicWindow *owner ) : ChildWindow( owner )
 	{
 		registerClass();

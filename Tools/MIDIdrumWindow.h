@@ -113,7 +113,7 @@ class DrumPlayerThread : public gak::Thread
 	int					m_playMode;
 	int					m_selectedTrack;
 
-	virtual void ExecuteThread();
+	void ExecuteThread() override;
 
 	public:
 	DrumPlayerThread(
@@ -167,19 +167,19 @@ class PatternArea : public winlib::ChildWindow
 	}
 	int findNote( unsigned long start, unsigned long end, short track );
 
-	virtual winlib::ProcessStatus handleMouseRelease();
-	virtual winlib::ProcessStatus handleMouseMove( WPARAM modifier, const winlib::Point &position );
-	virtual winlib::ProcessStatus handleLeftButton( winlib::LeftButton leftButton, WPARAM modifier, const winlib::Point &position );
-	virtual winlib::ProcessStatus handleRightButton( winlib::RightButton rightButton, WPARAM modifier, const winlib::Point &position );
-	virtual winlib::ProcessStatus handleRepaint( winlib::Device &hDC );
-	virtual winlib::ProcessStatus handleHorizScroll( winlib::HorizScrollCode scrollCode, int nPos, HWND scrollBar );
-	virtual winlib::ProcessStatus handleVertScroll( winlib::VertScrollCode scrollCode, int nPos, HWND scrollBar );
+	winlib::ProcessStatus handleMouseRelease() override;
+	winlib::ProcessStatus handleMouseMove( WPARAM modifier, const winlib::Point &position ) override;
+	winlib::ProcessStatus handleLeftButton( winlib::LeftButton leftButton, WPARAM modifier, const winlib::Point &position ) override;
+	winlib::ProcessStatus handleRightButton( winlib::RightButton rightButton, WPARAM modifier, const winlib::Point &position ) override;
+	winlib::ProcessStatus handleRepaint( winlib::Device &hDC ) override;
+	winlib::ProcessStatus handleHorizScroll( winlib::HorizScrollCode scrollCode, int nPos, HWND scrollBar ) override;
+	winlib::ProcessStatus handleVertScroll( winlib::VertScrollCode scrollCode, int nPos, HWND scrollBar ) override;
 
 	private:
 	static const char className[];
 	public:
 	static void registerClass();
-	virtual gak::STRING getWindowClassName() const;
+	gak::STRING getWindowClassName() const override;
 
 	PatternArea(
 		winlib::BasicWindow *owner, int controlId,
@@ -317,13 +317,13 @@ class MIDIdrumWindow : public winlibGUI::MIDIdrumWindow_form, public PlayerWindo
 	}
 
 	void create();
-	virtual winlib::ProcessStatus handleCreate();
-	virtual winlib::ProcessStatus handleDestroy();
-	virtual bool canClose();
-	virtual winlib::ProcessStatus handleButtonClick( int btn );
-	virtual winlib::ProcessStatus handleSelectionChange( int control );
-	virtual winlib::ProcessStatus handleCommand( int cmd );
-	virtual winlib::ProcessStatus handleMessage( UINT msg, WPARAM wParam, LPARAM lParam );
+	winlib::ProcessStatus handleCreate() override;
+	winlib::ProcessStatus handleDestroy() override;
+	bool canClose() override;
+	winlib::ProcessStatus handleButtonClick( int btn ) override;
+	winlib::ProcessStatus handleSelectionChange( int control ) override;
+	winlib::ProcessStatus handleCommand( int cmd ) override;
+	winlib::ProcessStatus handleMessage( UINT msg, WPARAM wParam, LPARAM lParam ) override;
 	void loadDrumPatterns( const char *cmdLine=nullptr );
 	void playMidiEvent( const MIDIevent &msg );
 };

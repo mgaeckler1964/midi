@@ -134,8 +134,8 @@ class MGsynthEditor : public VST3Editor
 		m_synthA = m_synthB = m_synthC = m_synthD = nullptr;
 		m_synthAEnable = m_synthBEnable = m_synthCEnable = m_synthDEnable = nullptr;
 	}
-	virtual void valueChanged( CControl* pControl ) VSTGUI_OVERRIDE_VMETHOD;
-	virtual CView* verifyView (CView* view, const UIAttributes& attributes, IUIDescription* description);
+	void valueChanged( CControl* pControl ) override;
+	CView* verifyView (CView* view, const UIAttributes& attributes, IUIDescription* description) override;
 };
 
 // --------------------------------------------------------------------- //

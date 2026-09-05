@@ -103,10 +103,10 @@ class MIDIchannelsWindow : public winlibGUI::MIDIchannelsWindow_form
 	void handleNewExpression( unsigned char expression );
 	void handleDefault();
 
-	virtual winlib::ProcessStatus handleCreate();
-	virtual winlib::ProcessStatus handleCommand( int cmd );
-	virtual winlib::SuccessCode handleClose();
-	virtual winlib::ProcessStatus handleCancel();
+	winlib::ProcessStatus handleCreate() override;
+	winlib::ProcessStatus handleCommand( int cmd ) override;
+	winlib::SuccessCode handleClose() override;
+	winlib::ProcessStatus handleCancel() override;
 
 	public:
 	MIDIchannelsWindow( BasicWindow *owner ) : MIDIchannelsWindow_form( owner )

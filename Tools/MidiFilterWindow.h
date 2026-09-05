@@ -118,14 +118,14 @@ class MIDIfilterWindow : public winlibGUI::MIDIfilterWindow_form
 	void createStandardFilter();
 	void showValues( size_t selected );
 
-	virtual winlib::ProcessStatus handleCreate();
-	virtual winlib::ProcessStatus handleScrollControl( int control );
-	virtual winlib::ProcessStatus handleSelectionChange( int control );
-	virtual winlib::ProcessStatus handleButtonClick( int control );
-	virtual winlib::ProcessStatus handleEditChange( int control );
-	virtual winlib::ProcessStatus handleCommand( int cmd );
-	virtual winlib::SuccessCode handleClose();
-	virtual winlib::ProcessStatus handleCancel();
+	winlib::ProcessStatus handleCreate() override;
+	winlib::ProcessStatus handleScrollControl( int control ) override;
+	winlib::ProcessStatus handleSelectionChange( int control ) override;
+	winlib::ProcessStatus handleButtonClick( int control ) override;
+	winlib::ProcessStatus handleEditChange( int control ) override;
+	winlib::ProcessStatus handleCommand( int cmd ) override;
+	winlib::SuccessCode handleClose() override;
+	winlib::ProcessStatus handleCancel() override;
 
 	public:
 	MIDIfilterWindow( winlib::BasicWindow *owner ) : MIDIfilterWindow_form( owner )

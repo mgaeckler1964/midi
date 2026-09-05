@@ -104,7 +104,7 @@ class OscManipulator : public BaseProducer
 		return m_source.getOscilatorType();
 	}
 
-	virtual bool isEnabled() const
+	bool isEnabled() const override
 	{
 		return BaseProducer::isEnabled() && m_source.isEnabled();
 	}
@@ -112,7 +112,7 @@ class OscManipulator : public BaseProducer
 	/*
 		frequency
 	*/
-	virtual void setFrequency( double frequency )
+	void setFrequency( double frequency ) override
 	{
 		BaseProducer::setFrequency( frequency );
 		m_source.setFrequency( frequency );

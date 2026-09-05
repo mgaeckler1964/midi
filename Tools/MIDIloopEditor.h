@@ -93,7 +93,7 @@ class MidiLoopPlayerThread : public gak::Thread
 	MIDIloopEditor		*m_loopEditor;
 	MIDIdata			*m_midiData;
 
-	virtual void ExecuteThread();
+	void ExecuteThread() override;
 
 	public:
 	MidiLoopPlayerThread(
@@ -138,12 +138,12 @@ class MIDIloopEditor : public winlibGUI::MIDIloopEditor_form, public PlayerWindo
 	void showClock( unsigned long timeCode, const char *time );
 
 	void create();
-	virtual winlib::ProcessStatus handleCreate();
-	virtual winlib::ProcessStatus handleDestroy();
-	virtual bool canClose();
-	virtual winlib::ProcessStatus handleButtonClick( int btn );
-	virtual winlib::ProcessStatus handleCommand( int cmd );
-	virtual void handleFile( const char *filename, size_t idx, size_t numFiles );
+	winlib::ProcessStatus handleCreate() override;
+	winlib::ProcessStatus handleDestroy() override;
+	bool canClose() override;
+	winlib::ProcessStatus handleButtonClick( int btn ) override;
+	winlib::ProcessStatus handleCommand( int cmd ) override;
+	void handleFile( const char *filename, size_t idx, size_t numFiles ) override;
 
 	void loadLoopFile( const char *cmdLine=nullptr );
 };

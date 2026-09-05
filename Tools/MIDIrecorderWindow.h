@@ -96,7 +96,7 @@ class MetronomThread : public gak::Thread
 	unsigned			m_bpm, m_numerator, m_denominator;
 	unsigned char		m_channel;
 
-	virtual void ExecuteThread();
+	void ExecuteThread() override;
 
 	public:
 	MetronomThread( MIDIrecorderWindow *recWindow, unsigned bpm, unsigned numerator, unsigned denominator )
@@ -124,7 +124,7 @@ class MidiPlayerThread : public gak::Thread
 	size_t				m_midiDev;
 	bool				m_autoRhythm;
 
-	virtual void ExecuteThread();
+	void ExecuteThread() override;
 
 	public:
 	MidiPlayerThread( MIDIrecorderWindow *recWindow, MIDIdata *midiData, size_t midiDev, bool autoRhythm )
@@ -189,17 +189,17 @@ class MIDIrecorderWindow : public winlibGUI::MIDIrecorderWindow_form, public Pla
 	MIDIrecorderWindow( BasicWindow *owner );
 
 	void create();
-	virtual winlib::ProcessStatus handleCreate();
-	virtual bool handleChildClose( BasicWindow *child, bool deleted );
-	virtual bool canClose();
-	virtual winlib::ProcessStatus handleDestroy();
-	virtual winlib::ProcessStatus handleButtonClick( int btn );
-	virtual winlib::ProcessStatus handleSelectionChange( int control );
-	virtual winlib::ProcessStatus handleCommand( int cmd );
-	virtual winlib::ProcessStatus handleMessage( UINT message, WPARAM wParam, LPARAM lParam );
+	winlib::ProcessStatus handleCreate() override;
+	bool handleChildClose( BasicWindow *child, bool deleted ) override;
+	bool canClose() override;
+	winlib::ProcessStatus handleDestroy() override;
+	winlib::ProcessStatus handleButtonClick( int btn ) override;
+	winlib::ProcessStatus handleSelectionChange( int control ) override;
+	winlib::ProcessStatus handleCommand( int cmd ) override;
+	winlib::ProcessStatus handleMessage( UINT message, WPARAM wParam, LPARAM lParam ) override;
 
 
-	virtual winlib::SuccessCode close();
+	winlib::SuccessCode close() override;
 
 	void playFinished()
 	{

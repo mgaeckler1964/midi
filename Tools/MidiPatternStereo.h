@@ -92,8 +92,8 @@ class PatternStereoDialog : public winlibGUI::PatternStereo_form
 
 	void handlePatternSelection( unsigned char pattern );
 	void handleNewStereoPosition( signed char stereoPos );
-	virtual winlib::ProcessStatus handleCreate();
-	virtual winlib::ProcessStatus handleCommand( int cmd );
+	winlib::ProcessStatus handleCreate() override;
+	winlib::ProcessStatus handleCommand( int cmd ) override;
 
 	public:
 	PatternStereoDialog() : PatternStereo_form( nullptr )

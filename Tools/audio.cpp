@@ -178,7 +178,7 @@ class AudioThread : public Thread
 	};
 
 	void PlayAudioStream();
-	virtual void ExecuteThread();
+	void ExecuteThread() override;
 
 	public:
 	AudioThread( unsigned short bitsPerSample, unsigned long sampleRate );
@@ -213,7 +213,7 @@ class LevelMeterThread : public Thread
 	ToolWindow						*m_targetWindow;
 	RingBuffer< StereoSample<> >	&m_dataSource;
 
-	virtual void ExecuteThread();
+	void ExecuteThread() override;
 	public:
 	LevelMeterThread( RingBuffer< StereoSample<> > &dataSource, ToolWindow *targetWindow ) : m_dataSource( dataSource )
 	{

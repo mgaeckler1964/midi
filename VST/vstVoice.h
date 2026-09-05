@@ -340,13 +340,13 @@ class MGsynthVoice : public SynthVoiceBase
 	~MGsynthVoice()
 	{
 	}
-	virtual Steinberg::tresult process( Steinberg::Vst::ProcessData& data );
-	virtual void setParameterState( const GlobalParameterState &newState );
-	virtual int getMaxVoices() const
+	Steinberg::tresult process( Steinberg::Vst::ProcessData& data ) override;
+	void setParameterState( const GlobalParameterState &newState ) override;
+	int getMaxVoices() const override
 	{
 		return m_theSynthesizer.getMaxPhones();
 	}
-	virtual int getActiveVoices() const
+	int getActiveVoices() const override
 	{
 		return m_theSynthesizer.getActivePhones();
 	}

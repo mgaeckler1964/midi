@@ -88,11 +88,11 @@ class ToolBarWindow : public winlibGUI::ToolBarWindow_form
 
 	void openFile( const char *cmdLine );
 
-	virtual winlib::ProcessStatus handleCreate();
-	virtual bool handleChildClose( BasicWindow *child, bool deleted );
-	virtual winlib::ProcessStatus handleCommand( int cmd );
-	virtual winlib::ProcessStatus ddeInitiate( const char *app, const char *topic );
-	virtual winlib::ProcessStatus ddeExecute( const char *command );
+	winlib::ProcessStatus handleCreate() override;
+	bool handleChildClose( BasicWindow *child, bool deleted ) override;
+	winlib::ProcessStatus handleCommand( int cmd ) override;
+	winlib::ProcessStatus ddeInitiate( const char *app, const char *topic ) override;
+	winlib::ProcessStatus ddeExecute( const char *command ) override;
 
 	public:
 	ToolBarWindow() : ToolBarWindow_form( nullptr )

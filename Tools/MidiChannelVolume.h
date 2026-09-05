@@ -88,8 +88,8 @@ class ChannelVolumeDialog : public winlibGUI::ChannelVolume_form
 
 	void handleChannelSelection( unsigned char channel );
 	void handleNewVolume( unsigned char volume );
-	virtual winlib::ProcessStatus handleCreate();
-	virtual winlib::ProcessStatus handleCommand( int cmd );
+	winlib::ProcessStatus handleCreate() override;
+	winlib::ProcessStatus handleCommand( int cmd ) override;
 
 	public:
 	ChannelVolumeDialog() : ChannelVolume_form( nullptr )

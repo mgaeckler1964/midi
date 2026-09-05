@@ -82,9 +82,9 @@
 
 class MIDIapplication : public winlib::Application
 {
-	virtual bool 					startApplication( HINSTANCE hInstance, const char *cmdLine );
-	virtual winlib::CallbackWindow	*createMainWindow( const char *cmdLine, int nCmdShow );
-	virtual void					deleteMainWindow( winlib::BasicWindow *mainWindow );
+	bool 					startApplication( HINSTANCE hInstance, const char *cmdLine ) override;
+	winlib::CallbackWindow	*createMainWindow( const char *cmdLine, int nCmdShow ) override;
+	void					deleteMainWindow( winlib::BasicWindow *mainWindow ) override;
 
 	public:
 	MIDIapplication() : Application( IDI_ICON1 ) {}

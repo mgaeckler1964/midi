@@ -116,7 +116,7 @@ class MidiEditPlayerThread : public gak::Thread
 	size_t		 			m_midiDev;
 	const MIDIeditorWindow	*m_owner;
 
-	virtual void ExecuteThread();
+	void ExecuteThread() override;
 
 	public:
 	MidiEditPlayerThread( MIDIdata *midiData, size_t midiDev, const MIDIeditorWindow *owner )
@@ -160,11 +160,11 @@ class MIDIeditorWindow : public winlibGUI::MIDIeditorWindow_form
 	void copyMoveEntries( bool copy );
 	void convertEditorEvents( MIDIdata *midiData, bool selected );
 
-	virtual winlib::ProcessStatus handleCreate();
-	virtual winlib::ProcessStatus handleOk();
-	virtual winlib::ProcessStatus handleButtonClick( int btn );
-	virtual winlib::ProcessStatus handleCommand( int cmd );
-	virtual winlib::ProcessStatus handleSelectionChange( int control );
+	winlib::ProcessStatus handleCreate() override;
+	winlib::ProcessStatus handleOk() override;
+	winlib::ProcessStatus handleButtonClick( int btn ) override;
+	winlib::ProcessStatus handleCommand( int cmd ) override;
+	winlib::ProcessStatus handleSelectionChange( int control ) override;
 
 	public:
 	MIDIeditorWindow() : MIDIeditorWindow_form( nullptr ) {}

@@ -87,8 +87,8 @@ class MetronomWindow : public winlibGUI::MetronomWindow_form
 	DrumVoices		theVoices;
 
 	private:
-	virtual winlib::ProcessStatus handleCreate();
-	virtual winlib::SuccessCode handleClose();
+	winlib::ProcessStatus handleCreate() override;
+	winlib::SuccessCode handleClose() override;
 	public:
 	MetronomWindow( winlib::BasicWindow *owner ) : MetronomWindow_form( owner ) {}
 	void create( winlib::BasicWindow *parent, const gak::STRING &firstMetronom, const gak::STRING &otherMetronom, const gak::STRING &drumsFile )

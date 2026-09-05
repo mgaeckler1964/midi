@@ -101,13 +101,13 @@ public:
 	tresult PLUGIN_API terminate();
 	tresult PLUGIN_API setComponentState( IBStream* state);
 
-	virtual IPlugView * PLUGIN_API createView( FIDString name );
+	IPlugView * PLUGIN_API createView( FIDString name ) override;
 
-	virtual tresult PLUGIN_API getParamStringByValue( ParamID tag, ParamValue valueNormalized, String128 string );
-	virtual tresult PLUGIN_API getParamValueByString( ParamID tag, TChar* string, ParamValue& valueNormalized );
+	tresult PLUGIN_API getParamStringByValue( ParamID tag, ParamValue valueNormalized, String128 string ) override;
+	tresult PLUGIN_API getParamValueByString( ParamID tag, TChar* string, ParamValue& valueNormalized ) override;
 
 	// IMidiMapping
-	virtual tresult PLUGIN_API getMidiControllerAssignment( int32 busIndex, int16 channel, CtrlNumber midiControllerNumber, ParamID& id/*out*/ );
+	tresult PLUGIN_API getMidiControllerAssignment( int32 busIndex, int16 channel, CtrlNumber midiControllerNumber, ParamID& id/*out*/ ) override;
 
 	static FUnknown* createInstance (void*)
 	{

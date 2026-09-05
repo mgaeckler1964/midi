@@ -96,8 +96,8 @@ class StatusWindow : public winlib::ToolWindow
 	const MidiSynthesizer	&m_synthesizer;
 
 	private:
-	virtual winlib::ProcessStatus handleRepaint( winlib::Device &hDC );
-	virtual winlib::ProcessStatus handleMessage( UINT msg, WPARAM wParam, LPARAM lParam );
+	winlib::ProcessStatus handleRepaint( winlib::Device &hDC ) override;
+	winlib::ProcessStatus handleMessage( UINT msg, WPARAM wParam, LPARAM lParam ) override;
 
 	public:
 	StatusWindow(const MidiSynthesizer	&theSynthesizer) 
@@ -113,7 +113,7 @@ class StatusThread : public Thread
 {
 	StatusWindow<SampleT>		*targetWindow;
 
-	virtual void ExecuteThread();
+	void ExecuteThread() override;
 	public:
 	StatusThread( StatusWindow<SampleT> *theTarget )
 	{

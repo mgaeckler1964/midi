@@ -85,8 +85,8 @@ class SwapChannelDialog : public winlibGUI::SwapChannel_form
 {
 	unsigned char	m_srcChannel, m_destChannel;
 
-	virtual winlib::ProcessStatus handleCreate();
-	virtual winlib::ProcessStatus handleCommand( int cmd );
+	winlib::ProcessStatus handleCreate() override;
+	winlib::ProcessStatus handleCommand( int cmd ) override;
 
 	public:
 	SwapChannelDialog() : SwapChannel_form( nullptr )

@@ -93,8 +93,8 @@ class PatternVolumeDialog : public winlibGUI::PatternVolume_form
 
 	void handlePatternSelection( unsigned char pattern );
 	void handleNewVolume( unsigned char volume );
-	virtual winlib::ProcessStatus handleCreate();
-	virtual winlib::ProcessStatus handleCommand( int cmd );
+	winlib::ProcessStatus handleCreate() override;
+	winlib::ProcessStatus handleCommand( int cmd ) override;
 
 	public:
 	PatternVolumeDialog() : PatternVolume_form( nullptr )
