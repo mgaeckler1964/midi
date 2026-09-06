@@ -33,7 +33,7 @@
 // ----- includes ------------------------------------------------------ //
 // --------------------------------------------------------------------- //
 
-#include <winlib/f_type.h>
+#include <winlib/FileTypeRegistry.h>
 
 #include "midiApplication.h"
 #include "ToolBarWindow.h"

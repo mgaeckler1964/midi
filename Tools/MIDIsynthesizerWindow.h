@@ -42,8 +42,8 @@
 
 #include <gak/fmtNumber.h>
 
-#include <winlib/dialogwi.h>
-#include <winlib/CONTROLW.H>
+#include <winlib/DialogWindow.h>
+#include <winlib/ControlWindow.h>
 
 #include "audio.h"
 #include "midi.gui.h"

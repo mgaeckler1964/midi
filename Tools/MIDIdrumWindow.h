@@ -41,9 +41,9 @@
 #include <gak/thread.h>
 
 #include <winlib/ChildWin.h>
-#include <winlib/dialogwi.h>
-#include <winlib/controlw.h>
-#include <winlib/stddlg.h>
+#include <winlib/DialogWindow.h>
+#include <winlib/ControlWindow.h>
+#include <winlib/StandardDialogs.h>
 
 #include "PlayerWindow.h"
 #include "DrumVoices.h"

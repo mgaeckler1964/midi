@@ -39,7 +39,7 @@
 
 #include <gak/fmtNumber.h>
 
-#include <winlib/stddlg.h>
+#include <winlib/StandardDialogs.h>
 
 #include "PlayerWindow.h"
 #include "midi_rc.h"

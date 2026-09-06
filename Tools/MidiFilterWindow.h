@@ -42,8 +42,8 @@
 
 #include <gak/ci_string.h>
 
-#include <winlib/controlw.h>
-#include <winlib/dialogwi.h>
+#include <winlib/ControlWindow.h>
+#include <winlib/DialogWindow.h>
 
 #include "midi.gui.h"
 #include "controls.h"

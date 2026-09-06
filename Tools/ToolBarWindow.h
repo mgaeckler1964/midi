@@ -42,7 +42,7 @@
 
 #include <gak/array.h>
 
-#include <winlib/dialogwi.h>
+#include <winlib/DialogWindow.h>
 
 #include "playerwindow.h"
 #include "midi.gui.h"

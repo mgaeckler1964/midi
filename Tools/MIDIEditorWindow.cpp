@@ -43,9 +43,9 @@
 #include <gak/fmtNumber.h>
 
 #include <winlib/popup.h>
-#include <winlib/stddlg.h>
+#include <winlib/StandardDialogs.h>
 #include <winlib/winlib.h>
-#include <winlib/controlw.h>
+#include <winlib/ControlWindow.h>
 
 #include "MIDIeditorWindow.h"
 #include "MIDIrecorderWindow.h"

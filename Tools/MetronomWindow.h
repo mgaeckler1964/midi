@@ -40,8 +40,8 @@
 // ----- includes ------------------------------------------------------ //
 // --------------------------------------------------------------------- //
 
-#include <winlib/dialogwi.h>
-#include <winlib/controlw.h>
+#include <winlib/DialogWindow.h>
+#include <winlib/ControlWindow.h>
 
 #include "DrumVoices.h"
 #include "midi.gui.h"

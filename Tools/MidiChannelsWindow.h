@@ -40,7 +40,7 @@
 // ----- includes ------------------------------------------------------ //
 // --------------------------------------------------------------------- //
 
-#include <winlib/dialogwi.h>
+#include <winlib/DialogWindow.h>
 
 #include "voices.h"
 #include "MidiDevices.h"

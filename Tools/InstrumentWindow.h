@@ -42,7 +42,7 @@
 // --------------------------------------------------------------------- //
 
 #include <winlib/popup.h>
-#include <winlib/controlw.h>
+#include <winlib/ControlWindow.h>
 
 #include "PianoPainter.h"
 #include "midi.gui.h"

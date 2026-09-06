@@ -40,7 +40,7 @@
 
 #include <gak/fmtNumber.h>
 
-#include <WINLIB/STDDLG.H>
+#include <WINLIB/StandardDialogs.h>
 
 #include "../Synth/synthesizer.h"
 

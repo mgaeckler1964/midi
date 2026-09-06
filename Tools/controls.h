@@ -42,7 +42,7 @@
 
 #include <gak/fmtNumber.h>
 
-#include <winlib/controlw.h>
+#include <winlib/ControlWindow.h>
 
 // --------------------------------------------------------------------- //
 // ----- imported datas ------------------------------------------------ //

@@ -43,7 +43,7 @@
 
 #include <gak/string.h>
 
-#include <winlib/controlw.h>
+#include <winlib/ControlWindow.h>
 
 #include "midifile.h"
 #include "midi_rc.h"
