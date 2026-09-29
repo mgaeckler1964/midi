@@ -41,6 +41,7 @@
 #include <time.h>
 
 #include <gak/fmtNumber.h>
+#include <gak/StringBuffer.h>
 
 #include <winlib/popup.h>
 #include <winlib/StandardDialogs.h>
@@ -568,9 +569,10 @@ size_t MIDIeditorWindow::newEntry( const MidiEditorEvent &newEvent )
 	StringBuffer<1024>	tmpBuffer;
 	size_t				numElements = m_editorEvents.size();
 
-	formatNumberFast( &tmpBuffer, newEvent.channel+1, 2, '0' );
-	tmpBuffer.addDigit( '\t' ).addCP( m_midiData->getTimeCodeStr(newEvent.timeCode) )
-		.addDigit( '\t' ).addCP(newEvent.title);
+	tmpBuffer
+		.addNumber( newEvent.channel+1, 2, '0' ).addDigit( '\t' )
+		.addCP( m_midiData->getTimeCodeStr(newEvent.timeCode) ).addDigit( '\t' )
+		.addCP(newEvent.title);
 
 	// search for the insert position
 	for( size_t i=0; i<numElements; i++ )
@@ -802,7 +804,6 @@ void MIDIeditorWindow::repeatEntries()
 
 	if( numSelected )
 	{
-		StringBuffer<1024> label;
 		const MidiEditorEvent &theLastEvent = m_editorEvents[numEntries-1];
 		newTimeCode = theLastEvent.timeCode;
 		if( theLastEvent.message == MIDI_NOTE_ON )
@@ -822,15 +823,15 @@ void MIDIeditorWindow::repeatEntries()
 		{
 			MidiEditorEvent theEvent = m_editorEvents[selectedEntries[i]];
 			theEvent.timeCode += timeCodeOffset;
-
-			formatNumberFast( &label, theEvent.channel+1, 2, '0' );
-			label.addDigit('\t')
-				.addCP(m_midiData->getTimeCodeStr(theEvent.timeCode)).addDigit('\t')
-				.addSTR(theEvent.title)
-			;
-
 			m_editorEvents.addElement( theEvent );
-			eventList->addEntry( label.c_str() );
+			eventList->addEntry( 
+				StringBuffer<1024>()
+					.addNumber( theEvent.channel+1, 2, '0' )
+					.addDigit('\t')
+					.addCP(m_midiData->getTimeCodeStr(theEvent.timeCode)).addDigit('\t')
+					.addSTR(theEvent.title)
+					.c_str()
+			);
 		}
 
 	}
@@ -838,7 +839,6 @@ void MIDIeditorWindow::repeatEntries()
 
 void MIDIeditorWindow::transposeEntries()
 {
-	StringBuffer<1024>	tmpBuffer;
 	unsigned char	 	noteOffset = transposeEdit->getText().getValueN<unsigned char>();
 
 	ArrayOfInts		selectedEntries;
@@ -862,10 +862,13 @@ void MIDIeditorWindow::transposeEntries()
 					);
 				}
 
-				formatNumberFast( &tmpBuffer, theEditorEvent.channel+1, 2, ' ' );
-				tmpBuffer.addDigit( '\t' ).addCP( m_midiData->getTimeCodeStr(theEditorEvent.timeCode) )
-					.addDigit( '\t' ).addCP(theEditorEvent.title);
-				eventList->replaceEntry( selectedEntries[i], tmpBuffer.c_str() );
+				eventList->replaceEntry( 
+					selectedEntries[i], 
+					StringBuffer<1024>()
+						.addNumber( theEditorEvent.channel+1, 2, ' ' ).addDigit( '\t' )
+						.addCP( m_midiData->getTimeCodeStr(theEditorEvent.timeCode) ).addDigit( '\t' )
+						.addCP(theEditorEvent.title).c_str() 
+				);
 			}
 		}
 
