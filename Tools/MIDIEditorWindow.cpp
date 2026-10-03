@@ -439,7 +439,7 @@ void MIDIeditorWindow::loadMidi()
 
 void MIDIeditorWindow::copyValues2Editor()
 {
-	NumberBuffer	label;
+	NumberBuffer	_label;
 	int				selectedEntry = eventList->getSelection();
 
 	if( selectedEntry >= 0 )
@@ -474,13 +474,13 @@ void MIDIeditorWindow::copyValues2Editor()
 			noteSelect->selectEntry( theEditorEvent.midiEvent.sound.note );
 
 			noteVolumeEdit->setText( 
-				formatNumberFast( &label, theEditorEvent.midiEvent.sound.volume )
+				NumberBuffer().addNumber( theEditorEvent.midiEvent.sound.volume ).c_str()
 			);
 			noteLengthEdit->setText( 
-				formatNumberFast( &label, theEditorEvent.midiEvent.sound.length )
+				NumberBuffer().addNumber( theEditorEvent.midiEvent.sound.length ).c_str()
 			);
 			noteTimeEdit->setText( 
-				formatNumberFast( &label, theEditorEvent.midiEvent.sound.time )
+				NumberBuffer().addNumber( theEditorEvent.midiEvent.sound.time ).c_str()
 			);
 
 		}
@@ -494,9 +494,8 @@ void MIDIeditorWindow::copyValues2Editor()
 
 			handleMessageType( winlibGUI::controllerRadio_id );
 			controllerSelect->selectEntry( theEditorEvent.midiEvent.midiData.data1 );
-			NumberBuffer	tmp;
 			controllerEdit->setText( 
-				formatNumberFast( &tmp, theEditorEvent.midiEvent.midiData.data2 )
+				NumberBuffer().addNumber( theEditorEvent.midiEvent.midiData.data2 ).c_str()
 			);
 		}
 		else if( theEditorEvent.message != MIDI_SYSTEM )
@@ -518,10 +517,10 @@ void MIDIeditorWindow::copyValues2Editor()
 			}
 
 			data1Edit->setText( 
-				formatNumberFast( &label, theEditorEvent.midiEvent.midiData.data1 )
+				NumberBuffer().addNumber( theEditorEvent.midiEvent.midiData.data1 ).c_str()
 			);
 			data2Edit->setText( 
-				formatNumberFast( &label, theEditorEvent.midiEvent.midiData.data2 )
+				NumberBuffer().addNumber( theEditorEvent.midiEvent.midiData.data2 ).c_str()
 			);
 		}
 		else

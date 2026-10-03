@@ -280,7 +280,6 @@ void MidiLoopPlayerThread::ExecuteThread()
 {
 	bool				firstRun = true;
 	std::size_t			firstLoopEntry = 0;
-	NumberBuffer		tmpBuffer;
 	unsigned char		message;
 	clock_t				actTime, nextTime , clockTime, elapsedTime, startTime;
 	int					lastSeconds, seconds, minutes, hours;
@@ -361,14 +360,15 @@ void MidiLoopPlayerThread::ExecuteThread()
 					hours = minutes / 60;
 					minutes = minutes % 60;
 
-					formatNumberFast( &tmpBuffer, currentBar, 4, '0' );
-					tmpBuffer.addCP(" - ");
-					appendNumberFast( &tmpBuffer, hours, 2, '0' );
-					tmpBuffer.addDigit(':');
-					appendNumberFast( &tmpBuffer, minutes, 2, '0' );
-					tmpBuffer.addDigit(':');
-					appendNumberFast( &tmpBuffer, seconds, 2, '0' );
-					m_loopEditor->showClock(midiMsg.getTimeCode(),tmpBuffer.c_str());
+					m_loopEditor->showClock(
+						midiMsg.getTimeCode(),
+						NumberBuffer()
+							.addNumber( currentBar, 4, '0' ).addCP(" - ")
+							.addNumber( hours, 2, '0' ).addDigit(':')
+							.addNumber( minutes, 2, '0' ).addDigit(':')
+							.addNumber( seconds, 2, '0' )
+							.c_str()
+					);
 				}
 
 				nextTime = startTime + midiMsg.getTimeCode();

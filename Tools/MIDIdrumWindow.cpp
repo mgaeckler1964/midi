@@ -1187,9 +1187,8 @@ ProcessStatus PatternArea::handleVertScroll( VertScrollCode scrollCode, int , HW
 
 void DrumPlayerThread::ExecuteThread()
 {
-	NumberBuffer	tmpBuffer;
-	clock_t			actTime, nextTime , clockTime, elapsedTime, startTime = clock();
-	int				lastSeconds, seconds, minutes, hours, barTime, lastBars, numBars;
+	clock_t		actTime, nextTime , clockTime, elapsedTime, startTime = clock();
+	int			lastSeconds, seconds, minutes, hours, barTime, lastBars, numBars;
 
 	clockTime = startTime;
 
@@ -1224,15 +1223,13 @@ void DrumPlayerThread::ExecuteThread()
 					hours = minutes / 60;
 					minutes = minutes % 60;
 
-					formatNumberFast( &tmpBuffer, hours, 2, '0' );
-					tmpBuffer.addDigit(':');
-					appendNumberFast( &tmpBuffer, minutes, 2, '0' );
-					tmpBuffer.addDigit(':');
-					appendNumberFast( &tmpBuffer, seconds, 2, '0' );
-					tmpBuffer.addDigit(' ');
-					appendNumberFast( &tmpBuffer, numBars % 1000, 3, '0' );
-
-					m_drumWindow->showClock(tmpBuffer.c_str());
+					m_drumWindow->showClock(
+						NumberBuffer().addNumber( hours, 2, '0' ).addDigit(':')
+							.addNumber( minutes, 2, '0' ).addDigit(':')
+							.addNumber( seconds, 2, '0' ).addDigit(' ')
+							.addNumber( numBars % 1000, 3, '0' )
+							.c_str()
+					);
 				}
 
 				nextTime = startTime + midiMsg.getTimeCode();
