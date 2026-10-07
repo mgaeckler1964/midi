@@ -1453,14 +1453,12 @@ void PianoArea::showMIDIevent( const MIDIevent &msg, size_t midiDev, bool isSent
 			notePresentation.note = note;
 			channel++;
 
-			NumberBuffer tmp1, tmp2, tmp3;
-			STRING	text = formatNumber( midiDev ).add( '/' )
-				.add( formatNumberFast( &tmp1, channel, 2, '0' ) ).add(": ")
+			notePresentation.presentation = formatNumber( midiDev ).add( '/' )
+				.add( NumberBuffer().addNumber( channel, 2, '0' ).c_str() ).add(": ")
 				.add(MIDIevent::getNoteText(note))
-				.add('(').add( formatNumberFast( &tmp2, note, 3, '0' ) ).add(") ")
-				.add( formatNumberFast( &tmp3, volume, 3, '0' ) ).add("   ")
+				.add('(').add( NumberBuffer().addNumber( note, 3, '0' ).c_str() ).add(") ")
+				.add( NumberBuffer().addNumber( volume, 3, '0' ).c_str() ).add("   ")
 			;
-			notePresentation.presentation = text;
 
 			if( isSent )
 			{
