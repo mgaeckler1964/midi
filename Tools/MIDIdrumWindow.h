@@ -168,9 +168,9 @@ class PatternArea : public winlib::ChildWindow
 	int findNote( unsigned long start, unsigned long end, short track );
 
 	winlib::ProcessStatus handleMouseRelease() override;
-	winlib::ProcessStatus handleMouseMove( WPARAM modifier, const winlib::Point &position ) override;
-	winlib::ProcessStatus handleLeftButton( winlib::LeftButton leftButton, WPARAM modifier, const winlib::Point &position ) override;
-	winlib::ProcessStatus handleRightButton( winlib::RightButton rightButton, WPARAM modifier, const winlib::Point &position ) override;
+	winlib::ProcessStatus handleMouseMove( winlib::ModifierFlags modifier, const winlib::Point &position ) override;
+	winlib::ProcessStatus handleLeftButton( winlib::LeftButton leftButton, winlib::ModifierFlags modifier, const winlib::Point &position ) override;
+	winlib::ProcessStatus handleRightButton( winlib::RightButton rightButton, winlib::ModifierFlags modifier, const winlib::Point &position ) override;
 	winlib::ProcessStatus handleRepaint( winlib::Device &hDC ) override;
 	winlib::ProcessStatus handleHorizScroll( winlib::HorizScrollCode scrollCode, int nPos, HWND scrollBar ) override;
 	winlib::ProcessStatus handleVertScroll( winlib::VertScrollCode scrollCode, int nPos, HWND scrollBar ) override;

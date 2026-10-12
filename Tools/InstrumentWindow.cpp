@@ -299,7 +299,7 @@ ProcessStatus InstrumentWindow::handleCreate()
 	return psPROCESSED;
 }
 
-ProcessStatus InstrumentWindow::handleMouseMove( WPARAM, const Point &position )
+ProcessStatus InstrumentWindow::handleMouseMove( ModifierFlags, const Point &position )
 {
 	if( !m_fixNote && m_stringDistance && m_boundDistance )
 	{
@@ -322,7 +322,7 @@ ProcessStatus InstrumentWindow::handleMouseMove( WPARAM, const Point &position )
 	return psDO_DEFAULT;
 }
 
-ProcessStatus InstrumentWindow::handleLeftButton( LeftButton leftButton, WPARAM , const Point & )
+ProcessStatus InstrumentWindow::handleLeftButton( LeftButton leftButton, ModifierFlags , const Point & )
 {
 	if( m_parent && leftButton == lbUP && m_currentNote <= 127 )
 	{
@@ -333,7 +333,7 @@ ProcessStatus InstrumentWindow::handleLeftButton( LeftButton leftButton, WPARAM 
 	return psDO_DEFAULT;
 }
 
-ProcessStatus InstrumentWindow::handleRightButton( RightButton rightButton, WPARAM , const Point &position )
+ProcessStatus InstrumentWindow::handleRightButton( RightButton rightButton, ModifierFlags , const Point &position )
 {
 	if( rightButton == rbUP && m_currentNote <= 127 )
 	{

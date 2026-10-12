@@ -667,7 +667,7 @@ ProcessStatus PatternArea::handleMouseRelease()
 	return psDO_DEFAULT;
 }
 
-ProcessStatus PatternArea::handleMouseMove( WPARAM, const Point &position )
+ProcessStatus PatternArea::handleMouseMove( winlib::ModifierFlags, const Point &position )
 {
 	if( m_dragPattern >= 0 )
 	{
@@ -687,7 +687,7 @@ ProcessStatus PatternArea::handleMouseMove( WPARAM, const Point &position )
 	return psDO_DEFAULT;
 }
 
-ProcessStatus PatternArea::handleLeftButton( LeftButton leftButton, WPARAM, const Point &position )
+ProcessStatus PatternArea::handleLeftButton( LeftButton leftButton, winlib::ModifierFlags, const Point &position )
 {
 	Size			size = getClientSize();
 	int				maxLines = getMaxLines();
@@ -876,7 +876,7 @@ ProcessStatus PatternArea::handleLeftButton( LeftButton leftButton, WPARAM, cons
 	return psDO_DEFAULT;
 }
 
-ProcessStatus PatternArea::handleRightButton( RightButton rightButton, WPARAM modifier, const Point &position )
+ProcessStatus PatternArea::handleRightButton( RightButton rightButton, ModifierFlags modifier, const Point &position )
 {
 	if( rightButton == rbUP )
 	{
@@ -915,7 +915,7 @@ ProcessStatus PatternArea::handleRightButton( RightButton rightButton, WPARAM mo
 				{
 					MIDIevent	&theEventOn = (*m_midiData)[foundNote];
 					MIDIevent	&theEventOff = (*m_midiData)[noteOff];
-					if( modifier & MK_CONTROL )
+					if( modifier.test(ModifierFlags::mbControlKey))
 					{
 						m_changedFlag = true;
 						theEventOn.setData2( m_volume );
