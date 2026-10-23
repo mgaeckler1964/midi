@@ -243,7 +243,7 @@ void PianoArea::drawFrameBorder( Device &context )
 	context.getPen().selectPen( Pen::spBlack );
 	context.getBrush().selectBrush( Brush::sbNull );
 
-	context.rectangle( 0, 0, size.width, size.height );
+	context.drawRectangle( 0, 0, size.width, size.height );
 }
 
 void PianoArea::drawNoteLines( Device &context )
@@ -1362,7 +1362,7 @@ void PianoArea::showMIDIevent( const MIDIevent &msg, size_t midiDev, bool isSent
 
 			context.getPen().selectPen( Pen::spWhite );
 			context.getBrush().selectBrush( Brush::sbWhite );
-			context.rectangle( 1, 1, size.width-2, 20 );
+			context.drawRectangle( 1, 1, size.width-2, 20 );
 
 			drawNoteLines( context );
 

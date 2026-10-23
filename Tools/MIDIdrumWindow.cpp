@@ -966,7 +966,7 @@ ProcessStatus PatternArea::handleRepaint( Device &hDC )
 	hDC.getBrush().selectBrush( Brush::sbWhite );
 	hDC.getFont().selectFont( Font::sfAnsiVar );
 
-	hDC.rectangle( 0, 0, size.width, size.height );
+	hDC.drawRectangle( 0, 0, size.width, size.height );
 
 	rect.left = textMargin;
 	rect.top = textMargin + textHeight;
@@ -1029,14 +1029,14 @@ ProcessStatus PatternArea::handleRepaint( Device &hDC )
 					timeEnd = theEvent.getTimeCode();
 					rightPos = textWidth + (timeEnd-minTime)*(size.width-textWidth)/timePerBar;
 
-					hDC.rectangle( leftPos, rect.top, rightPos, rect.bottom-1 );
+					hDC.drawRectangle( leftPos, rect.top, rightPos, rect.bottom-1 );
 					noteOnFound = false;
 				}
 			}
 		}
 		if( noteOnFound )
 		{
-			hDC.rectangle( leftPos, rect.top, size.width, rect.bottom-1 );
+			hDC.drawRectangle( leftPos, rect.top, size.width, rect.bottom-1 );
 		}
 
 		rect.top += textHeight;

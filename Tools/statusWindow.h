@@ -184,7 +184,7 @@ winlib::ProcessStatus StatusWindow<SampleT>::handleRepaint( winlib::Device &hDC 
 	winlib::Size	size = getClientSize();
 	hDC.getPen().selectPen( winlib::Pen::spNull );
 	hDC.getBrush().selectBrush( winlib::Brush::sbWhite );
-	hDC.rectangle( 0, 0, size.width+1, size.height+1 );
+	hDC.drawRectangle( 0, 0, size.width+1, size.height+1 );
 	paintStatus( hDC );
 
 	return winlib::psPROCESSED;

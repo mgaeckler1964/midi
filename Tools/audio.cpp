@@ -679,30 +679,30 @@ void LevelMeterThread::ExecuteThread()
 			double	left = sqrt( double( displaySample.left ) );
 			int		leftWidth = int(left * double(clipWidth) / clipValue);
 			hDC.getBrush().selectBrush( Brush::sbBlack );
-			hDC.rectangle( 0, 0, leftWidth, clientSize.height/2 );
+			hDC.drawRectangle( 0, 0, leftWidth, clientSize.height/2 );
 
 			hDC.getBrush().selectBrush( backGroundLeftBrush );
-			hDC.rectangle( leftWidth, 0, clientSize.width, clientSize.height/2 );
+			hDC.drawRectangle( leftWidth, 0, clientSize.width, clientSize.height/2 );
 		}
 		else
 		{
 			hDC.getBrush().selectBrush( backGroundLeftBrush );
-			hDC.rectangle( 0, 0, clientSize.width, clientSize.height/2 );
+			hDC.drawRectangle( 0, 0, clientSize.width, clientSize.height/2 );
 		}
 		if( displaySample.right )
 		{
 			double	right = sqrt( double( displaySample.right ) );
 			int		rightWidth = int(right * double(clipWidth) / clipValue);
 			hDC.getBrush().selectBrush( Brush::sbBlack );
-			hDC.rectangle( 0, clientSize.height/2, rightWidth, clientSize.height );
+			hDC.drawRectangle( 0, clientSize.height/2, rightWidth, clientSize.height );
 
 			hDC.getBrush().selectBrush( backGroundRightBrush );
-			hDC.rectangle( rightWidth, clientSize.height/2, clientSize.width, clientSize.height );
+			hDC.drawRectangle( rightWidth, clientSize.height/2, clientSize.width, clientSize.height );
 		}
 		else
 		{
 			hDC.getBrush().selectBrush( backGroundRightBrush );
-			hDC.rectangle( 0, clientSize.height/2, clientSize.width, clientSize.height );
+			hDC.drawRectangle( 0, clientSize.height/2, clientSize.width, clientSize.height );
 		}
 
 		if( peakSample.left )

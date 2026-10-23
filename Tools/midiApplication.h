@@ -83,7 +83,7 @@
 class MIDIapplication : public winlib::Application
 {
 	bool 					startApplication( HINSTANCE hInstance, const char *cmdLine ) override;
-	winlib::CallbackWindow	*createMainWindow( const char *cmdLine, int nCmdShow ) override;
+	winlib::CallbackWindow	*createMainWindow( const char *cmdLine, winlib::ShowWindowMode nCmdShow ) override;
 	void					deleteMainWindow( winlib::BasicWindow *mainWindow ) override;
 
 	public:

@@ -174,7 +174,7 @@ bool MIDIapplication::startApplication( HINSTANCE , const char * )
 	return false;
 }
 
-CallbackWindow *MIDIapplication::createMainWindow( const char *cmdLine, int  )
+CallbackWindow *MIDIapplication::createMainWindow( const char *cmdLine, ShowWindowMode  )
 {
 	ToolBarWindow *theToolBar;
 

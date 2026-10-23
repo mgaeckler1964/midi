@@ -361,7 +361,7 @@ ProcessStatus InstrumentWindow::handleRepaint( Device &hDC )
 	context.getPen().selectPen( Pen::spBlack );
 	context.getBrush().selectBrush( Brush::sbWhite );
 
-	context.rectangle( 0, 0, size.width, size.height );
+	context.drawRectangle( 0, 0, size.width, size.height );
 
 	m_stringDistance = size.height/12;
 	m_fingerSize = m_stringDistance / 5;

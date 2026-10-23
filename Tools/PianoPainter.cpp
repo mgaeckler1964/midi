@@ -299,7 +299,7 @@ void PianoPainter::drawPiano( Device &context, const Size &size, int whiteLength
 				rightPos = getKeyLeft( (unsigned char)(i+2) );
 
 
-			context.rectangle( int(leftPos), windowHeigth - whiteLength, int(rightPos)+1, windowHeigth );
+			context.drawRectangle( int(leftPos), windowHeigth - whiteLength, int(rightPos)+1, windowHeigth );
 		}
 	}
 
@@ -311,7 +311,7 @@ void PianoPainter::drawPiano( Device &context, const Size &size, int whiteLength
 		{
 			leftPos = getKeyLeft( i );
 
-			context.rectangle( int(leftPos), windowHeigth - whiteLength, int(leftPos+blackWidth)+1, windowHeigth - (whiteLength-blackLength) );
+			context.drawRectangle( int(leftPos), windowHeigth - whiteLength, int(leftPos+blackWidth)+1, windowHeigth - (whiteLength-blackLength) );
 		}
 	}
 }
