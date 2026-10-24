@@ -1036,7 +1036,7 @@ bool MIDIrecorderWindow::handleChildClose( BasicWindow *child, bool deleted )
 bool MIDIrecorderWindow::canClose()
 {
 	doEnterFunction("MIDIrecorderWindow::canClose");
-	int		button = IDYES;
+	MessageBoxResult	button = mbrYES;
 
 	if( m_metronomThread )
 	{
@@ -1054,21 +1054,21 @@ bool MIDIrecorderWindow::canClose()
 
 	if( m_midiChangedFlag )
 	{
-		button = messageBox( winlibGUI::MIDI_FILE_CHANGED_id, "MIDI Recorder", MB_ICONQUESTION|MB_YESNOCANCEL );
-		if( button == IDYES	)
+		button = messageBox( winlibGUI::MIDI_FILE_CHANGED_id, "MIDI Recorder", MessageBoxFlags(mbbYesNoCancel, mbiQUESTION) );
+		if( button == mbrYES	)
 		{
 			saveMidi();
 		}
 	}
-	if( m_settingsChangedFlag && button != IDCANCEL )
+	if( m_settingsChangedFlag && button != mbrCANCEL )
 	{
-		button = messageBox( winlibGUI::SETTINGS_CHANGED_id, "MIDI Recorder", MB_ICONQUESTION|MB_YESNOCANCEL );
-		if( button == IDYES	)
+		button = messageBox( winlibGUI::SETTINGS_CHANGED_id, "MIDI Recorder", MessageBoxFlags(mbbYesNoCancel, mbiQUESTION) );
+		if( button == mbrYES	)
 		{
 			saveSettings();
 		}
 	}
-	return button != IDCANCEL;
+	return button != mbrCANCEL;
 }
 
 ProcessStatus MIDIrecorderWindow::handleButtonClick( int btn )
@@ -1752,7 +1752,7 @@ void MIDIrecorderWindow::loadMidiFile( const char *cmdLine )
 				winlibGUI::MIDI_FILE_CHANGED_id,
 				"MIDI Recorder",
 				MB_ICONQUESTION|MB_YESNO
-			) == IDYES
+			) == mbrYES
 		)
 		{
 			saveMidi();
@@ -1782,7 +1782,7 @@ void MIDIrecorderWindow::loadMidiSettings( const char *cmdLine )
 				winlibGUI::SETTINGS_CHANGED_id,
 				"MIDI Recorder",
 				MB_ICONQUESTION|MB_YESNO
-			) == IDYES
+			) == mbrYES
 		)
 		{
 			saveSettings();

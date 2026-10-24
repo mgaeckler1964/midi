@@ -1320,14 +1320,14 @@ bool MIDIdrumWindow::canClose()
 
 	if( m_thePatternArea->getChangedFlag() )
 	{
-		int button = messageBox(
+		MessageBoxResult button = messageBox(
 			winlibGUI::DRUM_CHANGED_id,
 			winlibGUI::DRUM_EDITOR_TITLE_id,
-			MB_ICONQUESTION|MB_YESNOCANCEL
+			MessageBoxFlags(mbbYesNoCancel, mbiQUESTION)
 		);
-		if( button == IDYES	)
+		if( button == mbrYES	)
 			saveMidi();
-		else if( button == IDCANCEL )
+		else if( button == mbrCANCEL )
 		{
 /*@*/		return false;
 		}
@@ -1870,7 +1870,7 @@ void MIDIdrumWindow::loadDrumPatterns( const char *cmdLine )
 				winlibGUI::DRUM_CHANGED_id,
 				winlibGUI::DRUM_EDITOR_TITLE_id,
 				MB_ICONQUESTION|MB_YESNO
-			) == IDYES
+			) == mbrYES
 		)
 		{
 			saveMidi();

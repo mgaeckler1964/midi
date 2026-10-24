@@ -417,14 +417,14 @@ bool MIDIloopEditor::canClose()
 
 	if( m_changedFlag )
 	{
-		int button = messageBox(
+		MessageBoxResult button = messageBox(
 			winlibGUI::LOOP_CHANGED_id,
 			"Loop Editor",
-			MB_ICONQUESTION|MB_YESNOCANCEL
+			MessageBoxFlags(mbbYesNoCancel,mbiQUESTION)
 		);
-		if( button == IDYES	)
+		if( button == mbrYES	)
 			saveLoopFile();
-		else if( button == IDCANCEL )
+		else if( button == mbrCANCEL )
 		{
 /*@*/		return false;
 		}
@@ -611,8 +611,8 @@ void MIDIloopEditor::loadLoopFile( const char *cmdLine )
 			messageBox(
 				winlibGUI::LOOP_CHANGED_id,
 				"Loop Editor",
-				MB_ICONQUESTION|MB_YESNO
-			) == IDYES
+				MessageBoxFlags(mbbYesNo, mbiQUESTION)
+			) == mbrYES
 		)
 		{
 			saveLoopFile();
