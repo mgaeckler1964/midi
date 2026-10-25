@@ -1751,7 +1751,7 @@ void MIDIrecorderWindow::loadMidiFile( const char *cmdLine )
 			messageBox(
 				winlibGUI::MIDI_FILE_CHANGED_id,
 				"MIDI Recorder",
-				MB_ICONQUESTION|MB_YESNO
+				MessageBoxFlags(mbbYesNo, mbiQUESTION)
 			) == mbrYES
 		)
 		{
@@ -1781,7 +1781,7 @@ void MIDIrecorderWindow::loadMidiSettings( const char *cmdLine )
 			messageBox(
 				winlibGUI::SETTINGS_CHANGED_id,
 				"MIDI Recorder",
-				MB_ICONQUESTION|MB_YESNO
+				MessageBoxFlags(mbbYesNo, mbiQUESTION)
 			) == mbrYES
 		)
 		{

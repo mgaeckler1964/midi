@@ -1869,7 +1869,7 @@ void MIDIdrumWindow::loadDrumPatterns( const char *cmdLine )
 			messageBox(
 				winlibGUI::DRUM_CHANGED_id,
 				winlibGUI::DRUM_EDITOR_TITLE_id,
-				MB_ICONQUESTION|MB_YESNO
+				MessageBoxFlags(mbbYesNo, mbiQUESTION)
 			) == mbrYES
 		)
 		{
