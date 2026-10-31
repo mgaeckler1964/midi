@@ -1049,22 +1049,16 @@ void MidiEditPlayerThread::ExecuteThread()
 	if( playerHandles.openOutMidi( m_midiDev ) )
 	{
 		startTime = clock();
-		for(
-			MIDIdata::const_iterator it = m_midiData->cbegin(),
-				endIT = m_midiData->cend();
-			!terminated && it != endIT;
-			++it
-		)
+		m_midiData->forEach( [&](const MIDIevent	&midiMsg)->bool
 		{
-			const MIDIevent	&midiMsg = *it;
-
 			actTime = clock();
 			nextTime = startTime + midiMsg.getTimeCode();
 			if( nextTime > actTime )
 				Sleep((nextTime-actTime)*1000/CLK_TCK);
 
 			playerHandles.playMidiEvent( m_midiDev, midiMsg );
-		}
+			return terminated;
+		});
 
 		if( !terminated )
 		{

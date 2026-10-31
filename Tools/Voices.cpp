@@ -112,38 +112,36 @@ using namespace gak;
 
 void VoiceArray::addVoice( const STRING &theVoice )
 {
-	for( 
-		ArrayOfStrings::const_iterator	it = m_currentVoices.cbegin(), endIT = m_currentVoices.cend();
-		it != endIT;
-		++it
-	)
+	bool voiceFound = m_currentVoices.forEach( [theVoice](const STRING &curVoice)->bool
 	{
-		if( *it == theVoice )
+		if( curVoice == theVoice )
 		{
-			return;
+			return true;
 		}
+		return false;
+	});
+	if( !voiceFound )
+	{
+		m_currentVoices.addElement( theVoice );
+		m_voiceSelect->addEntry( theVoice );
 	}
-
-	m_currentVoices.addElement( theVoice );
-	m_voiceSelect->addEntry( theVoice );
 }
 
 void VoiceArray::addVoiceGroup( const STRING &theVoiceGroup )
 {
-	for( 
-		ArrayOfStrings::const_iterator	it = m_voiceGroups.cbegin(), endIT = m_voiceGroups.cend();
-		it != endIT;
-		++it
-	)
+	bool groupFound = m_voiceGroups.forEach( [theVoiceGroup](const STRING &curGroup)->bool
 	{
-		if( *it == theVoiceGroup )
+		if( curGroup == theVoiceGroup )
 		{
-			return;
+			return true;
 		}
+		return false;
+	});
+	if( !groupFound )
+	{
+		m_voiceGroups.addElement( theVoiceGroup );
+		m_groupSelect->addEntry( theVoiceGroup );
 	}
-
-	m_voiceGroups.addElement( theVoiceGroup );
-	m_groupSelect->addEntry( theVoiceGroup );
 }
 
 void VoiceArray::loadVoices( const STRING &voiceFile )
@@ -240,17 +238,14 @@ void VoiceArray::handleGroupSelection()
 	m_voiceSelect->clearEntries();
 	m_currentVoices.clear();
 
-	for(
-		const_iterator it = cbegin(), endIT = cend();
-		it != endIT;
-		++it 
-	)
+	forEach([&](const VoiceEntry &value)->bool
 	{
-		if( it->group == currentGroup )
+		if( value.group == currentGroup )
 		{
-			addVoice( it->voice );
+			addVoice( value.voice );
 		}
-	}
+		return false;
+	});
 
 	m_voiceSelect->selectEntry( 0 );
 }
@@ -296,21 +291,17 @@ void VoiceArray::selectVoice( const STRING &currentGroup, const STRING &currentV
 
 void VoiceArray::selectVoice( const VoiceCodes &voiceCodes )
 {
-	for( 
-		const_iterator it = cbegin(), endIT = cend();
-		it != endIT;
-		++it
-	)
+	forEach([&](const VoiceEntry &voiceEntry)->bool
 	{
-		const VoiceEntry &voiceEntry = *it;
 		if( voiceEntry.voiceCodes.program == voiceCodes.program
 		&&	voiceEntry.voiceCodes.bankMSB == voiceCodes.bankMSB
 		&&	voiceEntry.voiceCodes.bankLSB == voiceCodes.bankLSB )
 		{
 			selectVoice( voiceEntry.group, voiceEntry.voice );
-			break;
+			return true;	// break;
 		}
-	}
+		return false;
+	});
 }
 
 std::size_t VoiceArray::findVoice( const VoiceCodes &voiceCodes )

@@ -284,17 +284,14 @@ class MIDIrecorder : public gak::Array<MIDIrecorderHandle>
 	{
 		std::size_t	openDevices = 0;
 
-		for( 
-			const_iterator it = cbegin(), endIT = cend(); it != endIT; ++it
-		)
+		forEach([&](const MIDIrecorderHandle &handle) -> bool
 		{
-			const MIDIrecorderHandle &handle = *it;
-
 			if( handle.m_midiInHandle && handle.m_owner == owner )
 			{
 				openDevices++;
 			}
-		}
+			return false;
+		});
 
 		return openDevices;
 	}
@@ -316,11 +313,11 @@ class MIDIrecorder : public gak::Array<MIDIrecorderHandle>
 
 		if( getNumOpenDevices( owner ) )
 		{
-			for( iterator it=begin(), endIT = end(); it != endIT; ++it )
+			forEach( [owner](MIDIrecorderHandle &handle)->bool
 			{
-				MIDIrecorderHandle &handle = *it;
 				handle.close( owner );
-			}
+				return false;
+			});
 		}
 	}
 

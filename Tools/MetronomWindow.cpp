@@ -112,26 +112,21 @@ using namespace gak;
 
 ProcessStatus MetronomWindow::handleCreate()
 {
-	STRING			curVoice;
 	Set<STRING>		theUsedVoices;
 
 	theVoices.loadDrumVoices( drumsFile );
 
-	for( 
-		DrumVoices::const_iterator it = theVoices.cbegin(), 
-			endIT = theVoices.cend();
-		it != endIT;
-		++it
-	)
+	theVoices.forEach([&](const DrumVoice &voice)->bool
 	{
-		curVoice = it->voice;
+		const STRING &curVoice = voice.voice;
 		if( !theUsedVoices.hasElement( curVoice ) )
 		{
 			theUsedVoices.addElement( curVoice );
 			firstVoiceSelect->addEntry( curVoice ) ;
 			otherVoiceSelect->addEntry( curVoice ) ;
 		}
-	}
+		return false;
+	});
 
 	if( !firstMetronom.isEmpty() )
 	{

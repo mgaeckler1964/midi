@@ -451,13 +451,13 @@ void MIDIdata::convertTimeCodes( int oldBase, int newBase )
 	if( oldBase && newBase && oldBase != newBase )
 	{
 		double factor = double(oldBase) / double(newBase);
-		for( iterator it=begin(), endIT = end(); it != endIT; ++it )
+		forEach( [=] (MIDIevent &theEvent) -> bool
 		{
-			MIDIevent	&theEvent = *it;
 			unsigned long timeCode = theEvent.getTimeCode();
 			timeCode = (unsigned long)(double(timeCode) * factor);
 			theEvent.setTimeCode( timeCode );
-		}
+			return false;
+		});
 	}
 }
 
@@ -466,10 +466,8 @@ void MIDIdata::fixTimeCodes( int fraction )
 	double	factor, eventTimeCode;
 	double	timeFixPoint = getTimePerFulNoteDbl() / double(fraction);
 
-	for( iterator it=begin(), endIT = end(); it != endIT; ++it )
+	forEach( [&] (MIDIevent &theEvent) -> bool
 	{
-		MIDIevent	&theEvent = *it;
-
 		eventTimeCode = theEvent.getTimeCode();
 		factor = eventTimeCode / timeFixPoint;
 		factor = floor( factor + 0.5 );
@@ -479,7 +477,8 @@ void MIDIdata::fixTimeCodes( int fraction )
 			eventTimeCode -= 2;
 
 		theEvent.setTimeCode( (unsigned long)(eventTimeCode+0.5) );
-	}
+		return false;
+	});
 }
 
 // --------------------------------------------------------------------- //
@@ -497,33 +496,35 @@ void MIDIdata::fixTimeCodes( int fraction )
 // align timeCode, so that first note will be in first bar
 void MIDIdata::alignTimeCodes()
 {
-	unsigned long timePerBar;
-	unsigned long	firstNoteTimeCode = 0, eventTimeCode;
-
 	doEnterFunction("MIDIdata::alignTimeCodes");
 
-	for( const_iterator it=cbegin(), endIT = cend(); it != endIT; ++it )
+	unsigned long timePerBar;
+	unsigned long firstNoteTimeCode = 0, eventTimeCode;
+
+	forEach( [&] (const MIDIevent &theEvent) -> bool
 	{
-		if( it->getMessage() == MIDI_NOTE_ON )
+		if( theEvent.getMessage() == MIDI_NOTE_ON )
 		{
-			firstNoteTimeCode = it->getTimeCode();
-			break;
+			firstNoteTimeCode = theEvent.getTimeCode();
+			return true;	// break;
 		}
-	}
+		return false;
+	});
 
 	if( firstNoteTimeCode )
 	{
 		timePerBar = getTimePerBar();
 		firstNoteTimeCode = firstNoteTimeCode / timePerBar;
 		firstNoteTimeCode *= timePerBar;
-		for( iterator it=begin(), endIT = end(); it != endIT; ++it )
+		forEach( [&] (MIDIevent &theEvent) -> bool
 		{
-			eventTimeCode = it->getTimeCode();
+			eventTimeCode = theEvent.getTimeCode();
 			if( eventTimeCode <= firstNoteTimeCode )
-				it->setTimeCode( 0 );
+				theEvent.setTimeCode( 0 );
 			else
-				it->setTimeCode( eventTimeCode-firstNoteTimeCode );
-		}
+				theEvent.setTimeCode( eventTimeCode-firstNoteTimeCode );
+			return false;
+		});
 	}
 }
 
@@ -593,11 +594,12 @@ long MIDIdata::parseRelativeTimeCode( const char *timeCodeStr ) const
 size_t MIDIdata::getNumTrackData( unsigned short track ) const
 {
 	size_t numTrackData = 0;
-	for( const_iterator it=cbegin(), endIT = cend(); it != endIT; ++it )
+	forEach([&]( const MIDIevent &evnt)->bool
 	{
-		if( it->getTrack() == track )
+		if( evnt.getTrack() == track )
 			numTrackData++;
-	}
+		return false;
+	});
 
 	return numTrackData;
 }
@@ -662,16 +664,13 @@ void MIDIdata::replaceTrack( unsigned short track, const MIDIdata *newData )
 		}
 	}
 
-	for( 
-		const_iterator it = newData->cbegin(), endIT = newData->cend();
-		it != endIT;
-		++it
-	)
+	newData->forEach([&](const MIDIevent &srcEvent)->bool
 	{
-		MIDIevent	newEvent = *it;
+		MIDIevent	newEvent = srcEvent;
 		newEvent.setTrack( track );
 		addElement( newEvent );
-	}
+		return false;
+	});
 }
 
 unsigned short MIDIdata::getNumTracks() const
@@ -684,16 +683,13 @@ unsigned short MIDIdata::getNumTracks() const
 		maxTrack--;
 	}
 
-	for( 
-		const_iterator it = cbegin(), endIT = cend();
-		it != endIT;
-		++it
-	)
+	forEach([&](const MIDIevent &evnt)->bool
 	{
-		curTrack = it->getTrack();
+		curTrack = evnt.getTrack();
 		if( curTrack > maxTrack )
 			maxTrack = curTrack;
-	}
+		return false;
+	});
 
 	return (unsigned short)(maxTrack+1);
 }
@@ -710,15 +706,10 @@ bool MIDIdata::getChannelCodes(
 
 	memset( channelCodes, -1, sizeof( ChannelCodes ) );
 
-	for( 
-		const_iterator it = cbegin(), endIT = cend();
-		it != endIT;
-		++it
-	)
+	forEach([&](const MIDIevent	&theEvent)->bool
 	{
-		const MIDIevent	&theEvent = *it;
 		if( theEvent.getTimeCode() > timeCode )
-/*v*/		break;
+/*v*/		return true; // break;
 
 		if( theEvent.getChannel() == channel )
 		{
@@ -741,7 +732,8 @@ bool MIDIdata::getChannelCodes(
 					channelCodes->volume = data2;
 			}
 		}
-	}
+		return false;
+	});
 
 	return dataFound;
 }
@@ -1427,11 +1419,11 @@ void MIDIdata::optimizeMIDI()
 
 void MIDIdata::clearAllSelections()
 {
-	for( iterator it=begin(), endIT = end(); it != endIT; ++it )
+	forEach( [] (MIDIevent &theEvent) -> bool
 	{
-		MIDIevent	&theEvent = *it;
 		theEvent.clearSelected();
-	}
+		return false;
+	});
 }
 
 size_t MIDIdata::findMatchingEvent( size_t i )

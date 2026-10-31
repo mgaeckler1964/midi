@@ -226,8 +226,6 @@ void MIDIfilterWindow::createNewFilter()
 
 void MIDIfilterWindow::createStandardFilter( const STRING &newName, unsigned char channel, FilterCondition condition )
 {
-	bool			filterFound = false;
-
 	static STRING	allRecorderLabel;
 
 	if( allRecorderLabel.isEmpty() )
@@ -235,19 +233,14 @@ void MIDIfilterWindow::createStandardFilter( const STRING &newName, unsigned cha
 		allRecorderLabel = appObject->loadString( winlibGUI::ALL_MIDI_RECORD_LABEL_id );
 	}
 
-	for(
-		FilterList::const_iterator it = m_theFilterList->cbegin(),
-			endIT = m_theFilterList->cend();
-		it != endIT;
-		++it
-	)
+	bool filterFound = m_theFilterList->forEach( [newName](const FilterSettings &theFilter)->bool
 	{
-		if( it->name == newName )
+		if( theFilter.name == newName )
 		{
-			filterFound = true;
-			break;
+			return true;	// break;
 		}
-	}
+		return false;
+	});
 
 	if( !filterFound )
 	{
@@ -325,28 +318,20 @@ ProcessStatus MIDIfilterWindow::handleCreate()
 	actionChannelSelect->selectEntry( 16 );
 
 	m_midiInCount = recorderHandles.size();
-	for( 
-		MIDIrecorder::const_iterator it = recorderHandles.cbegin(),
-			endIT = recorderHandles.cend();
-		it != endIT;
-		++it
-	)
+	recorderHandles.forEach( [&](const MIDIrecorderHandle &recorder)->bool
 	{
-		MIDIrecSelect->addEntry( it->getInstrument() );
-	}
+		MIDIrecSelect->addEntry( recorder.getInstrument() );
+		return false;
+	});
 	MIDIrecSelect->addEntry( appObject->loadString( winlibGUI::ALL_MIDI_RECORD_LABEL_id ) );
 	MIDIrecSelect->selectEntry( int(m_midiInCount) );
 
 	m_midiOutCount = playerHandles.size();
-	for( 
-		MIDIplayer::const_iterator it = playerHandles.cbegin(),
-			endIT = playerHandles.cend();
-		it != endIT;
-		++it
-	)
+	playerHandles.forEach([&](const MIDIplayerHandle &player) -> bool
 	{
-		MIDIplaySelect->addEntry( it->getInstrument() );
-	}
+		MIDIplaySelect->addEntry( player.getInstrument() );
+		return false;
+	});
 	MIDIplaySelect->addEntry( CONTROLLER_LABEL );
 	MIDIplaySelect->addEntry( appObject->loadString( winlibGUI::DEFAULT_MIDI_PLAY_LABEL_id ) );
 	MIDIplaySelect->selectEntry( int(m_midiOutCount) );
@@ -556,15 +541,11 @@ void MIDIfilterWindow::refreshFilter( size_t newSelected )
 	filterListBox->clearEntries();
 	if( m_theFilterList->size() )
 	{
-		for( 
-			FilterList::const_iterator it = m_theFilterList->cbegin(),
-				endIT = m_theFilterList->cend();
-			it != endIT;
-			++it
-		)
+		m_theFilterList->forEach( [&](const FilterSettings &filter) ->bool
 		{
-			filterListBox->addEntry( it->name );
-		}
+			filterListBox->addEntry( filter.name );
+			return false;
+		});
 
 		filterListBox->selectEntry( int(newSelected) );
 		showValues( newSelected );

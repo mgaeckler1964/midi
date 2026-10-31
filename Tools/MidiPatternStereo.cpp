@@ -131,15 +131,11 @@ ProcessStatus PatternStereoDialog::handleCreate()
 {
 	stereoBar->setRange( MIDI_LEFT_POSITION, MIDI_RIGHT_POSITION );
 
-	for( 
-		PatternInfos::const_iterator it = m_patternList.cbegin(),
-			endIT = m_patternList.cend();
-		it != endIT;
-		++it
-	)
+	m_patternList.forEach([&]( const PatternInfo &info) -> bool
 	{
-		patternSelect->addEntry( it->drumVoice.voice );
-	}
+		patternSelect->addEntry( info.drumVoice.voice );
+		return false;
+	});
 	patternSelect->selectEntry( 0 );
 	handlePatternSelection( 0 );
 

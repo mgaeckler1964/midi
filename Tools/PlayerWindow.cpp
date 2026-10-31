@@ -127,14 +127,8 @@ void PlayerWindow::saveMidi2CSV( const char *filename )
 			"Data2",
 			"SysEx"
 		);
-		for( 
-			MIDIdata::const_iterator it = m_midiData.cbegin(), 
-				endIT = m_midiData.cend();
-			it != endIT;
-			++it
-		)
+		m_midiData.forEach( [&](const MIDIevent	&theEvent)->bool
 		{
-			const MIDIevent	&theEvent = *it;
 			unsigned char	msg = theEvent.getStatusByte();
 			if( msg != MIDI_SYS_EX_START )
 			{
@@ -177,7 +171,8 @@ void PlayerWindow::saveMidi2CSV( const char *filename )
 					(const char *)sysEx
 				);
 			}
-		}
+			return false;
+		});
 	}
 }
 
@@ -230,15 +225,12 @@ void PlayerWindow::initMidiPlaySelect( ComboBox *playSelect, PushButton *playBut
 {
 	m_MIDIplaySelect = playSelect;
 	m_MIDIplayButton = playButton;
-	for( 
-		MIDIplayer::const_iterator it = playerHandles.cbegin(), 
-			endIT = playerHandles.cend();
-		it != endIT;
-		++it
-	)
+
+	playerHandles.forEach([&]( const MIDIplayerHandle &player )->bool
 	{
-		m_MIDIplaySelect->addEntry( it->getInstrument() );
-	}
+		m_MIDIplaySelect->addEntry( player.getInstrument() );
+		return false;
+	});
 
 	if( playerHandles.size() )
 	{

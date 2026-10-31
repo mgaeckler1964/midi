@@ -126,18 +126,13 @@ void MGsynthEditor::switchState( EditorState state )
 		int32_t	endParamID = startParamID + (spiReleaseRateMS1-spiSynthVolume1);
 		for( int32_t paramID = startParamID, tagID=spiSynthVolume1; paramID <=  endParamID; ++paramID, ++tagID )
 		{
-
 			Controls	&controls = m_controls[tagID];
 
-			for(
-				Controls::iterator it = controls.begin(), endIT = controls.end();
-				it != endIT;
-				++it
-			)
+			controls.forEach([=] (CControl	*control)->bool
 			{
-				CControl	*control = *it;
 				control->setTag( paramID );
-			}
+				return false;
+			});
 		}
 	}
 }

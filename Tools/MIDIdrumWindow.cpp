@@ -116,14 +116,8 @@ static char findStereoPos( const MIDIdata &midiData, unsigned char channel )
 {
 	char stereoPos = 0;
 
-	for( 
-		MIDIdata::const_iterator it = midiData.cbegin(),
-			endIT = midiData.cend();
-		it != endIT;
-		++it
-	)
+	midiData.forEach([&](const MIDIevent &theEvent)->bool
 	{
-		const MIDIevent	&theEvent = *it;
 		if( theEvent.getChannel() == channel )
 		{
 			if( theEvent.getMessage() == MIDI_CONTROLLER )
@@ -133,11 +127,12 @@ static char findStereoPos( const MIDIdata &midiData, unsigned char channel )
 				||  controller == MIDI_BALANCE_POSITION )
 				{
 					stereoPos = char(theEvent.getData2() - MIDI_CENTER_PAN);
-					break;
+					return true;	// break;
 				}
 			}
 		}
-	}
+		return false;
+	});
 	return stereoPos;
 }
 
@@ -151,17 +146,11 @@ static std::size_t findDrumVoiceNchannel(
 	unsigned char		*theChannel
 )
 {
-	bool			voiceFound;
+	size_t			voiceIdx = size_t(-1);
 	ChannelCodes	channelCodes;
 
-	for( 
-		MIDIdata::const_iterator it = midiData.cbegin(),
-			endIT = midiData.cend();
-		it != endIT;
-		++it
-	)
+	midiData.forEach( [&](const MIDIevent &theEvent)->bool
 	{
-		const MIDIevent	&theEvent = *it;
 		if( theEvent.getTrack() == trackNo )
 		{
 			if( theEvent.getMessage() == MIDI_NOTE_ON )
@@ -174,13 +163,14 @@ static std::size_t findDrumVoiceNchannel(
 						if( theVoice.note == theEvent.getData1() )
 						{
 							*theChannel = theEvent.getChannel();
-/***/						return j;
+							voiceIdx = j;
+/*v*/						return true;	// break;
 						}
 					}
 				}
 				else
 				{
-					voiceFound = midiData.getChannelCodes(
+					bool voiceFound = midiData.getChannelCodes(
 						theEvent.getTimeCode(),
 						theEvent.getChannel(),
 						&channelCodes
@@ -196,16 +186,18 @@ static std::size_t findDrumVoiceNchannel(
 							&& theVoice.voiceCodes.bankLSB == channelCodes.voiceCodes.bankLSB )
 							{
 								*theChannel = theEvent.getChannel();
-/***/							return j;
+								voiceIdx = j;
+/*v*/							return true;	// break;
 							}
 						}
 					}
 				}
 			}
 		}
-	}
+		return false;
+	});
 
-	return std::size_t(-1);
+	return voiceIdx;
 }
 
 // --------------------------------------------------------------------- //
@@ -359,16 +351,11 @@ void MIDIdrumWindow::saveMidi()
 	// init used channel flags:
 	memset( channelUsageCounter, 0, 16 );
 
-	for( 
-		PatternInfos::const_iterator it = patternList.cbegin(),
-			endIT = patternList.cend();
-		it != endIT;
-		++it
-	)
+	patternList.forEach( [&](const PatternInfo	&theInfo)->bool
 	{
-		const PatternInfo	&theInfo = *it;
 		channelUsageCounter[theInfo.channel]++;
-	}
+		return false;
+	});
 
 	for( unsigned char curChannel=0; curChannel<16; curChannel++ )
 	{
@@ -462,14 +449,8 @@ void MIDIdrumWindow::changeVolume()
 	{
 		maxVolumes[curTrack] = 0;
 	}
-	for(
-		MIDIdata::const_iterator it = m_midiData.cbegin(),
-			endIT = m_midiData.cend();
-		it != endIT;
-		++it
-	)
+	m_midiData.forEach([&](const MIDIevent &theEvent)->bool
 	{
-		const MIDIevent &theEvent = *it;
 		if( theEvent.getMessage() == MIDI_NOTE_ON )
 		{
 			unsigned short	curTrack = theEvent.getTrack();
@@ -483,7 +464,8 @@ void MIDIdrumWindow::changeVolume()
 				maxVolumes[0] = curVolume;
 			}
 		}
-	}
+		return false;
+	});
 
 	dialog.create( this, &m_thePatternArea->getPatternList(), maxVolumes, numTracks );
 	if( dialog.getModalResult() == IDOK )
@@ -501,14 +483,8 @@ void MIDIdrumWindow::changeVolume()
 					double(maxVolumes[selectedTrack]);
 			}
 
-			for( 
-				MIDIdata::iterator it = m_midiData.begin(),
-					endIT = m_midiData.end();
-				it != endIT;
-				++it
-			)
+			m_midiData.forEach( [=](MIDIevent &theEvent) -> bool
 			{
-				MIDIevent &theEvent = *it;
 				if( theEvent.getMessage() == MIDI_NOTE_ON
 				&&  (
 						theEvent.getTrack() == selectedTrack
@@ -519,7 +495,7 @@ void MIDIdrumWindow::changeVolume()
 					if( maxVolumes[selectedTrack] )
 					{
 						theEvent.setData2(
-							static_cast<unsigned char>(double(theEvent.getData2()) * factor + 0.5)
+							gak::math::round<unsigned char>(double(theEvent.getData2()) * factor)
 						);
 					}
 					else
@@ -527,7 +503,8 @@ void MIDIdrumWindow::changeVolume()
 						theEvent.setData2( newVolume );
 					}
 				}
-			}
+				return false;
+			});
 
 			m_thePatternArea->setChangedFlag();
 			invalidateWindow();
@@ -568,34 +545,22 @@ void MIDIdrumWindow::changeStereoPosition()
 					unsigned char oldChannel = thePattern.channel;
 					thePattern.channel = newChannel;
 
-					for( 
-						MIDIdata::iterator it = m_midiData.begin(),
-							endIT = m_midiData.end();
-						it != endIT;
-						++it
-					)
+					m_midiData.forEach( [=](MIDIevent &theEvent) -> bool
 					{
-						MIDIevent	&theEvent = *it;
 						if( theEvent.getTrack() == (unsigned short)selectedPattern+1 )
 						{
 							theEvent.setChannel( newChannel );
 						}
-					}
-					found = false;
-					for(
-						PatternInfos::const_iterator it = patternList.cbegin(),
-							endIT = patternList.cend();
-						it != endIT;
-						++it
-					)
+						return false;
+					});
+					found = patternList.forEach([=] (const PatternInfo	&thePattern) -> bool
 					{
-						const PatternInfo	&thePattern = *it;
 						if( thePattern.channel == oldChannel )
 						{
-							found = true;
-							break;
+							return true;	// break;
 						}
-					}
+						return false;
+					});
 					if( !found )
 					{
 						m_midiData.removeChannel( oldChannel );
@@ -623,14 +588,9 @@ void MIDIdrumWindow::loadVoices()
 		m_theVoices.loadDrumVoices( drumsFile );
 		voiceSelect->clearEntries();
 
-		for( 
-			DrumVoices::const_iterator it = m_theVoices.cbegin(),
-				endIT = m_theVoices.cend();
-			it != endIT;
-			++it
-		)
+		m_theVoices.forEach([&](const DrumVoice &drumVoice)->bool
 		{
-			const STRING &curVoice = it->voice;
+			const STRING &curVoice = drumVoice.voice;
 
 			// do not add a voice twice
 			if( !theUsedVoices.hasElement(curVoice) )
@@ -638,7 +598,8 @@ void MIDIdrumWindow::loadVoices()
 				theUsedVoices.addElement( curVoice );
 				voiceSelect->addEntry( curVoice ) ;
 			}
-		}
+			return false;
+		});
 
 		voiceSelect->selectEntry( 0 );
 	}
@@ -816,53 +777,36 @@ ProcessStatus PatternArea::handleLeftButton( LeftButton leftButton, winlib::Modi
 	}
 	else if( leftButton == lbUP )	// pattern released -> move
 	{
-		short	curTrack;
-
-		for( 
-			MIDIdata::iterator it = m_midiData->begin(),
-				endIT = m_midiData->end();
-			it != endIT;
-			++it
-		)
+		m_midiData->forEach( [=](MIDIevent	&theEvent)->bool
 		{
-			MIDIevent	&theEvent = *it;
-			curTrack = theEvent.getTrack();
+			short curTrack = theEvent.getTrack();
 			if( curTrack > m_overPattern )
 				theEvent.setTrack( (short)(curTrack+1) );
-		}
+			return false;
+		});
 
 		if( m_overPattern < m_dragPattern )
 		{
 			m_dragPattern++;
 		}
 
-		for( 
-			MIDIdata::iterator it = m_midiData->begin(),
-				endIT = m_midiData->end();
-			it != endIT;
-			++it
-		)
+		m_midiData->forEach( [=](MIDIevent	&theEvent)->bool
 		{
-			MIDIevent	&theEvent = *it;
-			curTrack = theEvent.getTrack();
+			short curTrack = theEvent.getTrack();
 			if( curTrack == m_dragPattern+1 )
 				theEvent.setTrack( short(m_overPattern+1) );
-		}
+			return false;
+		});
 
-		for( 
-			MIDIdata::iterator it = m_midiData->begin(),
-				endIT = m_midiData->end();
-			it != endIT;
-			++it
-		)
+		m_midiData->forEach( [=](MIDIevent	&theEvent)->bool
 		{
-			MIDIevent	&theEvent = *it;
-			curTrack = theEvent.getTrack();
+			short curTrack = theEvent.getTrack();
 			if( curTrack > m_dragPattern )
 			{
 				theEvent.setTrack( (short)(curTrack-1) );
 			}
-		}
+			return false;
+		});
 
 		m_overPattern = m_dragPattern = -1;
 		refreshPatternList();
@@ -1000,14 +944,8 @@ ProcessStatus PatternArea::handleRepaint( Device &hDC )
 		hDC.selectPen( redPen );
 		noteOnFound = false;
 		leftPos = textWidth;
-		for( 
-			MIDIdata::const_iterator it = m_midiData->cbegin(),
-				endIT = m_midiData->cend();
-			it != endIT;
-			++it
-		)
+		m_midiData->forEach( [&](const MIDIevent &theEvent)->bool
 		{
-			const MIDIevent &theEvent = *it;
 			if( theEvent.getTrack() == curTrack
 			&&	theEvent.getTimeCode() >= minTime
 			&&	theEvent.getTimeCode() < maxTime )
@@ -1033,7 +971,8 @@ ProcessStatus PatternArea::handleRepaint( Device &hDC )
 					noteOnFound = false;
 				}
 			}
-		}
+			return false;
+		});
 		if( noteOnFound )
 		{
 			hDC.drawRectangle( leftPos, rect.top, size.width, rect.bottom-1 );
@@ -1202,14 +1141,8 @@ void DrumPlayerThread::ExecuteThread()
 		}
 		else
 		{
-			for( 
-				MIDIdata::const_iterator it = m_midiData->cbegin(), endIT = m_midiData->cend();
-				!terminated && it != endIT;
-				++it
-			)
+			m_midiData->forEach( [&](const MIDIevent &midiMsg) -> bool
 			{
-				const MIDIevent &midiMsg = *it;
-
 				actTime = clock();
 
 				elapsedTime = actTime - clockTime;
@@ -1244,7 +1177,8 @@ void DrumPlayerThread::ExecuteThread()
 				{
 					m_drumWindow->playMidiEvent( midiMsg );
 				}
-			}
+				return terminated;
+			});
 		}
 		startTime += m_totalTime;
 	}

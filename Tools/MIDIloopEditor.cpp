@@ -115,20 +115,15 @@ unsigned long MIDIloopEditor::compileLoop2Midi()
 
 			for( int j=0; j<theLoopEntry.counter; j++ )
 			{
-				for( 
-					MIDIdata::const_iterator it = entryData.cbegin(),
-						endIT = entryData.cend();
-					it != endIT;
-					++it
-				)
+				entryData.forEach( [&](MIDIevent theEvent) -> bool
 				{
-					MIDIevent	theEvent = *it;
 					if( timeOffset )
 					{
 						theEvent.setTimeCode( (unsigned long)(theEvent.getTimeCode() + timeOffset) );
 					}
 					m_midiData.addElement( theEvent );
-				}
+					return false;
+				});
 
 				timeOffset += entryLength;
 			}
@@ -149,23 +144,19 @@ void MIDIloopEditor::saveLoopXmlFile( const STRING &fileName )
 	xmlMidiLoop->setStringAttribute( "BPM", bpmEdit->getText() );
 	xmlMidiLoop->setIntegerAttribute( "START", startEntry );
 
-	for( 
-		LoopEntries::const_iterator it = m_theLoopList.cbegin(),
-			endIT = m_theLoopList.cend();
-		it != endIT;
-		++it
-	)
+	m_theLoopList.forEach([&]( const LoopEntry &entry)->bool
 	{
-		if( it->counter )
+		if( entry.counter )
 		{
 			xml::Any *xmlLoopEntry = static_cast<xml::Any*>(xmlMidiLoop->addObject( new xml::Any( "LOOP_ENTRY" ) ));
 
-			relativePath = makeRelPath( fileName, it->fileName );
+			relativePath = makeRelPath( fileName, entry.fileName );
 			xmlLoopEntry->setStringAttribute( "FILE_NAME", relativePath );
 
-			xmlLoopEntry->setIntegerAttribute( "COUNTER", it->counter );
+			xmlLoopEntry->setIntegerAttribute( "COUNTER", entry.counter );
 		}
-	}
+		return false;
+	});
 
 	STRING	xmlCode = xmlMidiLoop->generateDoc();
 	std::ofstream	fStream( fileName );
@@ -288,36 +279,30 @@ void MidiLoopPlayerThread::ExecuteThread()
 	unsigned long	totalTime = (unsigned long)(m_midiData->getNumBars() * m_midiData->getTimePerBarDbl() + 0.5);
 
 	// send voice changes to the device
-	for( 
-		MIDIdata::const_iterator it = m_midiData->cbegin(),
-			endIT = m_midiData->cend();
-		!terminated && it != endIT;
-		++it
-	)
+	m_midiData->forEach( [&](const MIDIevent &midiMsg) -> bool
 	{
-		const MIDIevent &midiMsg = *it;
 		message = midiMsg.getMessage();
 
 		if( message != MIDI_NOTE_ON && message != MIDI_NOTE_OFF )
 		{
 			m_loopEditor->playMidiEvent( midiMsg, true );
 		}
-	}
+		return terminated;
+	});
 
 	if( m_loopPoint )
 	{
-			std::size_t i = 0;
-			for( 
-			MIDIdata::const_iterator it = m_midiData->cbegin(),
-				endIT = m_midiData->cend();
-			!terminated && it != endIT;
-			++it, ++i
-		)
-			if( it->getTimeCode() >= m_loopPoint )
+		std::size_t i = 0;
+		m_midiData->forEach( [&](const MIDIevent &midiMsg) -> bool
+		{
+			if( midiMsg.getTimeCode() >= m_loopPoint )
 			{
 				firstLoopEntry = i;
-				break;
+				return true;	// break;
 			}
+			++i;
+			return terminated;
+		});
 	}
 
 	for( int i=0; i<4 && !terminated; i++ )

@@ -140,20 +140,14 @@ class PianoArea : public ChildWindow
 		{
 			MIDIevent	theEvent;
 			notesReceived.clear();
-			for(
-				MIDInotePresentations::const_iterator it = notesPlaying.cbegin(),
-					endIT = notesPlaying.cend();
-				it != endIT;
-				++it
-			)
+			notesPlaying.forEach( [&](const MIDInotePresentation &theNote) -> bool
 			{
-				const MIDInotePresentation	&theNote = *it;
-
 				theEvent.setNoteOn( theNote.channel, theNote.note, 0 );
 				playerHandles.playMidiEvent( theNote.midiDev, theEvent );
 				theEvent.setNoteOff( theNote.channel, theNote.note, 0 );
 				playerHandles.playMidiEvent( theNote.midiDev, theEvent );
-			}
+				return false;
+			});
 			notesPlaying.clear();
 			invalidateWindow();
 		}
@@ -453,15 +447,8 @@ void MIDIrecorderWindow::saveSettings()
 			}
 		}
 		xml::Any	*xmlFilterSettings = static_cast<xml::Any*>(xmlMidiSettings->addObject( new xml::Any( "FILTER_SETTINGS" ) ));
-		for( 
-			FilterList::const_iterator it = m_theFilterList.cbegin(),
-				endIT = m_theFilterList.cend();
-			it != endIT;
-			++it
-		)
+		m_theFilterList.forEach([&](const FilterSettings &theSettings)->bool
 		{
-			const FilterSettings &theSettings = *it;
-
 			xml::Any *xmlFilter = static_cast<xml::Any*>(xmlFilterSettings->addObject( new xml::Any( "FILTER" ) ));
 
 			xmlFilter->setStringAttribute( "NAME", theSettings.name );
@@ -484,7 +471,8 @@ void MIDIrecorderWindow::saveSettings()
 			xmlFilter->setIntegerAttribute( "NOTE_OFFSET", theSettings.noteOffset );
 			xmlFilter->setStringAttribute( "NEW_VOLUME", theSettings.newVolume );
 			xmlFilter->setIntegerAttribute( "STOP_FLAG", theSettings.stopFlag );
-		}
+			return false;
+		});
 		xml::Any	*xmlMetronomSettings = static_cast<xml::Any*>(xmlMidiSettings->addObject( new xml::Any( "METRONOM_SETTINGS" ) ));
 		xmlMetronomSettings->setStringAttribute( "FIRST_METRONOM", m_firstMetronom );
 		xmlMetronomSettings->setStringAttribute( "OTHER_METRONOM", m_otherMetronom );
@@ -1770,7 +1758,6 @@ void MIDIrecorderWindow::loadMidiFile( const char *cmdLine )
 void MIDIrecorderWindow::loadMidiSettings( const char *cmdLine )
 {
 	doEnterFunction("MIDIrecorderWindow::loadMidiSettings");
-	unsigned char	channel, effect, sound;
 	STRING			name, value;
 	int				valueI;
 	OpenFileDialog	dlg;
@@ -1849,15 +1836,10 @@ void MIDIrecorderWindow::loadMidiSettings( const char *cmdLine )
 
 				xml::XmlArray	children;
 				xmlMidiSettings->getChildElements( &children, "CHANNEL_SETTINGS" );
-				for( 
-					xml::XmlArray::const_iterator it = children.cbegin(),
-						endIT = children.cend();
-					it != endIT;
-					++it
-				)
+
+				children.forEach([=](xml::Element *xmlChannelSettings)->bool
 				{
 					ChannelSettings *channelSettings;
-					xml::Element *xmlChannelSettings = *it;
 					STRING instrument = xmlChannelSettings->getAttribute( "instrument" );
 					STRING device = xmlChannelSettings->getAttribute( "device" );
 					size_t midiDev = playerHandles.no_index;
@@ -1871,7 +1853,7 @@ void MIDIrecorderWindow::loadMidiSettings( const char *cmdLine )
 					if( midiDev != playerHandles.no_index )
 					{
 						channelSettings = playerHandles[midiDev].getChannelSettings();
-						for( channel = 0; channel <= 16; channel++ )
+						for( unsigned char channel = 0; channel <= 16; channel++ )
 							channelSettings[channel].active = false;
 
 						for( size_t i=0; i<xmlChannelSettings->getNumObjects(); i++ )
@@ -1880,9 +1862,8 @@ void MIDIrecorderWindow::loadMidiSettings( const char *cmdLine )
 
 							if( xmlChannel && xmlChannel->getTag() == "CHANNEL" )
 							{
-								value = xmlChannel->getAttribute( "CHANNEL" );
-								channel = value.getValueE<unsigned char>();
-								value = xmlChannel->getAttribute( "ACTIVE" );
+								unsigned char channel = xmlChannel->getAttribute( "CHANNEL" ).getValueE<unsigned char>();
+								STRING value = xmlChannel->getAttribute( "ACTIVE" );
 								if( !value.isEmpty() )
 									channelSettings[channel].active = value.getValueN<bool>();
 								else
@@ -1903,25 +1884,27 @@ void MIDIrecorderWindow::loadMidiSettings( const char *cmdLine )
 								value = xmlChannel->getAttribute( "EXPRESSION" );
 								channelSettings[channel].expression = value.getValueE<unsigned char>();
 
-								for( effect=0; effect<5; effect++ )
+								for( unsigned char effect=0; effect<5; effect++ )
 								{
-									name = "EFFECT_";
-									name += formatNumber( effect );
-									value = xmlChannel->getAttribute( name );
-									channelSettings[channel].effects[effect] = value.getValueE<unsigned char>();
+									channelSettings[channel].effects[effect] = 
+										xmlChannel->getAttribute( 
+											NumberBuffer().add("EFFECT_").addNumber(effect).c_str() 
+										).getValueE<unsigned char>()
+									;
 								}
 
-								for( sound=0; sound<5; sound++ )
+								for( unsigned char sound=0; sound<5; sound++ )
 								{
-									name = "SOUND_";
-									name += formatNumber( sound );
-									value = xmlChannel->getAttribute( name );
-									channelSettings[channel].sounds[sound] = value.getValueE<unsigned char>();
+									channelSettings[channel].sounds[sound] = 
+										xmlChannel->getAttribute( 
+											NumberBuffer().add("SOUND_").addNumber(sound).c_str() 
+										).getValueE<unsigned char>()
+									;
 								}
 							}
 							if( playerHandles.isOutOpen( midiDev ) )
 							{
-								for( channel=0; channel <= 15; channel++ )
+								for( unsigned char channel=0; channel <= 15; channel++ )
 								{
 									sendChannelSettings( midiDev, channel );
 								}
@@ -1931,8 +1914,8 @@ void MIDIrecorderWindow::loadMidiSettings( const char *cmdLine )
 
 					if( m_theMidiChannelsWindow )
 						m_theMidiChannelsWindow->refreshWindow();
-
-				}
+					return false;
+				});
 				xml::Element *xmlFilterSettings = xmlMidiSettings->getElement( "FILTER_SETTINGS" );
 				if( xmlFilterSettings )
 				{
